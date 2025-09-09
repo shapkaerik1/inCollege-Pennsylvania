@@ -1,0 +1,18 @@
+****************************************
+*                                      *
+*         Welcome to InCollege!        *
+*                                      *
+****************************************
+Log In
+Create New Account
+Please enter your username:
+Please enter your password:
+Error: Password must have at leat one capital letter.
+Error: Password must be between 8 and 12 characters long.
+Account created successfully.
+You have successfully logged in.
+WELCOME [USERNAME] !
+Search for a job
+Find someone you know
+Learn a new skill
+Enter your choice:
