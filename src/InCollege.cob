@@ -6,11 +6,11 @@ ENVIRONMENT DIVISION.
        INPUT-OUTPUT SECTION.
            FILE-CONTROL.
                  SELECT INPUT-FILE
-                     ASSIGN TO "InCollege-input.txt"
+                     ASSIGN TO "InCollege-Input.txt"
                      ORGANIZATION IS LINE SEQUENTIAL
                      FILE STATUS IS INPUT-FILE-STATUS.
                  SELECT OUTPUT-FILE
-                     ASSIGN TO "InCollege-output.txt"
+                     ASSIGN TO "InCollege-Output.txt"
                      ORGANIZATION IS LINE SEQUENTIAL
                      FILE STATUS IS OUTPUT-FILE-STATUS.
                  SELECT ACCOUNTS-FILE
@@ -87,14 +87,14 @@ OPEN-FILES.
        *> this paragraph handles the opening of input and output files and checks for errors
        OPEN INPUT INPUT-FILE.
        IF INPUT-FILE-STATUS NOT = '00'
-           MOVE "Error: Input file 'InCollege-input.txt' not found." TO OUTPUT-LINE
+           MOVE "Error: Input file 'InCollege-Input.txt' not found." TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
            STOP RUN
        END-IF.
 
        OPEN OUTPUT OUTPUT-FILE.
        IF OUTPUT-FILE-STATUS NOT = '00'
-           MOVE "Error: Output file 'InCollege-output.txt' could not be opened." TO OUTPUT-LINE
+           MOVE "Error: Output file 'InCollege-Output.txt' could not be opened." TO OUTPUT-LINE
            DISPLAY OUTPUT-LINE
            STOP RUN
        END-IF.
