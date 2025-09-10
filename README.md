@@ -2,17 +2,13 @@
 
 
 
-A console-based COBOL application that simulates a simplified version of LinkedIn for college students.
+This project is a COBOL application that simulates a simplified version of LinkedIn for college students.
 This project demonstrates login, registration, and initial navigation functionality, while ensuring:
 
-User input comes from a file.
-
+User inputs comes from a file.
 Output is displayed to the console and written identically to an output file.
-
 Registration and password rules are enforced.
-
 Navigation menus allow exploration of under-construction features.
-
 
 ->->->-> Requirements
 
