@@ -56,14 +56,16 @@ DATA DIVISION.
        01 WS-HAS-DIGIT PIC X.
        01 WS-HAS-SPECIAL PIC X.
 
+       *> flags to track the state of login and registration attempts
        01 WS-LOGIN-SUCCESSFUL PIC X.
        01 WS-USERNAME-IS-UNIQUE PIC X.
 
-       *> line to hold text before its displayed and written
+       *> general purpose varibale to build a line of text before displaying or writing it
        01 OUTPUT-LINE PIC X(80).
 
        *> in memory table (max 5 accounts)
        01 ACCOUNT-TABLE.
+           *> create space for 6 ACCOUNTS records and create a pointer for the account table
            05 ACCOUNTS OCCURS 5 TIMES INDEXED BY TBL-IDX.
                10 WS-USERNAME PIC X(20).
                10 WS-PASSWORD PIC X(12).
@@ -74,13 +76,15 @@ PROCEDURE DIVISION.
        PERFORM OPEN-FILES.
        PERFORM LOAD-ACCOUNTS.
        PERFORM MAIN-MENU-DISPLAY.
-
+       *> main loop that drives the program, processing one command per iteration
        PERFORM PROCESS-INPUT-COMMANDS UNTIL EOF.
 
+       *> cleanup and termination
        CLOSE INPUT-FILE OUTPUT-FILE ACCOUNTS-FILE.
        STOP RUN.
 
 OPEN-FILES.
+       *> this paragraph handles the opening of input and output files and checks for errors
        OPEN INPUT INPUT-FILE.
        IF INPUT-FILE-STATUS NOT = '00'
            MOVE "Error: Input file 'InCollege-input.txt' not found." TO OUTPUT-LINE
@@ -96,20 +100,23 @@ OPEN-FILES.
        END-IF.
 
 WRITE-AND-DISPLAY.
+       *> a reusable utility paragraph to both display a line to the screen and write it to the output file
        DISPLAY OUTPUT-LINE.
        MOVE OUTPUT-LINE TO OUTPUT-RECORD.
        WRITE OUTPUT-RECORD.
        MOVE SPACES TO OUTPUT-LINE.
 
 LOAD-ACCOUNTS.
+       *> This paragraph reads all existing user accounts from ACCOUNTS.DAT into the in-memory ACCOUNT-TABLE
        OPEN INPUT ACCOUNTS-FILE.
        IF ACCOUNTS-STATUS NOT = "00"
-           *> If file doesn't exist, just treat it as empty.
+           *> If file doesn't exist (e.g first time running),exit since table is already empty
            MOVE 0 TO ACCOUNT-COUNT
            EXIT PARAGRAPH
        END-IF.
 
        MOVE 0 TO ACCOUNT-COUNT.
+       *>loop to read every record from the file until the end.
        PERFORM UNTIL 1 = 2
            READ ACCOUNTS-FILE
                AT END
@@ -125,9 +132,12 @@ LOAD-ACCOUNTS.
        CLOSE ACCOUNTS-FILE.
 
 ADD-AND-SAVE-ACCOUNT.
+       *> this paragraph handels writing to a new account to the ACCOUNTS.DAT file for persistence
+       *> and also adds it to the in-memory table for the current session
        MOVE USERNAME TO AR-USERNAME.
        MOVE PASSWORD TO AR-PASSWORD.
 
+       *> OPEN EXTEND appends to the file and creates it if the file doesnt exist
        OPEN EXTEND ACCOUNTS-FILE.
        IF ACCOUNTS-STATUS = "35" *> File not found
            OPEN OUTPUT ACCOUNTS-FILE
@@ -139,11 +149,13 @@ ADD-AND-SAVE-ACCOUNT.
        WRITE ACCOUNT-RECORD.
        CLOSE ACCOUNTS-FILE.
 
+       *> update the in-memory table and count
        ADD 1 TO ACCOUNT-COUNT.
        MOVE USERNAME TO WS-USERNAME(ACCOUNT-COUNT).
        MOVE PASSWORD TO WS-PASSWORD(ACCOUNT-COUNT).
 
 MAIN-MENU-DISPLAY.
+       *> displays the initial welcome screen and static text prompt
        MOVE "****************************************" TO OUTPUT-LINE.
        PERFORM WRITE-AND-DISPLAY.
        MOVE "*         Welcome to InCollege!        *" TO OUTPUT-LINE.
@@ -161,12 +173,14 @@ MAIN-MENU-DISPLAY.
        PERFORM WRITE-AND-DISPLAY.
 
 PROCESS-INPUT-COMMANDS.
+       *> The main command processor. It reads a line and decides which action to take.
        READ INPUT-FILE
            AT END
                SET EOF TO TRUE
            NOT AT END
                MOVE FUNCTION TRIM(FILE-RECORD) TO USER-ACTION
 
+               *> switch case
                EVALUATE USER-ACTION
                    WHEN "new account"
                        PERFORM CREATE-ACCOUNT-SECTION
@@ -180,6 +194,7 @@ PROCESS-INPUT-COMMANDS.
        END-READ.
 
 GET-USERNAME.
+       *> reads the next line from the input file and store it as the username
        READ INPUT-FILE
            AT END
                SET EOF TO TRUE
@@ -188,6 +203,7 @@ GET-USERNAME.
        END-READ.
 
 GET-PASSWORD.
+       *> reads the next line from the input file and store it as the password
        READ INPUT-FILE
            AT END
                SET EOF TO TRUE
@@ -196,10 +212,13 @@ GET-PASSWORD.
        END-READ.
 
 CREATE-ACCOUNT-SECTION.
+       *> handles the entire account creation workflow
+       *> check if the maximum number of accounts has been reached
        IF ACCOUNT-COUNT >= 5
            MOVE "All permitted accounts have been created, please come back later."
                TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
+           *> Consume the next two lines (username/password) from the input file
            PERFORM GET-USERNAME
            PERFORM GET-PASSWORD
            EXIT PARAGRAPH
@@ -208,42 +227,46 @@ CREATE-ACCOUNT-SECTION.
        *> Get the first username attempt before the loop
        PERFORM GET-USERNAME.
 
-       *> loops for a unique username
-       *> Initialize the flag to 'N' to ensure the loop runs at least once.
+       *> initialize the flag to 'N' to ensure the loop runs at least once
        MOVE 'N' TO WS-USERNAME-IS-UNIQUE.
 
-       *> loop until a unique username is found or we hit the end of the file.
+       *> loop until a unique username is found or we hit the end of the file
        PERFORM UNTIL WS-USERNAME-IS-UNIQUE = 'Y' OR EOF
-           *> Assume the current username is unique until proven otherwise.
+           *> assume the current username is unique until proven otherwise
            MOVE 'Y' TO WS-USERNAME-IS-UNIQUE
            IF ACCOUNT-COUNT > 0
+               *> point to first row of the table
                SET TBL-IDX TO 1
+
+               *> SEARCH is used is for table lookups
                SEARCH ACCOUNTS
                    AT END
                        CONTINUE
-                   WHEN WS-USERNAME(TBL-IDX) = FUNCTION TRIM(USERNAME)
+                   *> look if inputted username is already in the account table
+                   WHEN WS-USERNAME(TBL-IDX) = FUNCTION TRIM(USERNAME) *>TRIM removes trailing blankspaces
                        MOVE 'N' TO WS-USERNAME-IS-UNIQUE
                END-SEARCH
            END-IF
 
            *> if the username was a duplicate, print an error and get the next attempt.
            IF WS-USERNAME-IS-UNIQUE = 'N' AND NOT EOF
-               MOVE "Error: Username is already taken. Please try a different one."
-                   TO OUTPUT-LINE
+               MOVE "Error: Username is already taken. Please try a different one." TO OUTPUT-LINE
                PERFORM WRITE-AND-DISPLAY
-               PERFORM GET-USERNAME
+               PERFORM GET-USERNAME *> get the next username attempt
            END-IF
        END-PERFORM.
 
-       *> after the loop, check if we found a unique username before EOF
+       *> after the loop, only proceed if a unique username was found before the EOF
        IF WS-USERNAME-IS-UNIQUE = 'Y'
            *> username is unique, so proceed with password validation
            PERFORM GET-PASSWORD
            MOVE 'N' TO VALID-PASSWORD
+
+           *> loop until password is valid
            PERFORM UNTIL VALID-PASSWORD = 'Y' OR EOF
                PERFORM VALIDATE-PASSWORD
                IF VALID-PASSWORD = 'N' AND NOT EOF
-                   PERFORM GET-PASSWORD
+                   PERFORM GET-PASSWORD *> get next password attempt
                END-IF
            END-PERFORM
 
@@ -267,6 +290,7 @@ CREATE-ACCOUNT-SECTION.
        END-IF.
 
 VALIDATE-PASSWORD.
+       *> this paragraph checks a password against a set of rules. It doesn't read any files
        MOVE 'N' TO VALID-PASSWORD.
        MOVE 'N' TO WS-HAS-CAPITAL.
        MOVE 'N' TO WS-HAS-DIGIT.
@@ -280,7 +304,10 @@ VALIDATE-PASSWORD.
            EXIT PARAGRAPH
        END-IF.
 
+       *> loop through the password one character at a time
+       *> PERFORM VARYING is a for loop, with i = 1 and inecrement by 1
        PERFORM VARYING I FROM 1 BY 1 UNTIL I > PASSWORD-LENGTH
+           *> (I:1) means start at the position i is currently on and take 1 character
            MOVE PASSWORD(I:1) TO WS-CURRENT-CHAR
            IF WS-CURRENT-CHAR >= 'A' AND <= 'Z'
                MOVE 'Y' TO WS-HAS-CAPITAL
@@ -294,6 +321,7 @@ VALIDATE-PASSWORD.
            END-IF
        END-PERFORM.
 
+       *> check if password met all criteria
        IF WS-HAS-CAPITAL = 'N'
            MOVE "Error: Password must have a capital letter."
                TO OUTPUT-LINE
@@ -315,21 +343,21 @@ VALIDATE-PASSWORD.
        MOVE 'Y' TO VALID-PASSWORD.
 
 LOGIN-SECTION.
-    *> Initialize the flag to 'N' to ensure the loop runs at least once.
+    *> this paragraph handles multiple login attempts
+    *> initialize the flag to 'N' to ensure the loop runs at least once
     MOVE 'N' TO WS-LOGIN-SUCCESSFUL.
 
-    *> Loop until the user logs in successfully OR we run out of input.
+    *> loop until the user logs in successfully or EOF
     PERFORM UNTIL WS-LOGIN-SUCCESSFUL = 'Y' OR EOF
-
-        *> Get credentials inside the loop for each attempt.
+        *> get credentials inside the loop for each attempt.
         PERFORM GET-USERNAME
         IF NOT EOF
             PERFORM GET-PASSWORD
         END-IF
 
-        *> Check credentials only if we haven't hit the end of the file.
+        *> check credentials
         IF NOT EOF
-            *> This inner loop searches the account table.
+            *> inner loop searches the account table
             PERFORM VARYING I FROM 1 BY 1 UNTIL I > ACCOUNT-COUNT
                 IF FUNCTION TRIM(USERNAME) = FUNCTION TRIM(WS-USERNAME(I)) AND
                    FUNCTION TRIM(PASSWORD) = FUNCTION TRIM(WS-PASSWORD(I))
@@ -338,7 +366,7 @@ LOGIN-SECTION.
                 END-IF
             END-PERFORM
 
-            *> If the inner loop finished and the flag is still 'N', the login failed.
+            *> if the inner loop finished and the flag is still 'N', the login failed
             IF WS-LOGIN-SUCCESSFUL = 'N'
                 MOVE "Incorrect username/password, please try again."
                     TO OUTPUT-LINE
@@ -347,8 +375,8 @@ LOGIN-SECTION.
         END-IF
     END-PERFORM.
 
-    *> This code now only runs AFTER the loop is broken by a successful login.
-    IF WS-LOGIN-SUCCESSFUL = 'Y'
+       *> after the loop, if login sucessful, show the post-login menu
+        IF WS-LOGIN-SUCCESSFUL = 'Y'
         MOVE "You have successfully logged in." TO OUTPUT-LINE
         PERFORM WRITE-AND-DISPLAY
         PERFORM POST-LOGIN-MENU
@@ -356,12 +384,14 @@ LOGIN-SECTION.
     END-IF.
 
 POST-LOGIN-MENU.
+       *> this paragraph is shown after a user successfully logs in.
        STRING "Welcome, " DELIMITED BY SIZE
               FUNCTION TRIM(USERNAME) DELIMITED BY SIZE
               "!" DELIMITED BY SIZE
               INTO OUTPUT-LINE.
        PERFORM WRITE-AND-DISPLAY.
 
+       *> This loop redisplays the menu after every action
        PERFORM UNTIL USER-ACTION = "Go Back" OR EOF
            MOVE SPACES TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
@@ -398,9 +428,10 @@ POST-LOGIN-MENU.
                END-EVALUATE
            END-IF
        END-PERFORM.
-       MOVE SPACES TO USER-ACTION. *> Reset for next main loop
+       MOVE SPACES TO USER-ACTION. *> reset for next main loop
 
 LEARN-A-SKILL-SUB-MENU.
+       *> this is the sub-menu for learning skills.
       PERFORM UNTIL USER-ACTION = "Go Back" OR EOF
            MOVE SPACES TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
