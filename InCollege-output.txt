@@ -6,15 +6,104 @@ Log In
 Create New Account
 Please enter your username:
 Please enter your password:
-Incorrect username/password, please try again.
+Account created successfully.
 You have successfully logged in.
-Welcome, jdoe!
+Welcome, testuser1!
+
+Search for a job
+Find someone you know
+Learn a new skill
+Enter your choice:
+****************************************
+*         Welcome to InCollege!        *
+****************************************
+
+Log In
+Create New Account
+Please enter your username:
+Please enter your password:
+Account created successfully.
+You have successfully logged in.
+Welcome, testuser2!
+
+Search for a job
+Find someone you know
+Learn a new skill
+Enter your choice:
+****************************************
+*         Welcome to InCollege!        *
+****************************************
+
+Log In
+Create New Account
+Please enter your username:
+Please enter your password:
+Error: Password must be 8-12 characters.
+Account created successfully.
+You have successfully logged in.
+Welcome, testuser3!
+
+Search for a job
+Find someone you know
+Learn a new skill
+Enter your choice:
+****************************************
+*         Welcome to InCollege!        *
+****************************************
+
+Log In
+Create New Account
+Please enter your username:
+Please enter your password:
+Error: Password must have a special character.
+Account created successfully.
+You have successfully logged in.
+Welcome, testuser4!
+
+Search for a job
+Find someone you know
+Learn a new skill
+Enter your choice:
+****************************************
+*         Welcome to InCollege!        *
+****************************************
+
+Log In
+Create New Account
+Please enter your username:
+Please enter your password:
+Error: Password must have a capital letter.
+Account created successfully.
+You have successfully logged in.
+Welcome, testuser5!
+
+Search for a job
+Find someone you know
+Learn a new skill
+Enter your choice:
+****************************************
+*         Welcome to InCollege!        *
+****************************************
+
+Log In
+Create New Account
+Please enter your username:
+Please enter your password:
+All permitted accounts have been created, please come back later.
+You have successfully logged in.
+Welcome, testuser1!
 
 Search for a job
 Find someone you know
 Learn a new skill
 Enter your choice:
 Job search/internship is under construction.
+
+Search for a job
+Find someone you know
+Learn a new skill
+Enter your choice:
+Find someone you know is under construction.
 
 Search for a job
 Find someone you know
@@ -49,21 +138,18 @@ Cloud Fundamentals
 Networking Basics
 Go Back
 Enter your choice:
-Welcome, jdoe!
+Welcome, testuser1!
 
 Search for a job
 Find someone you know
 Learn a new skill
 Enter your choice:
-Job search/internship is under construction.
+****************************************
+*         Welcome to InCollege!        *
+****************************************
 
-Search for a job
-Find someone you know
-Learn a new skill
-Enter your choice:
-Find someone you know is under construction.
-
-Search for a job
-Find someone you know
-Learn a new skill
-Enter your choice:
+Log In
+Create New Account
+Please enter your username:
+Please enter your password:
+Incorrect username/password, please try again.

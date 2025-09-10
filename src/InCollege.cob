@@ -115,8 +115,8 @@ LOAD-ACCOUNTS.
                AT END
                    EXIT PERFORM
                NOT AT END
-                   IF ACCOUNT-COUNT < 5
-                       ADD 1 TO ACCOUNT-COUNT
+                   ADD 1 TO ACCOUNT-COUNT
+                   IF ACCOUNT-COUNT <= 5
                        MOVE AR-USERNAME TO WS-USERNAME(ACCOUNT-COUNT)
                        MOVE AR-PASSWORD TO WS-PASSWORD(ACCOUNT-COUNT)
                    END-IF
@@ -247,13 +247,14 @@ CREATE-ACCOUNT-SECTION.
                END-IF
            END-PERFORM
 
-           IF VALID-PASSWORD = 'Y'
+               IF VALID-PASSWORD = 'Y'
                PERFORM ADD-AND-SAVE-ACCOUNT
                MOVE "Account created successfully." TO OUTPUT-LINE
                PERFORM WRITE-AND-DISPLAY
                MOVE "You have successfully logged in." TO OUTPUT-LINE
                PERFORM WRITE-AND-DISPLAY
                PERFORM POST-LOGIN-MENU
+               PERFORM MAIN-MENU-DISPLAY
            ELSE
                MOVE "Account creation failed: A valid password was not provided."
                    TO OUTPUT-LINE
@@ -351,6 +352,7 @@ LOGIN-SECTION.
         MOVE "You have successfully logged in." TO OUTPUT-LINE
         PERFORM WRITE-AND-DISPLAY
         PERFORM POST-LOGIN-MENU
+        PERFORM MAIN-MENU-DISPLAY
     END-IF.
 
 POST-LOGIN-MENU.
@@ -361,6 +363,7 @@ POST-LOGIN-MENU.
        PERFORM WRITE-AND-DISPLAY.
 
        PERFORM UNTIL USER-ACTION = "Go Back" OR EOF
+           MOVE SPACES TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
            MOVE "Search for a job" TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
@@ -399,30 +402,31 @@ POST-LOGIN-MENU.
 
 LEARN-A-SKILL-SUB-MENU.
       PERFORM UNTIL USER-ACTION = "Go Back" OR EOF
+           MOVE SPACES TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           MOVE "Learn a New Skill:" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           MOVE "Resume Writing" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           MOVE "Agile and Scrum Basics" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           MOVE "Git and GitHub Fundamentals" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           MOVE "Cloud Fundamentals" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           MOVE "Networking Basics" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           MOVE "Go Back" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           MOVE "Enter your choice:" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+
            READ INPUT-FILE
                AT END SET EOF TO TRUE
                NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO USER-ACTION
            END-READ
 
            IF NOT EOF
-               PERFORM WRITE-AND-DISPLAY
-               MOVE "Learn a New Skill:" TO OUTPUT-LINE
-               PERFORM WRITE-AND-DISPLAY
-               MOVE "Resume Writing" TO OUTPUT-LINE
-               PERFORM WRITE-AND-DISPLAY
-               MOVE "Agile and Scrum Basics" TO OUTPUT-LINE
-               PERFORM WRITE-AND-DISPLAY
-               MOVE "Git and GitHub Fundamentals" TO OUTPUT-LINE
-               PERFORM WRITE-AND-DISPLAY
-               MOVE "Cloud Fundamentals" TO OUTPUT-LINE
-               PERFORM WRITE-AND-DISPLAY
-               MOVE "Networking Basics" TO OUTPUT-LINE
-               PERFORM WRITE-AND-DISPLAY
-               MOVE "Go Back" TO OUTPUT-LINE
-               PERFORM WRITE-AND-DISPLAY
-               MOVE "Enter your choice:" TO OUTPUT-LINE
-               PERFORM WRITE-AND-DISPLAY
-
                EVALUATE USER-ACTION
                    WHEN "Go Back"
                        EXIT PERFORM
