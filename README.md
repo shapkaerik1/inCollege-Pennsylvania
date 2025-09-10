@@ -14,7 +14,7 @@ Registration and password rules are enforced.
 Navigation menus allow exploration of under-construction features.
 
 
-⚙️ Requirements
+->->->-> Requirements
 
 COBOL compiler (GnuCOBOL recommended)
 
@@ -29,7 +29,7 @@ brew install gnu-cobol
 
 Input and output text files (InCollege-Input.txt, InCollege-Test.txt) must exist in the project root.
 
-🛠️ Compilation
+ ->->->Compilation
 
 Navigate into the src folder and compile the program:
 
@@ -42,7 +42,8 @@ cobc = COBOL compiler (GnuCOBOL)
 
 -o ../bin/InCollege = output the binary in the bin directory
 
-▶️ Running the Program
+
+->->->-> Running the Program
 
 From the project root, run:
 
