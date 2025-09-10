@@ -13,19 +13,6 @@ Registration and password rules are enforced.
 
 Navigation menus allow exploration of under-construction features.
 
-📂 Project Structure
-.
-├── src/                  # Source code directory
-│   └── InCollege.cob     # Main COBOL program
-├── bin/                  # Compiled executable output
-├── InCollege-Input.txt   # Sample input file for normal execution
-├── InCollege-Test.txt    # Test input file (positive, negative, edge cases)
-├── InCollege-Output.txt  # Actual output generated from InCollege-Test.txt
-├── Sample-Output.txt     # Example expected output for normal run
-├── ACCOUNTS.DAT          # Stores registered user account data
-├── Roles.txt             # Team member roles
-├── Jira.jpg              # Jira board screenshot
-└── README.md             # Project documentation
 
 ⚙️ Requirements
 
@@ -34,7 +21,6 @@ COBOL compiler (GnuCOBOL recommended)
 Install on Linux/macOS:
 
 sudo apt-get install open-cobol
-
 
 or
 
