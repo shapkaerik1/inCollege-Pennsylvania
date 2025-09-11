@@ -45,7 +45,7 @@ DATA DIVISION.
        01 WS-INPUT-LINE PIC X(80).
        01 USER-ACTION PIC X(80).
        01 USERNAME PIC X(20).
-       01 PASSWORD PIC X(12).
+       01 PASSWORD PIC X(80).
 
        *> variables for password validation
        01 VALID-PASSWORD PIC X VALUE 'N'.
@@ -137,7 +137,7 @@ ADD-AND-SAVE-ACCOUNT.
        MOVE USERNAME TO AR-USERNAME.
        MOVE PASSWORD TO AR-PASSWORD.
 
-       *> OPEN EXTEND appends to the file and creates it if the file doesnt exist
+       *> appends to the file but creates it if the file doesnt exist
        OPEN EXTEND ACCOUNTS-FILE.
        IF ACCOUNTS-STATUS = "35" *> File not found
            OPEN OUTPUT ACCOUNTS-FILE
@@ -158,7 +158,11 @@ MAIN-MENU-DISPLAY.
        *> displays the initial welcome screen and static text prompt
        MOVE "****************************************" TO OUTPUT-LINE.
        PERFORM WRITE-AND-DISPLAY.
+       MOVE "*                                      *" TO OUTPUT-LINE.
+       PERFORM WRITE-AND-DISPLAY.
        MOVE "*         Welcome to InCollege!        *" TO OUTPUT-LINE.
+       PERFORM WRITE-AND-DISPLAY.
+       MOVE "*                                      *" TO OUTPUT-LINE.
        PERFORM WRITE-AND-DISPLAY.
        MOVE "****************************************" TO OUTPUT-LINE.
        PERFORM WRITE-AND-DISPLAY.
@@ -252,7 +256,9 @@ CREATE-ACCOUNT-SECTION.
            IF WS-USERNAME-IS-UNIQUE = 'N' AND NOT EOF
                MOVE "Error: Username is already taken. Please try a different one." TO OUTPUT-LINE
                PERFORM WRITE-AND-DISPLAY
-               PERFORM GET-USERNAME *> get the next username attempt
+               *>assume user will input username and password
+               PERFORM GET-PASSWORD *> read old password and discard
+               PERFORM GET-USERNAME *> get new username
            END-IF
        END-PERFORM.
 
@@ -277,7 +283,6 @@ CREATE-ACCOUNT-SECTION.
                MOVE "You have successfully logged in." TO OUTPUT-LINE
                PERFORM WRITE-AND-DISPLAY
                PERFORM POST-LOGIN-MENU
-               PERFORM MAIN-MENU-DISPLAY
            ELSE
                MOVE "Account creation failed: A valid password was not provided."
                    TO OUTPUT-LINE
@@ -298,8 +303,7 @@ VALIDATE-PASSWORD.
        COMPUTE PASSWORD-LENGTH = FUNCTION LENGTH(FUNCTION TRIM(PASSWORD)).
 
        IF PASSWORD-LENGTH < 8 OR PASSWORD-LENGTH > 12
-           MOVE "Error: Password must be 8-12 characters."
-               TO OUTPUT-LINE
+           MOVE "Error: Password must be 8-12 characters." TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
            EXIT PARAGRAPH
        END-IF.
@@ -380,10 +384,11 @@ LOGIN-SECTION.
         MOVE "You have successfully logged in." TO OUTPUT-LINE
         PERFORM WRITE-AND-DISPLAY
         PERFORM POST-LOGIN-MENU
-        PERFORM MAIN-MENU-DISPLAY
     END-IF.
 
 POST-LOGIN-MENU.
+       MOVE SPACES TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
        *> this paragraph is shown after a user successfully logs in.
        STRING "Welcome, " DELIMITED BY SIZE
               FUNCTION TRIM(USERNAME) DELIMITED BY SIZE
@@ -392,7 +397,7 @@ POST-LOGIN-MENU.
        PERFORM WRITE-AND-DISPLAY.
 
        *> This loop redisplays the menu after every action
-       PERFORM UNTIL USER-ACTION = "Go Back" OR EOF
+       PERFORM UNTIL EOF
            MOVE SPACES TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
            MOVE "Search for a job" TO OUTPUT-LINE
@@ -420,6 +425,9 @@ POST-LOGIN-MENU.
                    WHEN "Learn a new skill"
                        PERFORM LEARN-A-SKILL-SUB-MENU
                    WHEN "Go Back"
+                       MOVE SPACES TO OUTPUT-LINE
+                       PERFORM WRITE-AND-DISPLAY
+                       PERFORM MAIN-MENU-DISPLAY
                        EXIT PERFORM
                    WHEN OTHER
                        MOVE "Invalid choice. Please try again."
@@ -459,8 +467,6 @@ LEARN-A-SKILL-SUB-MENU.
 
            IF NOT EOF
                EVALUATE USER-ACTION
-                   WHEN "Go Back"
-                       EXIT PERFORM
                    WHEN "Resume Writing"
                    WHEN "Agile and Scrum Basics"
                    WHEN "Git and GitHub Fundamentals"
@@ -468,10 +474,11 @@ LEARN-A-SKILL-SUB-MENU.
                    WHEN "Networking Basics"
                        MOVE "This skill is under construction." TO OUTPUT-LINE
                        PERFORM WRITE-AND-DISPLAY
+                   WHEN "Go Back"
+                       EXIT PERFORM
                    WHEN OTHER
                        MOVE "Error: Skill does not exist. Please try again." TO OUTPUT-LINE
                        PERFORM WRITE-AND-DISPLAY
                END-EVALUATE
            END-IF
       END-PERFORM.
-      PERFORM POST-LOGIN-MENU.
