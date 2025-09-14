@@ -17,32 +17,58 @@ ENVIRONMENT DIVISION.
                      ASSIGN TO "ACCOUNTS.DAT"
                      ORGANIZATION IS LINE SEQUENTIAL
                      FILE STATUS IS ACCOUNTS-STATUS.
+                 SELECT PROFILES-FILE
+                     ASSIGN TO "PROFILES.DAT"
+                     ORGANIZATION IS LINE SEQUENTIAL
+                     FILE STATUS IS PROFILES-STATUS.
 
 DATA DIVISION.
        FILE SECTION.
        FD INPUT-FILE.
-       01 FILE-RECORD PIC X(80).
+       01 FILE-RECORD PIC X(256).
 
        FD OUTPUT-FILE.
-       01 OUTPUT-RECORD PIC X(80).
+       01 OUTPUT-RECORD PIC X(256).
 
        FD ACCOUNTS-FILE.
        01 ACCOUNT-RECORD.
            05 AR-USERNAME PIC X(20).
            05 AR-PASSWORD PIC X(12).
 
+       FD PROFILES-FILE.
+       01 PROFILE-RECORD.
+           05 PR-USERNAME             PIC X(20).
+           05 PR-FIRST-NAME           PIC X(20).
+           05 PR-LAST-NAME            PIC X(20).
+           05 PR-UNIVERSITY           PIC X(40).
+           05 PR-MAJOR                PIC X(30).
+           05 PR-GRAD-YEAR            PIC 9(4).
+           05 PR-ABOUT                PIC X(200).
+           05 PR-EXP-COUNT            PIC 9.
+           05 PR-EXP                  OCCURS 3 TIMES.
+              10 PR-EXP-TITLE         PIC X(30).
+              10 PR-EXP-COMPANY       PIC X(30).
+              10 PR-EXP-DATES         PIC X(30).
+              10 PR-EXP-DESC          PIC X(100).
+           05 PR-EDU-COUNT            PIC 9.
+           05 PR-EDU                  OCCURS 3 TIMES.
+              10 PR-EDU-DEGREE        PIC X(30).
+              10 PR-EDU-UNIV          PIC X(40).
+              10 PR-EDU-YEARS         PIC X(20).
+
        WORKING-STORAGE SECTION.
        *> variables for file handling
        01 INPUT-FILE-STATUS PIC XX.
        01 OUTPUT-FILE-STATUS PIC XX.
        01 ACCOUNTS-STATUS PIC X(2).
+       01 PROFILES-STATUS  PIC X(2).
 
        *> end of file flag to control main loop
        01 WS-EOF-FLAG PIC A(1) VALUE 'N'.
            88 EOF VALUE 'Y'.
 
        *> variables for parsing the line
-       01 WS-INPUT-LINE PIC X(80).
+       01 WS-INPUT-LINE PIC X(256).
        01 USER-ACTION PIC X(80).
        01 USERNAME PIC X(20).
        01 PASSWORD PIC X(80).
@@ -70,6 +96,29 @@ DATA DIVISION.
                10 WS-USERNAME PIC X(20).
                10 WS-PASSWORD PIC X(12).
        01 ACCOUNT-COUNT PIC 9 VALUE 0.
+
+       *> working storage for profile editing/viewing
+       01 WS-PROFILE.
+           05 WS-FIRST-NAME           PIC X(20).
+           05 WS-LAST-NAME            PIC X(20).
+           05 WS-UNIVERSITY           PIC X(40).
+           05 WS-MAJOR                PIC X(30).
+           05 WS-GRAD-YEAR-STR        PIC X(4).
+           05 WS-GRAD-YEAR-NUM        PIC 9(4).
+           05 WS-ABOUT                PIC X(200).
+           05 WS-EXP-COUNT            PIC 9.
+           05 WS-EXP                  OCCURS 3 TIMES.
+              10 WS-EXP-TITLE         PIC X(30).
+              10 WS-EXP-COMPANY       PIC X(30).
+              10 WS-EXP-DATES         PIC X(30).
+              10 WS-EXP-DESC          PIC X(100).
+           05 WS-EDU-COUNT            PIC 9.
+           05 WS-EDU                  OCCURS 3 TIMES.
+              10 WS-EDU-DEGREE        PIC X(30).
+              10 WS-EDU-UNIV          PIC X(40).
+              10 WS-EDU-YEARS         PIC X(20).
+       01 WS-PROFILE-FOUND            PIC X VALUE 'N'.
+       01 WS-INDEX-TEXT               PIC 9.
 
 
 PROCEDURE DIVISION.
@@ -400,9 +449,11 @@ POST-LOGIN-MENU.
        PERFORM UNTIL EOF
            MOVE SPACES TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
-           MOVE "Search for a job" TO OUTPUT-LINE
+           MOVE "Create/Edit My Profile" TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
-           MOVE "Find someone you know" TO OUTPUT-LINE
+           MOVE "View My Profile" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           MOVE "Search for User" TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
            MOVE "Learn a new skill" TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
@@ -416,19 +467,15 @@ POST-LOGIN-MENU.
 
            IF NOT EOF
                EVALUATE USER-ACTION
-                   WHEN "Search for a job"
-                       MOVE "Job search/internship is under construction." TO OUTPUT-LINE
-                       PERFORM WRITE-AND-DISPLAY
-                   WHEN "Find someone you know"
-                       MOVE "Find someone you know is under construction." TO OUTPUT-LINE
+                   WHEN "Create/Edit My Profile"
+                       PERFORM CREATE-OR-EDIT-PROFILE
+                   WHEN "View My Profile"
+                       PERFORM VIEW-MY-PROFILE
+                   WHEN "Search for User"
+                       MOVE "Search for user is under construction." TO OUTPUT-LINE
                        PERFORM WRITE-AND-DISPLAY
                    WHEN "Learn a new skill"
                        PERFORM LEARN-A-SKILL-SUB-MENU
-                   WHEN "Go Back"
-                       MOVE SPACES TO OUTPUT-LINE
-                       PERFORM WRITE-AND-DISPLAY
-                       PERFORM MAIN-MENU-DISPLAY
-                       EXIT PERFORM
                    WHEN OTHER
                        MOVE "Invalid choice. Please try again."
                            TO OUTPUT-LINE
@@ -482,3 +529,355 @@ LEARN-A-SKILL-SUB-MENU.
                END-EVALUATE
            END-IF
       END-PERFORM.
+
+CREATE-OR-EDIT-PROFILE.
+       MOVE "--- Create/Edit Profile ---" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+       *> First Name (Required)
+       MOVE SPACES TO WS-FIRST-NAME
+       PERFORM UNTIL FUNCTION TRIM(WS-FIRST-NAME) NOT = SPACE OR EOF
+           MOVE "Enter First Name:" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           READ INPUT-FILE
+               AT END SET EOF TO TRUE
+               NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-FIRST-NAME
+           END-READ
+           IF FUNCTION TRIM(WS-FIRST-NAME) = SPACE AND NOT EOF
+               MOVE "Error: First Name is required." TO OUTPUT-LINE
+               PERFORM WRITE-AND-DISPLAY
+           END-IF
+       END-PERFORM
+       *> Last Name (Required)
+        MOVE SPACES TO WS-LAST-NAME
+       PERFORM UNTIL FUNCTION TRIM(WS-LAST-NAME) NOT = SPACE OR EOF
+           MOVE "Enter Last Name:" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           READ INPUT-FILE
+               AT END SET EOF TO TRUE
+               NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-LAST-NAME
+           END-READ
+           IF FUNCTION TRIM(WS-LAST-NAME) = SPACE AND NOT EOF
+               MOVE "Error: Last Name is required." TO OUTPUT-LINE
+               PERFORM WRITE-AND-DISPLAY
+           END-IF
+       END-PERFORM
+       *> University (Required)
+        MOVE SPACES TO WS-UNIVERSITY
+       PERFORM UNTIL FUNCTION TRIM(WS-UNIVERSITY) NOT = SPACE OR EOF
+           MOVE "Enter University/College Attended:" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           READ INPUT-FILE
+               AT END SET EOF TO TRUE
+               NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-UNIVERSITY
+           END-READ
+           IF FUNCTION TRIM(WS-UNIVERSITY) = SPACE AND NOT EOF
+               MOVE "Error: University/College is required." TO OUTPUT-LINE
+               PERFORM WRITE-AND-DISPLAY
+           END-IF
+       END-PERFORM
+       *> Major (Required)
+        MOVE SPACES TO WS-MAJOR
+       PERFORM UNTIL FUNCTION TRIM(WS-MAJOR) NOT = SPACE OR EOF
+           MOVE "Enter Major:" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           READ INPUT-FILE
+               AT END SET EOF TO TRUE
+               NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-MAJOR
+           END-READ
+           IF FUNCTION TRIM(WS-MAJOR) = SPACE AND NOT EOF
+               MOVE "Error: Major is required." TO OUTPUT-LINE
+               PERFORM WRITE-AND-DISPLAY
+           END-IF
+       END-PERFORM
+       *> Grad Year (Required, numeric 4-digits, reasonable range)
+        MOVE SPACES TO WS-GRAD-YEAR-STR
+        MOVE ZEROS  TO WS-GRAD-YEAR-NUM
+       PERFORM UNTIL (WS-GRAD-YEAR-STR IS NUMERIC AND
+                       FUNCTION LENGTH(WS-GRAD-YEAR-STR) = 4 AND
+                       WS-GRAD-YEAR-NUM >= 1900 AND WS-GRAD-YEAR-NUM <= 2100)
+                       OR EOF
+           MOVE "Enter Graduation Year (YYYY):" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           READ INPUT-FILE
+               AT END SET EOF TO TRUE
+               NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-GRAD-YEAR-STR
+           END-READ
+           IF NOT EOF AND WS-GRAD-YEAR-STR IS NUMERIC AND
+              FUNCTION LENGTH(WS-GRAD-YEAR-STR) = 4
+               MOVE WS-GRAD-YEAR-STR TO WS-GRAD-YEAR-NUM
+           END-IF
+           IF NOT EOF AND NOT (WS-GRAD-YEAR-STR IS NUMERIC AND
+                                FUNCTION LENGTH(WS-GRAD-YEAR-STR) = 4)
+               MOVE "Error: Graduation Year must be a 4-digit number." TO OUTPUT-LINE
+               PERFORM WRITE-AND-DISPLAY
+           ELSE
+               IF NOT EOF AND (WS-GRAD-YEAR-NUM < 1900 OR WS-GRAD-YEAR-NUM > 2100)
+                   MOVE "Error: Graduation Year out of valid range (1900-2100)." TO OUTPUT-LINE
+                   PERFORM WRITE-AND-DISPLAY
+               END-IF
+           END-IF
+       END-PERFORM
+       *> About Me (Optional)
+       MOVE "Enter About Me (optional, max 200 chars, enter blank line to skip):" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+       MOVE SPACES TO WS-ABOUT
+       READ INPUT-FILE
+           AT END SET EOF TO TRUE
+           NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-ABOUT
+       END-READ
+       *> Experiences (Optional up to 3)
+       MOVE 0 TO WS-EXP-COUNT
+       PERFORM VARYING I FROM 1 BY 1 UNTIL I > 3 OR EOF
+           MOVE "Add Experience (optional, max 3 entries. Enter 'DONE' to finish):" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           READ INPUT-FILE
+               AT END SET EOF TO TRUE
+               NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-INPUT-LINE
+           END-READ
+           IF EOF
+               EXIT PERFORM
+           END-IF
+           IF WS-INPUT-LINE = "DONE"
+               EXIT PERFORM
+           END-IF
+           ADD 1 TO WS-EXP-COUNT
+           MOVE SPACES TO WS-EXP-TITLE(WS-EXP-COUNT)
+           MOVE SPACES TO WS-EXP-COMPANY(WS-EXP-COUNT)
+           MOVE SPACES TO WS-EXP-DATES(WS-EXP-COUNT)
+           MOVE SPACES TO WS-EXP-DESC(WS-EXP-COUNT)
+           MOVE  WS-EXP-COUNT TO WS-INDEX-TEXT
+           MOVE "Experience #1 - Title:" TO OUTPUT-LINE
+           IF WS-INDEX-TEXT = 2 MOVE "Experience #2 - Title:" TO OUTPUT-LINE END-IF
+           IF WS-INDEX-TEXT = 3 MOVE "Experience #3 - Title:" TO OUTPUT-LINE END-IF
+           PERFORM WRITE-AND-DISPLAY
+           READ INPUT-FILE
+               AT END SET EOF TO TRUE
+               NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-EXP-TITLE(WS-EXP-COUNT)
+           END-READ
+           MOVE "Experience #1 - Company/Organization:" TO OUTPUT-LINE
+           IF WS-INDEX-TEXT = 2 MOVE "Experience #2 - Company/Organization:" TO OUTPUT-LINE END-IF
+           IF WS-INDEX-TEXT = 3 MOVE "Experience #3 - Company/Organization:" TO OUTPUT-LINE END-IF
+           PERFORM WRITE-AND-DISPLAY
+           READ INPUT-FILE
+               AT END SET EOF TO TRUE
+               NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-EXP-COMPANY(WS-EXP-COUNT)
+           END-READ
+           MOVE "Experience #1 - Dates (e.g., Summer 2024):" TO OUTPUT-LINE
+           IF WS-INDEX-TEXT = 2 MOVE "Experience #2 - Dates (e.g., Summer 2024):" TO OUTPUT-LINE END-IF
+           IF WS-INDEX-TEXT = 3 MOVE "Experience #3 - Dates (e.g., Summer 2024):" TO OUTPUT-LINE END-IF
+           PERFORM WRITE-AND-DISPLAY
+           READ INPUT-FILE
+               AT END SET EOF TO TRUE
+               NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-EXP-DATES(WS-EXP-COUNT)
+           END-READ
+           MOVE "Experience #1 - Description (optional, max 100 chars, blank to skip):" TO OUTPUT-LINE
+           IF WS-INDEX-TEXT = 2 MOVE "Experience #2 - Description (optional, max 100 chars, blank to skip):" TO OUTPUT-LINE END-IF
+           IF WS-INDEX-TEXT = 3 MOVE "Experience #3 - Description (optional, max 100 chars, blank to skip):" TO OUTPUT-LINE END-IF
+           PERFORM WRITE-AND-DISPLAY
+           READ INPUT-FILE
+               AT END SET EOF TO TRUE
+               NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-EXP-DESC(WS-EXP-COUNT)
+           END-READ
+       END-PERFORM
+       *> Education (Optional up to 3)
+       MOVE 0 TO WS-EDU-COUNT
+       PERFORM VARYING I FROM 1 BY 1 UNTIL I > 3 OR EOF
+           MOVE "Add Education (optional, max 3 entries. Enter 'DONE' to finish):" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           READ INPUT-FILE
+               AT END SET EOF TO TRUE
+               NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-INPUT-LINE
+           END-READ
+           IF EOF
+               EXIT PERFORM
+           END-IF
+           IF WS-INPUT-LINE = "DONE"
+               EXIT PERFORM
+           END-IF
+           ADD 1 TO WS-EDU-COUNT
+           MOVE SPACES TO WS-EDU-DEGREE(WS-EDU-COUNT)
+           MOVE SPACES TO WS-EDU-UNIV(WS-EDU-COUNT)
+           MOVE SPACES TO WS-EDU-YEARS(WS-EDU-COUNT)
+           MOVE  WS-EDU-COUNT TO WS-INDEX-TEXT
+           MOVE "Education #1 - Degree:" TO OUTPUT-LINE
+           IF WS-INDEX-TEXT = 2 MOVE "Education #2 - Degree:" TO OUTPUT-LINE END-IF
+           IF WS-INDEX-TEXT = 3 MOVE "Education #3 - Degree:" TO OUTPUT-LINE END-IF
+           PERFORM WRITE-AND-DISPLAY
+           READ INPUT-FILE
+               AT END SET EOF TO TRUE
+               NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-EDU-DEGREE(WS-EDU-COUNT)
+           END-READ
+           MOVE "Education #1 - University/College:" TO OUTPUT-LINE
+           IF WS-INDEX-TEXT = 2 MOVE "Education #2 - University/College:" TO OUTPUT-LINE END-IF
+           IF WS-INDEX-TEXT = 3 MOVE "Education #3 - University/College:" TO OUTPUT-LINE END-IF
+           PERFORM WRITE-AND-DISPLAY
+           READ INPUT-FILE
+               AT END SET EOF TO TRUE
+               NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-EDU-UNIV(WS-EDU-COUNT)
+           END-READ
+           MOVE "Education #1 - Years Attended (e.g., 2023-2025):" TO OUTPUT-LINE
+           IF WS-INDEX-TEXT = 2 MOVE "Education #2 - Years Attended (e.g., 2023-2025):" TO OUTPUT-LINE END-IF
+           IF WS-INDEX-TEXT = 3 MOVE "Education #3 - Years Attended (e.g., 2023-2025):" TO OUTPUT-LINE END-IF
+           PERFORM WRITE-AND-DISPLAY
+           READ INPUT-FILE
+               AT END SET EOF TO TRUE
+               NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-EDU-YEARS(WS-EDU-COUNT)
+           END-READ
+       END-PERFORM
+       *> Save profile (append-based persistence)
+       PERFORM SAVE-CURRENT-PROFILE
+       MOVE "Profile saved successfully!" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY.
+ 
+VIEW-MY-PROFILE.
+       MOVE "--- Your Profile ---" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+       PERFORM LOAD-PROFILE-FOR-CURRENT-USER
+       IF WS-PROFILE-FOUND = 'N'
+           MOVE "Profile not found. Please create your profile first." TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           EXIT PARAGRAPH
+       END-IF
+       MOVE SPACES TO OUTPUT-LINE
+       STRING "Name: " DELIMITED BY SIZE
+              FUNCTION TRIM(PR-FIRST-NAME) DELIMITED BY SIZE
+              " " DELIMITED BY SIZE
+              FUNCTION TRIM(PR-LAST-NAME) DELIMITED BY SIZE
+              INTO OUTPUT-LINE
+       END-STRING
+       PERFORM WRITE-AND-DISPLAY
+       MOVE SPACES TO OUTPUT-LINE
+       STRING "University: " DELIMITED BY SIZE
+              FUNCTION TRIM(PR-UNIVERSITY) DELIMITED BY SIZE
+              INTO OUTPUT-LINE
+       END-STRING
+       PERFORM WRITE-AND-DISPLAY
+       MOVE SPACES TO OUTPUT-LINE
+       STRING "Major: " DELIMITED BY SIZE
+              FUNCTION TRIM(PR-MAJOR) DELIMITED BY SIZE
+              INTO OUTPUT-LINE
+       END-STRING
+       PERFORM WRITE-AND-DISPLAY
+       MOVE PR-GRAD-YEAR TO WS-GRAD-YEAR-STR
+       MOVE SPACES TO OUTPUT-LINE
+       STRING "Graduation Year: " DELIMITED BY SIZE
+              FUNCTION TRIM(WS-GRAD-YEAR-STR) DELIMITED BY SIZE
+              INTO OUTPUT-LINE
+       END-STRING
+       PERFORM WRITE-AND-DISPLAY
+       IF FUNCTION TRIM(PR-ABOUT) NOT = SPACE
+           MOVE SPACES TO OUTPUT-LINE
+           STRING "About Me: " DELIMITED BY SIZE
+                  FUNCTION TRIM(PR-ABOUT) DELIMITED BY SIZE
+                  INTO OUTPUT-LINE
+           END-STRING
+           PERFORM WRITE-AND-DISPLAY
+       END-IF
+       IF PR-EXP-COUNT > 0
+           MOVE "Experience:" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           PERFORM VARYING I FROM 1 BY 1 UNTIL I > PR-EXP-COUNT
+               MOVE SPACES TO OUTPUT-LINE
+               STRING "Title: " DELIMITED BY SIZE
+                      FUNCTION TRIM(PR-EXP-TITLE(I)) DELIMITED BY SIZE
+                      INTO OUTPUT-LINE
+               END-STRING
+               PERFORM WRITE-AND-DISPLAY
+               MOVE SPACES TO OUTPUT-LINE
+               STRING "Company: " DELIMITED BY SIZE
+                      FUNCTION TRIM(PR-EXP-COMPANY(I)) DELIMITED BY SIZE
+                      INTO OUTPUT-LINE
+               END-STRING
+               PERFORM WRITE-AND-DISPLAY
+               MOVE SPACES TO OUTPUT-LINE
+               STRING "Dates: " DELIMITED BY SIZE
+                      FUNCTION TRIM(PR-EXP-DATES(I)) DELIMITED BY SIZE
+                      INTO OUTPUT-LINE
+               END-STRING
+               PERFORM WRITE-AND-DISPLAY
+               IF FUNCTION TRIM(PR-EXP-DESC(I)) NOT = SPACE
+                   MOVE SPACES TO OUTPUT-LINE
+                   STRING "Description: " DELIMITED BY SIZE
+                          FUNCTION TRIM(PR-EXP-DESC(I)) DELIMITED BY SIZE
+                          INTO OUTPUT-LINE
+                   END-STRING
+                   PERFORM WRITE-AND-DISPLAY
+               END-IF
+           END-PERFORM
+       END-IF
+       IF PR-EDU-COUNT > 0
+           MOVE "Education:" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           PERFORM VARYING I FROM 1 BY 1 UNTIL I > PR-EDU-COUNT
+               MOVE SPACES TO OUTPUT-LINE
+               STRING "Degree: " DELIMITED BY SIZE
+                      FUNCTION TRIM(PR-EDU-DEGREE(I)) DELIMITED BY SIZE
+                      INTO OUTPUT-LINE
+               END-STRING
+               PERFORM WRITE-AND-DISPLAY
+               MOVE SPACES TO OUTPUT-LINE
+               STRING "University: " DELIMITED BY SIZE
+                      FUNCTION TRIM(PR-EDU-UNIV(I)) DELIMITED BY SIZE
+                      INTO OUTPUT-LINE
+               END-STRING
+               PERFORM WRITE-AND-DISPLAY
+               MOVE SPACES TO OUTPUT-LINE
+               STRING "Years: " DELIMITED BY SIZE
+                      FUNCTION TRIM(PR-EDU-YEARS(I)) DELIMITED BY SIZE
+                      INTO OUTPUT-LINE
+               END-STRING
+               PERFORM WRITE-AND-DISPLAY
+           END-PERFORM
+       END-IF
+       MOVE "--------------------" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY.
+
+SAVE-CURRENT-PROFILE.
+       MOVE FUNCTION TRIM(USERNAME)      TO PR-USERNAME
+       MOVE WS-FIRST-NAME                TO PR-FIRST-NAME
+       MOVE WS-LAST-NAME                 TO PR-LAST-NAME
+       MOVE WS-UNIVERSITY                TO PR-UNIVERSITY
+       MOVE WS-MAJOR                     TO PR-MAJOR
+       IF WS-GRAD-YEAR-STR IS NUMERIC AND FUNCTION LENGTH(WS-GRAD-YEAR-STR) = 4
+           MOVE WS-GRAD-YEAR-STR TO PR-GRAD-YEAR
+       END-IF
+       MOVE WS-ABOUT                     TO PR-ABOUT
+       MOVE WS-EXP-COUNT                 TO PR-EXP-COUNT
+       PERFORM VARYING I FROM 1 BY 1 UNTIL I > 3
+           MOVE WS-EXP-TITLE(I)          TO PR-EXP-TITLE(I)
+           MOVE WS-EXP-COMPANY(I)        TO PR-EXP-COMPANY(I)
+           MOVE WS-EXP-DATES(I)          TO PR-EXP-DATES(I)
+           MOVE WS-EXP-DESC(I)           TO PR-EXP-DESC(I)
+       END-PERFORM
+       MOVE WS-EDU-COUNT                 TO PR-EDU-COUNT
+       PERFORM VARYING I FROM 1 BY 1 UNTIL I > 3
+           MOVE WS-EDU-DEGREE(I)         TO PR-EDU-DEGREE(I)
+           MOVE WS-EDU-UNIV(I)           TO PR-EDU-UNIV(I)
+           MOVE WS-EDU-YEARS(I)          TO PR-EDU-YEARS(I)
+       END-PERFORM
+       OPEN EXTEND PROFILES-FILE
+       IF PROFILES-STATUS = "35"
+           OPEN OUTPUT PROFILES-FILE
+       ELSE
+           CLOSE PROFILES-FILE
+           OPEN EXTEND PROFILES-FILE
+       END-IF
+       WRITE PROFILE-RECORD
+       CLOSE PROFILES-FILE.
+
+LOAD-PROFILE-FOR-CURRENT-USER.
+       MOVE 'N' TO WS-PROFILE-FOUND
+       OPEN INPUT PROFILES-FILE
+       IF PROFILES-STATUS NOT = "00"
+           EXIT PARAGRAPH
+       END-IF
+       PERFORM UNTIL 1 = 2
+           READ PROFILES-FILE
+               AT END EXIT PERFORM
+               NOT AT END
+                   IF FUNCTION TRIM(PR-USERNAME) = FUNCTION TRIM(USERNAME)
+                       MOVE 'Y' TO WS-PROFILE-FOUND
+                   END-IF
+           END-READ
+       END-PERFORM
+       CLOSE PROFILES-FILE.

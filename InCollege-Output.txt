@@ -10,8 +10,9 @@ Account created successfully.
 You have successfully logged in.
 Welcome, testuser1!
 
-Search for a job
-Find someone you know
+Create/Edit My Profile
+View My Profile
+Search for User
 Learn a new skill
 Enter your choice:
 ****************************************
@@ -26,8 +27,9 @@ Account created successfully.
 You have successfully logged in.
 Welcome, testuser2!
 
-Search for a job
-Find someone you know
+Create/Edit My Profile
+View My Profile
+Search for User
 Learn a new skill
 Enter your choice:
 ****************************************
@@ -43,8 +45,9 @@ Account created successfully.
 You have successfully logged in.
 Welcome, testuser3!
 
-Search for a job
-Find someone you know
+Create/Edit My Profile
+View My Profile
+Search for User
 Learn a new skill
 Enter your choice:
 ****************************************
@@ -60,8 +63,9 @@ Account created successfully.
 You have successfully logged in.
 Welcome, testuser4!
 
-Search for a job
-Find someone you know
+Create/Edit My Profile
+View My Profile
+Search for User
 Learn a new skill
 Enter your choice:
 ****************************************
@@ -77,8 +81,9 @@ Account created successfully.
 You have successfully logged in.
 Welcome, testuser5!
 
-Search for a job
-Find someone you know
+Create/Edit My Profile
+View My Profile
+Search for User
 Learn a new skill
 Enter your choice:
 ****************************************
@@ -93,20 +98,58 @@ All permitted accounts have been created, please come back later.
 You have successfully logged in.
 Welcome, testuser1!
 
-Search for a job
-Find someone you know
+Create/Edit My Profile
+View My Profile
+Search for User
 Learn a new skill
 Enter your choice:
-Job search/internship is under construction.
+--- Create/Edit Profile ---
+Enter First Name:
+Enter Last Name:
+Enter University/College Attended:
+Enter Major:
+Enter Graduation Year (YYYY):
+Enter About Me (optional, max 200 chars, enter blank line to skip):
+Add Experience (optional, max 3 entries. Enter 'DONE' to finish):
+Experience #1 - Title:
+Experience #1 - Company/Organization:
+Experience #1 - Dates (e.g., Summer 2024):
+Experience #1 - Description (optional, max 100 chars, blank to skip):
+Add Experience (optional, max 3 entries. Enter 'DONE' to finish):
+DONE
+Add Education (optional, max 3 entries. Enter 'DONE' to finish):
+Education #1 - Degree:
+Education #1 - University/College:
+Education #1 - Years Attended (e.g., 2023-2025):
+Add Education (optional, max 3 entries. Enter 'DONE' to finish):
+DONE
+Profile saved successfully!
 
-Search for a job
-Find someone you know
+Create/Edit My Profile
+View My Profile
+Search for User
 Learn a new skill
 Enter your choice:
-Find someone you know is under construction.
+--- Your Profile ---
+Name: John Doe
+University: Example University
+Major: Computer Science
+Graduation Year: 2025
+About Me: Enthusiastic developer always learning new things.
+Experience:
+Title: Software Intern
+Company: Tech Corp
+Dates: Summer 2024
+Description: Developed tools for internal testing.
+Education:
+Degree: Bachelor of Science
+University: Example University
+Years: 2021-2025
+--------------------
 
-Search for a job
-Find someone you know
+Create/Edit My Profile
+View My Profile
+Search for User
 Learn a new skill
 Enter your choice:
 
@@ -140,8 +183,9 @@ Go Back
 Enter your choice:
 Welcome, testuser1!
 
-Search for a job
-Find someone you know
+Create/Edit My Profile
+View My Profile
+Search for User
 Learn a new skill
 Enter your choice:
 ****************************************

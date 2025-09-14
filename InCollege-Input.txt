@@ -27,8 +27,30 @@ ValidPass1!
 login
 testuser1
 ValidP1!
-Search for a job
-Find someone you know
+Create/Edit My Profile
+John
+Doe
+Example University
+Computer Science
+2025
+Enthusiastic developer always learning new things.
+Title
+Software Intern
+Company
+Tech Corp
+Dates
+Summer 2024
+Description
+Developed tools for internal testing.
+DONE
+Degree
+Bachelor of Science
+University
+Example University
+Years
+2021-2025
+DONE
+View My Profile
 Learn a new skill
 Resume Writing
 notrealskill
