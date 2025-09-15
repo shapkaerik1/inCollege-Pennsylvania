@@ -476,6 +476,11 @@ POST-LOGIN-MENU.
                        PERFORM WRITE-AND-DISPLAY
                    WHEN "Learn a new skill"
                        PERFORM LEARN-A-SKILL-SUB-MENU
+                   WHEN "Go Back"
+                       MOVE SPACES TO OUTPUT-LINE
+                       PERFORM WRITE-AND-DISPLAY
+                       PERFORM MAIN-MENU-DISPLAY
+                       EXIT PERFORM
                    WHEN OTHER
                        MOVE "Invalid choice. Please try again."
                            TO OUTPUT-LINE
@@ -728,7 +733,7 @@ CREATE-OR-EDIT-PROFILE.
        PERFORM SAVE-CURRENT-PROFILE
        MOVE "Profile saved successfully!" TO OUTPUT-LINE
        PERFORM WRITE-AND-DISPLAY.
- 
+
 VIEW-MY-PROFILE.
        MOVE "--- Your Profile ---" TO OUTPUT-LINE
        PERFORM WRITE-AND-DISPLAY
