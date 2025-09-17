@@ -1,0 +1,41 @@
+login
+testuser1
+ValidP1!
+Create/Edit My Profile
+
+John
+
+Doe
+
+Example University
+
+Computer Science
+
+wrongdate
+wr1g
+2025
+motivated cs student
+
+Software Intern
+
+Tech Corp
+
+Summer 2024
+creating new technologies
+DONE
+
+Bachelor of Science
+
+USF
+
+2023-2025
+DONE
+View My Profile
+Go Back
+login
+testuser2
+ValidPass1*
+Create/Edit My Profile
+DONE
+DONE
+View My Profile

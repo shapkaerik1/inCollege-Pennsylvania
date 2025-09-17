@@ -587,8 +587,9 @@ CREATE-OR-EDIT-PROFILE.
                PERFORM WRITE-AND-DISPLAY
            END-IF
        END-PERFORM
+       IF EOF EXIT PARAGRAPH END-IF
        *> Last Name (Required)
-        MOVE SPACES TO WS-LAST-NAME
+       MOVE SPACES TO WS-LAST-NAME
        PERFORM UNTIL FUNCTION TRIM(WS-LAST-NAME) NOT = SPACE OR EOF
            MOVE "Enter Last Name:" TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
@@ -601,8 +602,9 @@ CREATE-OR-EDIT-PROFILE.
                PERFORM WRITE-AND-DISPLAY
            END-IF
        END-PERFORM
+       IF EOF EXIT PARAGRAPH END-IF
        *> University (Required)
-        MOVE SPACES TO WS-UNIVERSITY
+       MOVE SPACES TO WS-UNIVERSITY
        PERFORM UNTIL FUNCTION TRIM(WS-UNIVERSITY) NOT = SPACE OR EOF
            MOVE "Enter University/College Attended:" TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
@@ -615,8 +617,9 @@ CREATE-OR-EDIT-PROFILE.
                PERFORM WRITE-AND-DISPLAY
            END-IF
        END-PERFORM
+       IF EOF EXIT PARAGraph END-IF
        *> Major (Required)
-        MOVE SPACES TO WS-MAJOR
+       MOVE SPACES TO WS-MAJOR
        PERFORM UNTIL FUNCTION TRIM(WS-MAJOR) NOT = SPACE OR EOF
            MOVE "Enter Major:" TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
@@ -629,9 +632,10 @@ CREATE-OR-EDIT-PROFILE.
                PERFORM WRITE-AND-DISPLAY
            END-IF
        END-PERFORM
+       IF EOF EXIT PARAGRAPH END-IF
        *> Grad Year (Required, numeric 4-digits, reasonable range)
-        MOVE SPACES TO WS-GRAD-YEAR-STR
-        MOVE ZEROS  TO WS-GRAD-YEAR-NUM
+       MOVE SPACES TO WS-GRAD-YEAR-STR
+       MOVE ZEROS  TO WS-GRAD-YEAR-NUM
        PERFORM UNTIL (WS-GRAD-YEAR-STR IS NUMERIC AND
                        FUNCTION LENGTH(WS-GRAD-YEAR-STR) = 4 AND
                        WS-GRAD-YEAR-NUM >= 1900 AND WS-GRAD-YEAR-NUM <= 2100)
@@ -643,11 +647,11 @@ CREATE-OR-EDIT-PROFILE.
                NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-GRAD-YEAR-STR
            END-READ
            IF NOT EOF AND WS-GRAD-YEAR-STR IS NUMERIC AND
-              FUNCTION LENGTH(WS-GRAD-YEAR-STR) = 4
+             FUNCTION LENGTH(WS-GRAD-YEAR-STR) = 4
                MOVE WS-GRAD-YEAR-STR TO WS-GRAD-YEAR-NUM
            END-IF
            IF NOT EOF AND NOT (WS-GRAD-YEAR-STR IS NUMERIC AND
-                                FUNCTION LENGTH(WS-GRAD-YEAR-STR) = 4)
+                               FUNCTION LENGTH(WS-GRAD-YEAR-STR) = 4)
                MOVE "Error: Graduation Year must be a 4-digit number." TO OUTPUT-LINE
                PERFORM WRITE-AND-DISPLAY
            ELSE
@@ -657,219 +661,158 @@ CREATE-OR-EDIT-PROFILE.
                END-IF
            END-IF
        END-PERFORM
+       IF EOF EXIT PARAGRAPH END-IF
        *> About Me (Optional)
        MOVE "Enter About Me (optional, max 200 chars, enter blank line to skip):" TO OUTPUT-LINE
        PERFORM WRITE-AND-DISPLAY
-       MOVE SPACES TO WS-ABOUT
        READ INPUT-FILE
            AT END SET EOF TO TRUE
            NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-ABOUT
        END-READ
+       IF EOF EXIT PARAGRAPH END-IF
+
        *> Experiences (Optional up to 3)
        MOVE 0 TO WS-EXP-COUNT
-       MOVE 'N' TO WS-END-EXPERIENCES
-       PERFORM VARYING I FROM 1 BY 1 UNTIL I > 3 OR EOF OR WS-END-EXPERIENCES = 'Y'
+       PERFORM VARYING I FROM 1 BY 1 UNTIL I > 3 OR EOF
            MOVE "Add Experience (optional, max 3 entries. Enter 'DONE' to finish):" TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
            MOVE I TO WS-INDEX-TEXT
-           MOVE "Experience #1 - Title:" TO OUTPUT-LINE
-           IF WS-INDEX-TEXT = 2 MOVE "Experience #2 - Title:" TO OUTPUT-LINE END-IF
-           IF WS-INDEX-TEXT = 3 MOVE "Experience #3 - Title:" TO OUTPUT-LINE END-IF
+
+           STRING "Experience #" WS-INDEX-TEXT " - Title:" INTO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
-           MOVE "Experience #1 - Company/Organization:" TO OUTPUT-LINE
-           IF WS-INDEX-TEXT = 2 MOVE "Experience #2 - Company/Organization:" TO OUTPUT-LINE END-IF
-           IF WS-INDEX-TEXT = 3 MOVE "Experience #3 - Company/Organization:" TO OUTPUT-LINE END-IF
-           PERFORM WRITE-AND-DISPLAY
-           MOVE "Experience #1 - Dates (e.g., Summer 2024):" TO OUTPUT-LINE
-           IF WS-INDEX-TEXT = 2 MOVE "Experience #2 - Dates (e.g., Summer 2024):" TO OUTPUT-LINE END-IF
-           IF WS-INDEX-TEXT = 3 MOVE "Experience #3 - Dates (e.g., Summer 2024):" TO OUTPUT-LINE END-IF
-           PERFORM WRITE-AND-DISPLAY
-           MOVE "Experience #1 - Description (optional, max 100 chars, blank to skip):" TO OUTPUT-LINE
-           IF WS-INDEX-TEXT = 2 MOVE "Experience #2 - Description (optional, max 100 chars, blank to skip):" TO OUTPUT-LINE END-IF
-           IF WS-INDEX-TEXT = 3 MOVE "Experience #3 - Description (optional, max 100 chars, blank to skip):" TO OUTPUT-LINE END-IF
-           PERFORM WRITE-AND-DISPLAY
-           MOVE 'N' TO WS-GOT-TITLE WS-GOT-COMPANY WS-GOT-DATES WS-GOT-DESC
-           MOVE SPACES TO WS-EXP-TITLE-TMP WS-EXP-COMPANY-TMP WS-EXP-DATES-TMP WS-EXP-DESC-TMP
-           *> prime first token for this experience
-           READ INPUT-FILE
-               AT END SET EOF TO TRUE
-               NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-INPUT-LINE
-           END-READ
-           IF EOF EXIT PERFORM END-IF
-           IF FUNCTION TRIM(WS-INPUT-LINE) = "DONE"
-               MOVE 'Y' TO WS-END-EXPERIENCES
-               EXIT PERFORM
-           END-IF
-           *> Loop to collect fields in any order until required are set
-           PERFORM UNTIL (WS-GOT-TITLE = 'Y' AND WS-GOT-COMPANY = 'Y' AND WS-GOT-DATES = 'Y') OR EOF OR WS-END-EXPERIENCES = 'Y'
-               EVALUATE FUNCTION TRIM(WS-INPUT-LINE)
-                   WHEN "Title"
-                       READ INPUT-FILE
-                           AT END SET EOF TO TRUE
-                           NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-EXP-TITLE-TMP
-                       END-READ
-                       IF NOT EOF MOVE 'Y' TO WS-GOT-TITLE END-IF
-                   WHEN "Company"
-                       READ INPUT-FILE
-                           AT END SET EOF TO TRUE
-                           NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-EXP-COMPANY-TMP
-                       END-READ
-                       IF NOT EOF MOVE 'Y' TO WS-GOT-COMPANY END-IF
-                   WHEN "Dates"
-                       READ INPUT-FILE
-                           AT END SET EOF TO TRUE
-                           NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-EXP-DATES-TMP
-                       END-READ
-                       IF NOT EOF MOVE 'Y' TO WS-GOT-DATES END-IF
-                   WHEN "Description"
-                       READ INPUT-FILE
-                           AT END SET EOF TO TRUE
-                           NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-EXP-DESC-TMP
-                       END-READ
-                       IF NOT EOF MOVE 'Y' TO WS-GOT-DESC END-IF
-                   WHEN "DONE"
-                       MOVE 'Y' TO WS-END-EXPERIENCES
-                       EXIT PERFORM
-                   WHEN OTHER
-                       *> No label: assign to next missing required field in order Title->Company->Dates
-                       IF WS-GOT-TITLE = 'N'
-                           MOVE FUNCTION TRIM(WS-INPUT-LINE) TO WS-EXP-TITLE-TMP
-                           MOVE 'Y' TO WS-GOT-TITLE
-                       ELSE
-                           IF WS-GOT-COMPANY = 'N'
-                               MOVE FUNCTION TRIM(WS-INPUT-LINE) TO WS-EXP-COMPANY-TMP
-                               MOVE 'Y' TO WS-GOT-COMPANY
-                           ELSE
-                               IF WS-GOT-DATES = 'N'
-                                   MOVE FUNCTION TRIM(WS-INPUT-LINE) TO WS-EXP-DATES-TMP
-                                   MOVE 'Y' TO WS-GOT-DATES
-                               ELSE
-                                   IF WS-GOT-DESC = 'N'
-                                       MOVE FUNCTION TRIM(WS-INPUT-LINE) TO WS-EXP-DESC-TMP
-                                       MOVE 'Y' TO WS-GOT-DESC
-                                   END-IF
-                               END-IF
-                           END-IF
-                       END-IF
-               END-EVALUATE
-               IF (WS-GOT-TITLE = 'Y' AND WS-GOT-COMPANY = 'Y' AND WS-GOT-DATES = 'Y') OR WS-END-EXPERIENCES = 'Y' OR EOF
-                   EXIT PERFORM
-               END-IF
+
+           PERFORM UNTIL 1 = 2
                READ INPUT-FILE
                    AT END SET EOF TO TRUE
                    NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-INPUT-LINE
                END-READ
+               IF EOF EXIT PERFORM END-IF
+
+               IF FUNCTION TRIM(WS-INPUT-LINE) NOT = SPACE
+                   EXIT PERFORM
+               ELSE
+                   MOVE "Error: Title is required." TO OUTPUT-LINE
+                   PERFORM WRITE-AND-DISPLAY
+                   STRING "Experience #" WS-INDEX-TEXT " - Title:" INTO OUTPUT-LINE
+                   PERFORM WRITE-AND-DISPLAY
+               END-IF
            END-PERFORM
-           IF WS-END-EXPERIENCES = 'Y'
+           IF EOF EXIT PERFORM END-IF
+
+           IF FUNCTION UPPER-CASE(FUNCTION TRIM(WS-INPUT-LINE)) = "DONE"
                EXIT PERFORM
            END-IF
-           *> validate required
-           IF WS-GOT-TITLE = 'Y' AND WS-GOT-COMPANY = 'Y' AND WS-GOT-DATES = 'Y'
-               ADD 1 TO WS-EXP-COUNT
-               MOVE WS-EXP-TITLE-TMP   TO WS-EXP-TITLE(WS-EXP-COUNT)
-               MOVE WS-EXP-COMPANY-TMP TO WS-EXP-COMPANY(WS-EXP-COUNT)
-               MOVE WS-EXP-DATES-TMP   TO WS-EXP-DATES(WS-EXP-COUNT)
-               MOVE WS-EXP-DESC-TMP    TO WS-EXP-DESC(WS-EXP-COUNT)
-           ELSE
-               MOVE "Error: Experience requires Title, Company, and Dates." TO OUTPUT-LINE
-               PERFORM WRITE-AND-DISPLAY
-               *> do not increment count; continue to next or DONE
-           END-IF
+
+           ADD 1 TO WS-EXP-COUNT
+           MOVE WS-INPUT-LINE TO WS-EXP-TITLE(WS-EXP-COUNT)
+
+           STRING "Experience #" WS-INDEX-TEXT " - Company/Organization:" INTO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           MOVE SPACES TO WS-EXP-COMPANY(WS-EXP-COUNT)
+           PERFORM UNTIL FUNCTION TRIM(WS-EXP-COMPANY(WS-EXP-COUNT)) NOT = SPACE OR EOF
+               READ INPUT-FILE
+                   AT END SET EOF TO TRUE
+                   NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-EXP-COMPANY(WS-EXP-COUNT)
+               END-READ
+               IF FUNCTION TRIM(WS-EXP-COMPANY(WS-EXP-COUNT)) = SPACE AND NOT EOF
+                   MOVE "Error: Company/Organization is required." TO OUTPUT-LINE
+                   PERFORM WRITE-AND-DISPLAY
+               END-IF
+           END-PERFORM
+           IF EOF EXIT PERFORM END-IF
+
+           STRING "Experience #" WS-INDEX-TEXT " - Dates (e.g., Summer 2024):" INTO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           MOVE SPACES TO WS-EXP-DATES(WS-EXP-COUNT)
+           PERFORM UNTIL FUNCTION TRIM(WS-EXP-DATES(WS-EXP-COUNT)) NOT = SPACE OR EOF
+               READ INPUT-FILE
+                   AT END SET EOF TO TRUE
+                   NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-EXP-DATES(WS-EXP-COUNT)
+               END-READ
+               IF FUNCTION TRIM(WS-EXP-DATES(WS-EXP-COUNT)) = SPACE AND NOT EOF
+                   MOVE "Error: Dates are required." TO OUTPUT-LINE
+                   PERFORM WRITE-AND-DISPLAY
+               END-IF
+           END-PERFORM
+           IF EOF EXIT PERFORM END-IF
+
+           STRING "Experience #" WS-INDEX-TEXT " - Description (optional, max 100 chars, blank to skip):" INTO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           READ INPUT-FILE
+               AT END SET EOF TO TRUE
+               NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-EXP-DESC(WS-EXP-COUNT)
+           END-READ
+           IF EOF EXIT PERFORM END-IF
        END-PERFORM
+       IF EOF EXIT PARAGRAPH END-IF
+
        *> Education (Optional up to 3)
        MOVE 0 TO WS-EDU-COUNT
        PERFORM VARYING I FROM 1 BY 1 UNTIL I > 3 OR EOF
            MOVE "Add Education (optional, max 3 entries. Enter 'DONE' to finish):" TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
-           READ INPUT-FILE
-               AT END SET EOF TO TRUE
-               NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-INPUT-LINE
-           END-READ
-           IF EOF
-               EXIT PERFORM
-           END-IF
-           IF FUNCTION TRIM(WS-INPUT-LINE) = "DONE"
-               EXIT PERFORM
-           END-IF
-           ADD 1 TO WS-EDU-COUNT
-           MOVE SPACES TO WS-EDU-DEGREE(WS-EDU-COUNT)
-           MOVE SPACES TO WS-EDU-UNIV(WS-EDU-COUNT)
-           MOVE SPACES TO WS-EDU-YEARS(WS-EDU-COUNT)
-           MOVE  WS-EDU-COUNT TO WS-INDEX-TEXT
-           MOVE "Education #1 - Degree:" TO OUTPUT-LINE
-           IF WS-INDEX-TEXT = 2 MOVE "Education #2 - Degree:" TO OUTPUT-LINE END-IF
-           IF WS-INDEX-TEXT = 3 MOVE "Education #3 - Degree:" TO OUTPUT-LINE END-IF
+           MOVE I TO WS-INDEX-TEXT
+
+           STRING "Education #" WS-INDEX-TEXT " - Degree:" INTO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
-           PERFORM UNTIL FUNCTION TRIM(WS-EDU-DEGREE(WS-EDU-COUNT)) NOT = SPACE OR EOF
+
+           PERFORM UNTIL 1 = 2
                READ INPUT-FILE
                    AT END SET EOF TO TRUE
                    NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-INPUT-LINE
                END-READ
                IF EOF EXIT PERFORM END-IF
-               IF FUNCTION TRIM(WS-INPUT-LINE) = "Degree"
-                   READ INPUT-FILE
-                       AT END SET EOF TO TRUE
-                       NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-INPUT-LINE
-                   END-READ
-                   IF EOF EXIT PERFORM END-IF
-               END-IF
-               IF FUNCTION TRIM(WS-INPUT-LINE) = SPACE
-                   MOVE "Error: Education Degree is required." TO OUTPUT-LINE
-                   PERFORM WRITE-AND-DISPLAY
+
+               IF FUNCTION TRIM(WS-INPUT-LINE) NOT = SPACE
+                   EXIT PERFORM
                ELSE
-                   MOVE WS-INPUT-LINE TO WS-EDU-DEGREE(WS-EDU-COUNT)
+                   MOVE "Error: Degree is required." TO OUTPUT-LINE
+                   PERFORM WRITE-AND-DISPLAY
+                   STRING "Education #" WS-INDEX-TEXT " - Degree:" INTO OUTPUT-LINE
+                   PERFORM WRITE-AND-DISPLAY
                END-IF
            END-PERFORM
-           MOVE "Education #1 - University/College:" TO OUTPUT-LINE
-           IF WS-INDEX-TEXT = 2 MOVE "Education #2 - University/College:" TO OUTPUT-LINE END-IF
-           IF WS-INDEX-TEXT = 3 MOVE "Education #3 - University/College:" TO OUTPUT-LINE END-IF
+           IF EOF EXIT PERFORM END-IF
+
+           IF FUNCTION UPPER-CASE(FUNCTION TRIM(WS-INPUT-LINE)) = "DONE"
+               EXIT PERFORM
+           END-IF
+
+           ADD 1 TO WS-EDU-COUNT
+           MOVE WS-INPUT-LINE TO WS-EDU-DEGREE(WS-EDU-COUNT)
+
+           STRING "Education #" WS-INDEX-TEXT " - University/College:" INTO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
+           MOVE SPACES TO WS-EDU-UNIV(WS-EDU-COUNT)
            PERFORM UNTIL FUNCTION TRIM(WS-EDU-UNIV(WS-EDU-COUNT)) NOT = SPACE OR EOF
                READ INPUT-FILE
                    AT END SET EOF TO TRUE
-                   NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-INPUT-LINE
+                   NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-EDU-UNIV(WS-EDU-COUNT)
                END-READ
-               IF EOF EXIT PERFORM END-IF
-               IF FUNCTION TRIM(WS-INPUT-LINE) = "University"
-                   READ INPUT-FILE
-                       AT END SET EOF TO TRUE
-                       NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-INPUT-LINE
-                   END-READ
-                   IF EOF EXIT PERFORM END-IF
-               END-IF
-               IF FUNCTION TRIM(WS-INPUT-LINE) = SPACE
-                   MOVE "Error: Education University/College is required." TO OUTPUT-LINE
+               IF FUNCTION TRIM(WS-EDU-UNIV(WS-EDU-COUNT)) = SPACE AND NOT EOF
+                   MOVE "Error: University/College is required." TO OUTPUT-LINE
                    PERFORM WRITE-AND-DISPLAY
-               ELSE
-                   MOVE WS-INPUT-LINE TO WS-EDU-UNIV(WS-EDU-COUNT)
                END-IF
            END-PERFORM
-           MOVE "Education #1 - Years Attended (e.g., 2023-2025):" TO OUTPUT-LINE
-           IF WS-INDEX-TEXT = 2 MOVE "Education #2 - Years Attended (e.g., 2023-2025):" TO OUTPUT-LINE END-IF
-           IF WS-INDEX-TEXT = 3 MOVE "Education #3 - Years Attended (e.g., 2023-2025):" TO OUTPUT-LINE END-IF
+           IF EOF EXIT PERFORM END-IF
+
+           STRING "Education #" WS-INDEX-TEXT " - Years Attended (e.g., 2023-2025):" INTO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
+           MOVE SPACES TO WS-EDU-YEARS(WS-EDU-COUNT)
            PERFORM UNTIL FUNCTION TRIM(WS-EDU-YEARS(WS-EDU-COUNT)) NOT = SPACE OR EOF
                READ INPUT-FILE
                    AT END SET EOF TO TRUE
-                   NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-INPUT-LINE
+                   NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-EDU-YEARS(WS-EDU-COUNT)
                END-READ
-               IF EOF EXIT PERFORM END-IF
-               IF FUNCTION TRIM(WS-INPUT-LINE) = "Years"
-                   READ INPUT-FILE
-                       AT END SET EOF TO TRUE
-                       NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-INPUT-LINE
-                   END-READ
-                   IF EOF EXIT PERFORM END-IF
-               END-IF
-               IF FUNCTION TRIM(WS-INPUT-LINE) = SPACE
-                   MOVE "Error: Education Years Attended are required." TO OUTPUT-LINE
+               IF FUNCTION TRIM(WS-EDU-YEARS(WS-EDU-COUNT)) = SPACE AND NOT EOF
+                   MOVE "Error: Years Attended are required." TO OUTPUT-LINE
                    PERFORM WRITE-AND-DISPLAY
-               ELSE
-                   MOVE WS-INPUT-LINE TO WS-EDU-YEARS(WS-EDU-COUNT)
                END-IF
            END-PERFORM
+           IF EOF EXIT PERFORM END-IF
        END-PERFORM
-       *> Save profile (append-based persistence)
+
+       *> Save profile
        PERFORM SAVE-CURRENT-PROFILE
        MOVE "Profile saved successfully!" TO OUTPUT-LINE
        PERFORM WRITE-AND-DISPLAY.
