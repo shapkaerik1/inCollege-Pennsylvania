@@ -8,20 +8,6 @@ Log In
 Create New Account
 Please enter your username:
 Please enter your password:
-All permitted accounts have been created, please come back later.
-Error: Input must be 'new account' or 'login'.
-All permitted accounts have been created, please come back later.
-Error: Input must be 'new account' or 'login'.
-All permitted accounts have been created, please come back later.
-Error: Input must be 'new account' or 'login'.
-Error: Input must be 'new account' or 'login'.
-All permitted accounts have been created, please come back later.
-Error: Input must be 'new account' or 'login'.
-Error: Input must be 'new account' or 'login'.
-All permitted accounts have been created, please come back later.
-Error: Input must be 'new account' or 'login'.
-Error: Input must be 'new account' or 'login'.
-All permitted accounts have been created, please come back later.
 You have successfully logged in.
 
 Welcome, testuser1!
@@ -61,12 +47,12 @@ Name: John Doe
 University: Example University
 Major: Computer Science
 Graduation Year: 2025
-About Me: Enthusiastic developer always learning new things.
+About Me: Initial about me.
 Experience:
 Title: Software Intern
 Company: Tech Corp
 Dates: Summer 2024
-Description: Developed tools for internal testing.
+Description: Built internal tools.
 Education:
 Degree: Bachelor of Science
 University: Example University
@@ -78,35 +64,47 @@ View My Profile
 Search for User
 Learn a new skill
 Enter your choice:
+--- Create/Edit Profile ---
+Enter First Name:
+Enter Last Name:
+Enter University/College Attended:
+Enter Major:
+Enter Graduation Year (YYYY):
+Enter About Me (optional, max 200 chars, enter blank line to skip):
+Add Experience (optional, max 3 entries. Enter 'DONE' to finish):
+Experience #1 - Title:
+Experience #1 - Company/Organization:
+Experience #1 - Dates (e.g., Summer 2024):
+Experience #1 - Description (optional, max 100 chars, blank to skip):
+Add Experience (optional, max 3 entries. Enter 'DONE' to finish):
+Add Education (optional, max 3 entries. Enter 'DONE' to finish):
+Education #1 - Degree:
+Education #1 - University/College:
+Education #1 - Years Attended (e.g., 2023-2025):
+Add Education (optional, max 3 entries. Enter 'DONE' to finish):
+Profile saved successfully!
 
-Learn a New Skill:
-Resume Writing
-Agile and Scrum Basics
-Git and GitHub Fundamentals
-Cloud Fundamentals
-Networking Basics
-Go Back
+Create/Edit My Profile
+View My Profile
+Search for User
+Learn a new skill
 Enter your choice:
-This skill is under construction.
-
-Learn a New Skill:
-Resume Writing
-Agile and Scrum Basics
-Git and GitHub Fundamentals
-Cloud Fundamentals
-Networking Basics
-Go Back
-Enter your choice:
-Error: Skill does not exist. Please try again.
-
-Learn a New Skill:
-Resume Writing
-Agile and Scrum Basics
-Git and GitHub Fundamentals
-Cloud Fundamentals
-Networking Basics
-Go Back
-Enter your choice:
+--- Your Profile ---
+Name: John Doe
+University: Example University
+Major: Data Science
+Graduation Year: 2026
+About Me: Updated about me.
+Experience:
+Title: Senior Intern
+Company: Tech Corp
+Dates: Fall 2025
+Description: Led test efforts.
+Education:
+Degree: Master of Science
+University: Example University
+Years: 2026-2028
+--------------------
 
 Create/Edit My Profile
 View My Profile
@@ -124,4 +122,3 @@ Log In
 Create New Account
 Please enter your username:
 Please enter your password:
-Incorrect username/password, please try again.

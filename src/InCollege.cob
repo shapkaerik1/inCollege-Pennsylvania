@@ -1006,25 +1006,30 @@ SAVE-CURRENT-PROFILE.
                    NOT AT END
                        IF FUNCTION TRIM(PR-USERNAME) = FUNCTION TRIM(USERNAME)
                            MOVE 'Y' TO WS-PROFILE-FOUND
-                           MOVE PR-USERNAME   TO TMP-USERNAME
-                           MOVE PR-FIRST-NAME TO TMP-FIRST-NAME
-                           MOVE PR-LAST-NAME  TO TMP-LAST-NAME
-                           MOVE PR-UNIVERSITY TO TMP-UNIVERSITY
-                           MOVE PR-MAJOR      TO TMP-MAJOR
-                           MOVE PR-GRAD-YEAR  TO TMP-GRAD-YEAR
-                           MOVE PR-ABOUT      TO TMP-ABOUT
-                           MOVE PR-EXP-COUNT  TO TMP-EXP-COUNT
+                           *> write UPDATED values from WS- fields
+                           MOVE FUNCTION TRIM(USERNAME) TO TMP-USERNAME
+                           MOVE WS-FIRST-NAME  TO TMP-FIRST-NAME
+                           MOVE WS-LAST-NAME   TO TMP-LAST-NAME
+                           MOVE WS-UNIVERSITY  TO TMP-UNIVERSITY
+                           MOVE WS-MAJOR       TO TMP-MAJOR
+                           IF WS-GRAD-YEAR-STR IS NUMERIC AND FUNCTION LENGTH(WS-GRAD-YEAR-STR) = 4
+                               MOVE WS-GRAD-YEAR-STR TO TMP-GRAD-YEAR
+                           ELSE
+                               MOVE ZEROS TO TMP-GRAD-YEAR
+                           END-IF
+                           MOVE WS-ABOUT       TO TMP-ABOUT
+                           MOVE WS-EXP-COUNT   TO TMP-EXP-COUNT
                            PERFORM VARYING I FROM 1 BY 1 UNTIL I > 3
-                               MOVE PR-EXP-TITLE(I)   TO TMP-EXP-TITLE(I)
-                               MOVE PR-EXP-COMPANY(I) TO TMP-EXP-COMPANY(I)
-                               MOVE PR-EXP-DATES(I)   TO TMP-EXP-DATES(I)
-                               MOVE PR-EXP-DESC(I)    TO TMP-EXP-DESC(I)
+                               MOVE WS-EXP-TITLE(I)   TO TMP-EXP-TITLE(I)
+                               MOVE WS-EXP-COMPANY(I) TO TMP-EXP-COMPANY(I)
+                               MOVE WS-EXP-DATES(I)   TO TMP-EXP-DATES(I)
+                               MOVE WS-EXP-DESC(I)    TO TMP-EXP-DESC(I)
                            END-PERFORM
-                           MOVE PR-EDU-COUNT  TO TMP-EDU-COUNT
+                           MOVE WS-EDU-COUNT   TO TMP-EDU-COUNT
                            PERFORM VARYING I FROM 1 BY 1 UNTIL I > 3
-                               MOVE PR-EDU-DEGREE(I)  TO TMP-EDU-DEGREE(I)
-                               MOVE PR-EDU-UNIV(I)    TO TMP-EDU-UNIV(I)
-                               MOVE PR-EDU-YEARS(I)   TO TMP-EDU-YEARS(I)
+                               MOVE WS-EDU-DEGREE(I)  TO TMP-EDU-DEGREE(I)
+                               MOVE WS-EDU-UNIV(I)    TO TMP-EDU-UNIV(I)
+                               MOVE WS-EDU-YEARS(I)   TO TMP-EDU-YEARS(I)
                            END-PERFORM
                            WRITE TMP-PROFILE-RECORD
                        ELSE
@@ -1056,25 +1061,30 @@ SAVE-CURRENT-PROFILE.
        CLOSE PROFILES-FILE
 
        IF WS-PROFILE-FOUND = 'N'
-           MOVE PR-USERNAME   TO TMP-USERNAME
-           MOVE PR-FIRST-NAME TO TMP-FIRST-NAME
-           MOVE PR-LAST-NAME  TO TMP-LAST-NAME
-           MOVE PR-UNIVERSITY TO TMP-UNIVERSITY
-           MOVE PR-MAJOR      TO TMP-MAJOR
-           MOVE PR-GRAD-YEAR  TO TMP-GRAD-YEAR
-           MOVE PR-ABOUT      TO TMP-ABOUT
-           MOVE PR-EXP-COUNT  TO TMP-EXP-COUNT
+           *> append as new using WS- fields
+           MOVE FUNCTION TRIM(USERNAME) TO TMP-USERNAME
+           MOVE WS-FIRST-NAME  TO TMP-FIRST-NAME
+           MOVE WS-LAST-NAME   TO TMP-LAST-NAME
+           MOVE WS-UNIVERSITY  TO TMP-UNIVERSITY
+           MOVE WS-MAJOR       TO TMP-MAJOR
+           IF WS-GRAD-YEAR-STR IS NUMERIC AND FUNCTION LENGTH(WS-GRAD-YEAR-STR) = 4
+               MOVE WS-GRAD-YEAR-STR TO TMP-GRAD-YEAR
+           ELSE
+               MOVE ZEROS TO TMP-GRAD-YEAR
+           END-IF
+           MOVE WS-ABOUT       TO TMP-ABOUT
+           MOVE WS-EXP-COUNT   TO TMP-EXP-COUNT
            PERFORM VARYING I FROM 1 BY 1 UNTIL I > 3
-               MOVE PR-EXP-TITLE(I)   TO TMP-EXP-TITLE(I)
-               MOVE PR-EXP-COMPANY(I) TO TMP-EXP-COMPANY(I)
-               MOVE PR-EXP-DATES(I)   TO TMP-EXP-DATES(I)
-               MOVE PR-EXP-DESC(I)    TO TMP-EXP-DESC(I)
+               MOVE WS-EXP-TITLE(I)   TO TMP-EXP-TITLE(I)
+               MOVE WS-EXP-COMPANY(I) TO TMP-EXP-COMPANY(I)
+               MOVE WS-EXP-DATES(I)   TO TMP-EXP-DATES(I)
+               MOVE WS-EXP-DESC(I)    TO TMP-EXP-DESC(I)
            END-PERFORM
-           MOVE PR-EDU-COUNT  TO TMP-EDU-COUNT
+           MOVE WS-EDU-COUNT   TO TMP-EDU-COUNT
            PERFORM VARYING I FROM 1 BY 1 UNTIL I > 3
-               MOVE PR-EDU-DEGREE(I)  TO TMP-EDU-DEGREE(I)
-               MOVE PR-EDU-UNIV(I)    TO TMP-EDU-UNIV(I)
-               MOVE PR-EDU-YEARS(I)   TO TMP-EDU-YEARS(I)
+               MOVE WS-EDU-DEGREE(I)  TO TMP-EDU-DEGREE(I)
+               MOVE WS-EDU-UNIV(I)    TO TMP-EDU-UNIV(I)
+               MOVE WS-EDU-YEARS(I)   TO TMP-EDU-YEARS(I)
            END-PERFORM
            WRITE TMP-PROFILE-RECORD
        END-IF
