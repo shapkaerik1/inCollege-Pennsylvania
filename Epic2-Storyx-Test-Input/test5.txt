@@ -1,0 +1,49 @@
+new account
+testuser2
+ValidPass1*
+Create/Edit My Profile
+Mary Anne
+Doe Jr
+Example University
+Computer Science
+2025
+This is a really long about me that is more than 200 characters. This is a really long about me that is more than 200 characters. This is a really long about me that is more than 200 characters. This is a really long about me that is more than 200 characters.
+Software Intern
+Tech Corp
+Summer 2024
+Built internal tools.
+Data Science Intern
+Data Corp
+Summer 2025
+This is a really long Description that is more than 100 characters. This is a really long Description that is more than 100 characters.
+ML Intern
+Data Corp
+Summer 2025
+Researched ML methods.
+Bachelor of Science
+USF
+2020-2024
+Masters of Science
+UCF
+2024-2026
+Masters of Electrical Engineering
+UCF
+2026-2028
+View My Profile
+Create/Edit My Profile
+Mary Anne
+Doe Jr
+Edited Example University
+Edited Computer Science
+2025
+
+Edited Software Intern
+Edited Tech Corp
+Summer 2024
+
+DONE
+Edited Bachelor of Science
+Edited USF
+Edited 2020-2024
+DONE
+View My Profile

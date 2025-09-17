@@ -1,0 +1,28 @@
+new account
+testuser1
+ValidP1!
+Create/Edit My Profile
+John
+Doe
+Uni 1
+Computer Science
+2025
+motivated cs student
+Software Intern
+Tech Corp
+Summer 2024
+creating new technologies
+Data Intern
+Data Corp
+Summer 2025
+
+ML Intern
+ML Corp
+Summer 2026
+looking at research
+extra Intern
+extra Corp
+Summer extra
+DONE
+View My Profile
+Go Back

@@ -1,0 +1,100 @@
+****************************************
+*                                      *
+*         Welcome to InCollege!        *
+*                                      *
+****************************************
+
+Log In
+Create New Account
+Please enter your username:
+Please enter your password:
+Account created successfully.
+You have successfully logged in.
+
+Welcome, testuser2!
+
+Create/Edit My Profile
+View My Profile
+Search for User
+Learn a new skill
+Enter your choice:
+
+--- Create/Edit Profile ---
+Enter First Name:
+Enter Last Name:
+Enter University/College Attended:
+Enter Major:
+Enter Graduation Year (YYYY):
+Enter About Me (optional, max 200 chars, enter blank line to skip):
+Add Experience (optional, max 3 entries. Enter 'DONE' to finish):
+Experience #1 - Title:
+Experience #1 - Company/Organization:
+Experience #1 - Dates (e.g., Summer 2024):
+Experience #1 - Description (optional, max 100 chars, blank to skip):
+Add Experience (optional, max 3 entries. Enter 'DONE' to finish):
+Experience #2 - Title:
+Experience #2 - Company/Organization:
+Experience #2 - Dates (e.g., Summer 2024):
+Experience #2 - Description (optional, max 100 chars, blank to skip):
+Add Experience (optional, max 3 entries. Enter 'DONE' to finish):
+Experience #3 - Title:
+Experience #3 - Company/Organization:
+Experience #3 - Dates (e.g., Summer 2024):
+Experience #3 - Description (optional, max 100 chars, blank to skip):
+The maximum number of experience entries have been inputted.
+Add Education (optional, max 3 entries. Enter 'DONE' to finish):
+Education #1 - Degree:
+Education #1 - University/College:
+Education #1 - Years Attended (e.g., 2023-2025):
+Add Education (optional, max 3 entries. Enter 'DONE' to finish):
+Education #2 - Degree:
+Education #2 - University/College:
+Education #2 - Years Attended (e.g., 2023-2025):
+Add Education (optional, max 3 entries. Enter 'DONE' to finish):
+Education #3 - Degree:
+Education #3 - University/College:
+Education #3 - Years Attended (e.g., 2023-2025):
+The maximum number of education entries have been inputted.
+Profile saved successfully!
+
+Create/Edit My Profile
+View My Profile
+Search for User
+Learn a new skill
+Enter your choice:
+
+--- Your Profile ---
+Name: John Doe
+University: Example University
+Major: Computer Science
+Graduation Year: 2025
+About Me: About baseline.
+Experience:
+Title: Software Intern
+Company: Tech Corp
+Dates: Summer 2024
+Description: Built internal tools.
+Title: Data Science Intern
+Company: Data Corp
+Dates: Summer 2025
+Title: ML Intern
+Company: Data Corp
+Dates: Summer 2025
+Description: Researched ML methods.
+Education:
+Degree: Bachelor of Science
+University: USF
+Years: 2020-2024
+Degree: Masters of Science
+University: UCF
+Years: 2024-2026
+Degree: Masters of Electrical Engineer
+University: UCF
+Years: 2026-2028
+--------------------
+
+Create/Edit My Profile
+View My Profile
+Search for User
+Learn a new skill
+Enter your choice:

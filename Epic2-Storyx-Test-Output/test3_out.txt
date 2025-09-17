@@ -1,0 +1,123 @@
+****************************************
+*                                      *
+*         Welcome to InCollege!        *
+*                                      *
+****************************************
+
+Log In
+Create New Account
+Please enter your username:
+Please enter your password:
+Account created successfully.
+You have successfully logged in.
+
+Welcome, testuser3!
+
+Create/Edit My Profile
+View My Profile
+Search for User
+Learn a new skill
+Enter your choice:
+
+--- Create/Edit Profile ---
+Enter First Name:
+Enter Last Name:
+Enter University/College Attended:
+Enter Major:
+Enter Graduation Year (YYYY):
+Enter About Me (optional, max 200 chars, enter blank line to skip):
+Add Experience (optional, max 3 entries. Enter 'DONE' to finish):
+Experience #1 - Title:
+Add Education (optional, max 3 entries. Enter 'DONE' to finish):
+Education #1 - Degree:
+Education #1 - University/College:
+Education #1 - Years Attended (e.g., 2023-2025):
+Add Education (optional, max 3 entries. Enter 'DONE' to finish):
+Education #2 - Degree:
+Profile saved successfully!
+
+Create/Edit My Profile
+View My Profile
+Search for User
+Learn a new skill
+Enter your choice:
+
+--- Your Profile ---
+Name: Jane Doe
+University: Uni 1
+Major: Computer Science
+Graduation Year: 2025
+Education:
+Degree: Bachelor of Computer Science
+University: UCF
+Years: 2022-2026
+--------------------
+
+Create/Edit My Profile
+View My Profile
+Search for User
+Learn a new skill
+Enter your choice:
+
+
+****************************************
+*                                      *
+*         Welcome to InCollege!        *
+*                                      *
+****************************************
+
+Log In
+Create New Account
+Please enter your username:
+Please enter your password:
+Account created successfully.
+You have successfully logged in.
+
+Welcome, testuser5!
+
+Create/Edit My Profile
+View My Profile
+Search for User
+Learn a new skill
+Enter your choice:
+
+--- Create/Edit Profile ---
+Enter First Name:
+Enter Last Name:
+Enter University/College Attended:
+Enter Major:
+Enter Graduation Year (YYYY):
+Enter About Me (optional, max 200 chars, enter blank line to skip):
+Add Experience (optional, max 3 entries. Enter 'DONE' to finish):
+Experience #1 - Title:
+Experience #1 - Company/Organization:
+Experience #1 - Dates (e.g., Summer 2024):
+Experience #1 - Description (optional, max 100 chars, blank to skip):
+Add Experience (optional, max 3 entries. Enter 'DONE' to finish):
+Experience #2 - Title:
+Add Education (optional, max 3 entries. Enter 'DONE' to finish):
+Education #1 - Degree:
+Profile saved successfully!
+
+Create/Edit My Profile
+View My Profile
+Search for User
+Learn a new skill
+Enter your choice:
+
+--- Your Profile ---
+Name: Johnnie Doe
+University: Uni 2
+Major: Electrical Engineering
+Graduation Year: 2025
+Experience:
+Title: Electrical Intern
+Company: Tech Corp
+Dates: Summer 2024
+--------------------
+
+Create/Edit My Profile
+View My Profile
+Search for User
+Learn a new skill
+Enter your choice:
