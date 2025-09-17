@@ -669,6 +669,8 @@ CREATE-OR-EDIT-PROFILE.
        MOVE 0 TO WS-EXP-COUNT
        MOVE 'N' TO WS-END-EXPERIENCES
        PERFORM VARYING I FROM 1 BY 1 UNTIL I > 3 OR EOF OR WS-END-EXPERIENCES = 'Y'
+           MOVE "Add Experience (optional, max 3 entries. Enter 'DONE' to finish):" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
            MOVE I TO WS-INDEX-TEXT
            MOVE "Experience #1 - Title:" TO OUTPUT-LINE
            IF WS-INDEX-TEXT = 2 MOVE "Experience #2 - Title:" TO OUTPUT-LINE END-IF

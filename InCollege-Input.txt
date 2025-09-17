@@ -18,10 +18,10 @@ Title
 Software Intern
 DONE
 Degree
-Example
-University/College
-usf
-Years Attended (e.g., 2023-2025)
+Bachelor of Science
+University
+USF
+Years
 2023-2025
 DONE
 View My Profile
