@@ -113,7 +113,7 @@ DATA DIVISION.
        01 WS-USERNAME-IS-UNIQUE PIC X.
 
        *> general purpose varibale to build a line of text before displaying or writing it
-       01 OUTPUT-LINE PIC X(80).
+       01 OUTPUT-LINE PIC X(256).
 
        *> in memory table (max 5 accounts)
        01 ACCOUNT-TABLE.
@@ -145,16 +145,6 @@ DATA DIVISION.
               10 WS-EDU-YEARS         PIC X(20).
        01 WS-PROFILE-FOUND            PIC X VALUE 'N'.
        01 WS-INDEX-TEXT               PIC 9.
-       01 WS-GOT-TITLE                PIC X.
-       01 WS-GOT-COMPANY              PIC X.
-       01 WS-GOT-DATES                PIC X.
-       01 WS-GOT-DESC                 PIC X.
-       01 WS-EXP-TITLE-TMP            PIC X(30).
-       01 WS-EXP-COMPANY-TMP          PIC X(30).
-        01 WS-EXP-DATES-TMP           PIC X(30).
-       01 WS-EXP-DESC-TMP             PIC X(100).
-       01 WS-END-EXPERIENCES          PIC X.
-
 
 PROCEDURE DIVISION.
        PERFORM OPEN-FILES.
@@ -501,6 +491,8 @@ POST-LOGIN-MENU.
            END-READ
 
            IF NOT EOF
+               MOVE SPACES TO OUTPUT-LINE
+               PERFORM WRITE-AND-DISPLAY
                EVALUATE USER-ACTION
                    WHEN "Create/Edit My Profile"
                        PERFORM CREATE-OR-EDIT-PROFILE
@@ -746,6 +738,11 @@ CREATE-OR-EDIT-PROFILE.
        END-PERFORM
        IF EOF EXIT PARAGRAPH END-IF
 
+       IF WS-EXP-COUNT = 3
+           MOVE "The maximum number of experience entries have been inputted." TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+       END-IF
+
        *> Education (Optional up to 3)
        MOVE 0 TO WS-EDU-COUNT
        PERFORM VARYING I FROM 1 BY 1 UNTIL I > 3 OR EOF
@@ -811,6 +808,11 @@ CREATE-OR-EDIT-PROFILE.
            END-PERFORM
            IF EOF EXIT PERFORM END-IF
        END-PERFORM
+
+       IF WS-EDU-COUNT = 3
+           MOVE "The maximum number of education entries have been inputted." TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+       END-IF
 
        *> Save profile
        PERFORM SAVE-CURRENT-PROFILE

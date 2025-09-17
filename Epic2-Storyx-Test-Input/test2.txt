@@ -1,4 +1,4 @@
-login
+new account
 testuser1
 ValidP1!
 Create/Edit My Profile

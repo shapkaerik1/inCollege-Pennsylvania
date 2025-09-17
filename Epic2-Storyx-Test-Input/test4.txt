@@ -1,0 +1,32 @@
+new account
+testuser2
+ValidPass1*
+Create/Edit My Profile
+John
+Doe
+Example University
+Computer Science
+2025
+About baseline.
+Software Intern
+Tech Corp
+Summer 2024
+Built internal tools.
+Data Science Intern
+Data Corp
+Summer 2025
+
+ML Intern
+Data Corp
+Summer 2025
+Researched ML methods.
+Bachelor of Science
+USF
+2020-2024
+Masters of Science
+UCF
+2024-2026
+Masters of Electrical Engineering
+UCF
+2026-2028
+View My Profile
