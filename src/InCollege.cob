@@ -145,6 +145,15 @@ DATA DIVISION.
               10 WS-EDU-YEARS         PIC X(20).
        01 WS-PROFILE-FOUND            PIC X VALUE 'N'.
        01 WS-INDEX-TEXT               PIC 9.
+       01 WS-GOT-TITLE                PIC X.
+       01 WS-GOT-COMPANY              PIC X.
+       01 WS-GOT-DATES                PIC X.
+       01 WS-GOT-DESC                 PIC X.
+       01 WS-EXP-TITLE-TMP            PIC X(30).
+       01 WS-EXP-COMPANY-TMP          PIC X(30).
+        01 WS-EXP-DATES-TMP           PIC X(30).
+       01 WS-EXP-DESC-TMP             PIC X(100).
+       01 WS-END-EXPERIENCES          PIC X.
 
 
 PROCEDURE DIVISION.
@@ -658,113 +667,111 @@ CREATE-OR-EDIT-PROFILE.
        END-READ
        *> Experiences (Optional up to 3)
        MOVE 0 TO WS-EXP-COUNT
-       PERFORM VARYING I FROM 1 BY 1 UNTIL I > 3 OR EOF
-           MOVE "Add Experience (optional, max 3 entries. Enter 'DONE' to finish):" TO OUTPUT-LINE
-           PERFORM WRITE-AND-DISPLAY
-           READ INPUT-FILE
-               AT END SET EOF TO TRUE
-               NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-INPUT-LINE
-           END-READ
-           IF EOF
-               EXIT PERFORM
-           END-IF
-           IF FUNCTION TRIM(WS-INPUT-LINE) = "DONE"
-               EXIT PERFORM
-           END-IF
-           ADD 1 TO WS-EXP-COUNT
-           MOVE SPACES TO WS-EXP-TITLE(WS-EXP-COUNT)
-           MOVE SPACES TO WS-EXP-COMPANY(WS-EXP-COUNT)
-           MOVE SPACES TO WS-EXP-DATES(WS-EXP-COUNT)
-           MOVE SPACES TO WS-EXP-DESC(WS-EXP-COUNT)
-           MOVE  WS-EXP-COUNT TO WS-INDEX-TEXT
+       MOVE 'N' TO WS-END-EXPERIENCES
+       PERFORM VARYING I FROM 1 BY 1 UNTIL I > 3 OR EOF OR WS-END-EXPERIENCES = 'Y'
+           MOVE I TO WS-INDEX-TEXT
            MOVE "Experience #1 - Title:" TO OUTPUT-LINE
            IF WS-INDEX-TEXT = 2 MOVE "Experience #2 - Title:" TO OUTPUT-LINE END-IF
            IF WS-INDEX-TEXT = 3 MOVE "Experience #3 - Title:" TO OUTPUT-LINE END-IF
            PERFORM WRITE-AND-DISPLAY
-           PERFORM UNTIL FUNCTION TRIM(WS-EXP-TITLE(WS-EXP-COUNT)) NOT = SPACE OR EOF
-               READ INPUT-FILE
-                   AT END SET EOF TO TRUE
-                   NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-INPUT-LINE
-               END-READ
-               IF EOF EXIT PERFORM END-IF
-               IF FUNCTION TRIM(WS-INPUT-LINE) = "Title"
-                   READ INPUT-FILE
-                       AT END SET EOF TO TRUE
-                       NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-INPUT-LINE
-                   END-READ
-                   IF EOF EXIT PERFORM END-IF
-               END-IF
-               IF FUNCTION TRIM(WS-INPUT-LINE) = SPACE
-                   MOVE "Error: Experience Title is required." TO OUTPUT-LINE
-                   PERFORM WRITE-AND-DISPLAY
-               ELSE
-                   MOVE WS-INPUT-LINE TO WS-EXP-TITLE(WS-EXP-COUNT)
-               END-IF
-           END-PERFORM
            MOVE "Experience #1 - Company/Organization:" TO OUTPUT-LINE
            IF WS-INDEX-TEXT = 2 MOVE "Experience #2 - Company/Organization:" TO OUTPUT-LINE END-IF
            IF WS-INDEX-TEXT = 3 MOVE "Experience #3 - Company/Organization:" TO OUTPUT-LINE END-IF
            PERFORM WRITE-AND-DISPLAY
-           PERFORM UNTIL FUNCTION TRIM(WS-EXP-COMPANY(WS-EXP-COUNT)) NOT = SPACE OR EOF
-               READ INPUT-FILE
-                   AT END SET EOF TO TRUE
-                   NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-INPUT-LINE
-               END-READ
-               IF EOF EXIT PERFORM END-IF
-               IF FUNCTION TRIM(WS-INPUT-LINE) = "Company"
-                   READ INPUT-FILE
-                       AT END SET EOF TO TRUE
-                       NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-INPUT-LINE
-                   END-READ
-                   IF EOF EXIT PERFORM END-IF
-               END-IF
-               IF FUNCTION TRIM(WS-INPUT-LINE) = SPACE
-                   MOVE "Error: Experience Company/Organization is required." TO OUTPUT-LINE
-                   PERFORM WRITE-AND-DISPLAY
-               ELSE
-                   MOVE WS-INPUT-LINE TO WS-EXP-COMPANY(WS-EXP-COUNT)
-               END-IF
-           END-PERFORM
            MOVE "Experience #1 - Dates (e.g., Summer 2024):" TO OUTPUT-LINE
            IF WS-INDEX-TEXT = 2 MOVE "Experience #2 - Dates (e.g., Summer 2024):" TO OUTPUT-LINE END-IF
            IF WS-INDEX-TEXT = 3 MOVE "Experience #3 - Dates (e.g., Summer 2024):" TO OUTPUT-LINE END-IF
            PERFORM WRITE-AND-DISPLAY
-           PERFORM UNTIL FUNCTION TRIM(WS-EXP-DATES(WS-EXP-COUNT)) NOT = SPACE OR EOF
-               READ INPUT-FILE
-                   AT END SET EOF TO TRUE
-                   NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-INPUT-LINE
-               END-READ
-               IF EOF EXIT PERFORM END-IF
-               IF FUNCTION TRIM(WS-INPUT-LINE) = "Dates"
-                   READ INPUT-FILE
-                       AT END SET EOF TO TRUE
-                       NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-INPUT-LINE
-                   END-READ
-                   IF EOF EXIT PERFORM END-IF
-               END-IF
-               IF FUNCTION TRIM(WS-INPUT-LINE) = SPACE OR FUNCTION TRIM(WS-INPUT-LINE) = "DONE"
-                   MOVE "Error: Experience Dates are required." TO OUTPUT-LINE
-                   PERFORM WRITE-AND-DISPLAY
-               ELSE
-                   MOVE WS-INPUT-LINE TO WS-EXP-DATES(WS-EXP-COUNT)
-               END-IF
-           END-PERFORM
            MOVE "Experience #1 - Description (optional, max 100 chars, blank to skip):" TO OUTPUT-LINE
            IF WS-INDEX-TEXT = 2 MOVE "Experience #2 - Description (optional, max 100 chars, blank to skip):" TO OUTPUT-LINE END-IF
            IF WS-INDEX-TEXT = 3 MOVE "Experience #3 - Description (optional, max 100 chars, blank to skip):" TO OUTPUT-LINE END-IF
            PERFORM WRITE-AND-DISPLAY
+           MOVE 'N' TO WS-GOT-TITLE WS-GOT-COMPANY WS-GOT-DATES WS-GOT-DESC
+           MOVE SPACES TO WS-EXP-TITLE-TMP WS-EXP-COMPANY-TMP WS-EXP-DATES-TMP WS-EXP-DESC-TMP
+           *> prime first token for this experience
            READ INPUT-FILE
                AT END SET EOF TO TRUE
                NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-INPUT-LINE
            END-READ
-           IF NOT EOF AND FUNCTION TRIM(WS-INPUT-LINE) = "Description"
+           IF EOF EXIT PERFORM END-IF
+           IF FUNCTION TRIM(WS-INPUT-LINE) = "DONE"
+               MOVE 'Y' TO WS-END-EXPERIENCES
+               EXIT PERFORM
+           END-IF
+           *> Loop to collect fields in any order until required are set
+           PERFORM UNTIL (WS-GOT-TITLE = 'Y' AND WS-GOT-COMPANY = 'Y' AND WS-GOT-DATES = 'Y') OR EOF OR WS-END-EXPERIENCES = 'Y'
+               EVALUATE FUNCTION TRIM(WS-INPUT-LINE)
+                   WHEN "Title"
+                       READ INPUT-FILE
+                           AT END SET EOF TO TRUE
+                           NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-EXP-TITLE-TMP
+                       END-READ
+                       IF NOT EOF MOVE 'Y' TO WS-GOT-TITLE END-IF
+                   WHEN "Company"
+                       READ INPUT-FILE
+                           AT END SET EOF TO TRUE
+                           NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-EXP-COMPANY-TMP
+                       END-READ
+                       IF NOT EOF MOVE 'Y' TO WS-GOT-COMPANY END-IF
+                   WHEN "Dates"
+                       READ INPUT-FILE
+                           AT END SET EOF TO TRUE
+                           NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-EXP-DATES-TMP
+                       END-READ
+                       IF NOT EOF MOVE 'Y' TO WS-GOT-DATES END-IF
+                   WHEN "Description"
+                       READ INPUT-FILE
+                           AT END SET EOF TO TRUE
+                           NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-EXP-DESC-TMP
+                       END-READ
+                       IF NOT EOF MOVE 'Y' TO WS-GOT-DESC END-IF
+                   WHEN "DONE"
+                       MOVE 'Y' TO WS-END-EXPERIENCES
+                       EXIT PERFORM
+                   WHEN OTHER
+                       *> No label: assign to next missing required field in order Title->Company->Dates
+                       IF WS-GOT-TITLE = 'N'
+                           MOVE FUNCTION TRIM(WS-INPUT-LINE) TO WS-EXP-TITLE-TMP
+                           MOVE 'Y' TO WS-GOT-TITLE
+                       ELSE
+                           IF WS-GOT-COMPANY = 'N'
+                               MOVE FUNCTION TRIM(WS-INPUT-LINE) TO WS-EXP-COMPANY-TMP
+                               MOVE 'Y' TO WS-GOT-COMPANY
+                           ELSE
+                               IF WS-GOT-DATES = 'N'
+                                   MOVE FUNCTION TRIM(WS-INPUT-LINE) TO WS-EXP-DATES-TMP
+                                   MOVE 'Y' TO WS-GOT-DATES
+                               ELSE
+                                   IF WS-GOT-DESC = 'N'
+                                       MOVE FUNCTION TRIM(WS-INPUT-LINE) TO WS-EXP-DESC-TMP
+                                       MOVE 'Y' TO WS-GOT-DESC
+                                   END-IF
+                               END-IF
+                           END-IF
+                       END-IF
+               END-EVALUATE
+               IF (WS-GOT-TITLE = 'Y' AND WS-GOT-COMPANY = 'Y' AND WS-GOT-DATES = 'Y') OR WS-END-EXPERIENCES = 'Y' OR EOF
+                   EXIT PERFORM
+               END-IF
                READ INPUT-FILE
                    AT END SET EOF TO TRUE
                    NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-INPUT-LINE
                END-READ
+           END-PERFORM
+           IF WS-END-EXPERIENCES = 'Y'
+               EXIT PERFORM
            END-IF
-           IF NOT EOF
-               MOVE WS-INPUT-LINE TO WS-EXP-DESC(WS-EXP-COUNT)
+           *> validate required
+           IF WS-GOT-TITLE = 'Y' AND WS-GOT-COMPANY = 'Y' AND WS-GOT-DATES = 'Y'
+               ADD 1 TO WS-EXP-COUNT
+               MOVE WS-EXP-TITLE-TMP   TO WS-EXP-TITLE(WS-EXP-COUNT)
+               MOVE WS-EXP-COMPANY-TMP TO WS-EXP-COMPANY(WS-EXP-COUNT)
+               MOVE WS-EXP-DATES-TMP   TO WS-EXP-DATES(WS-EXP-COUNT)
+               MOVE WS-EXP-DESC-TMP    TO WS-EXP-DESC(WS-EXP-COUNT)
+           ELSE
+               MOVE "Error: Experience requires Title, Company, and Dates." TO OUTPUT-LINE
+               PERFORM WRITE-AND-DISPLAY
+               *> do not increment count; continue to next or DONE
            END-IF
        END-PERFORM
        *> Education (Optional up to 3)

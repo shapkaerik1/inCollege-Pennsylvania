@@ -7,46 +7,22 @@ Doe
 Example University
 Computer Science
 2025
-Initial about me.
-Title
-Software Intern
+About baseline.
 Company
 Tech Corp
-Dates
-Summer 2024
 Description
 Built internal tools.
-DONE
-Degree
-Bachelor of Science
-University
-Example University
-Years
-2021-2025
-DONE
-View My Profile
-Create/Edit My Profile
-John
-Doe
-Example University
-Data Science
-2026
-Updated about me.
-Title
-Senior Intern
-Company
-Tech Corp
 Dates
-Fall 2025
-Description
-Led test efforts.
+Summer 2024
+Title
+Software Intern
 DONE
 Degree
-Master of Science
-University
-Example University
-Years
-2026-2028
+Example
+University/College
+usf
+Years Attended (e.g., 2023-2025)
+2023-2025
 DONE
 View My Profile
 Go Back
