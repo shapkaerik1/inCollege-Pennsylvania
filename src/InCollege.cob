@@ -167,16 +167,17 @@ OPEN-FILES.
        END-IF.
 
        OPEN OUTPUT OUTPUT-FILE.
-       IF OUTPUT-FILE-STATUS NOT = '00'
-           MOVE "Error: Output file 'InCollege-Output.txt' could not be opened." TO OUTPUT-LINE
-           DISPLAY OUTPUT-LINE
-           STOP RUN
-       END-IF.
+        IF OUTPUT-FILE-STATUS NOT = '00'
+            MOVE "Error: Output file 'InCollege-Output.txt' could not be opened." TO OUTPUT-LINE
+            DISPLAY FUNCTION TRIM(OUTPUT-LINE TRAILING)
+            STOP RUN
+        END-IF.
 
 WRITE-AND-DISPLAY.
        *> a reusable utility paragraph to both display a line to the screen and write it to the output file
-       DISPLAY OUTPUT-LINE.
-       MOVE OUTPUT-LINE TO OUTPUT-RECORD.
+       *> trim trailing spaces for cleaner output
+       DISPLAY FUNCTION TRIM(OUTPUT-LINE TRAILING).
+       MOVE FUNCTION TRIM(OUTPUT-LINE TRAILING) TO OUTPUT-RECORD.
        WRITE OUTPUT-RECORD.
        MOVE SPACES TO OUTPUT-LINE.
 
@@ -820,106 +821,183 @@ CREATE-OR-EDIT-PROFILE.
        PERFORM WRITE-AND-DISPLAY.
 
 VIEW-MY-PROFILE.
-       MOVE "--- Your Profile ---" TO OUTPUT-LINE
+       *> Enhanced profile display with improved formatting for better readability
+       MOVE "======================================" TO OUTPUT-LINE
        PERFORM WRITE-AND-DISPLAY
+       MOVE "            YOUR PROFILE" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+       MOVE "======================================" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+       MOVE SPACES TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+
        PERFORM LOAD-PROFILE-FOR-CURRENT-USER
        IF WS-PROFILE-FOUND = 'N'
            MOVE "Profile not found. Please create your profile first." TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
+           MOVE SPACES TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
            EXIT PARAGRAPH
        END-IF
+
+       *> Personal Information Section
+       MOVE "PERSONAL INFORMATION:" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+       MOVE "--------------------------------------" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+
        MOVE SPACES TO OUTPUT-LINE
-       STRING "Name: " DELIMITED BY SIZE
+       STRING "First Name:       " DELIMITED BY SIZE
               FUNCTION TRIM(PR-FIRST-NAME) DELIMITED BY SIZE
-              " " DELIMITED BY SIZE
+              INTO OUTPUT-LINE
+       END-STRING
+       PERFORM WRITE-AND-DISPLAY
+
+       MOVE SPACES TO OUTPUT-LINE
+       STRING "Last Name:        " DELIMITED BY SIZE
               FUNCTION TRIM(PR-LAST-NAME) DELIMITED BY SIZE
               INTO OUTPUT-LINE
        END-STRING
        PERFORM WRITE-AND-DISPLAY
+
        MOVE SPACES TO OUTPUT-LINE
-       STRING "University: " DELIMITED BY SIZE
+       STRING "University:       " DELIMITED BY SIZE
               FUNCTION TRIM(PR-UNIVERSITY) DELIMITED BY SIZE
               INTO OUTPUT-LINE
        END-STRING
        PERFORM WRITE-AND-DISPLAY
+
        MOVE SPACES TO OUTPUT-LINE
-       STRING "Major: " DELIMITED BY SIZE
+       STRING "Major:            " DELIMITED BY SIZE
               FUNCTION TRIM(PR-MAJOR) DELIMITED BY SIZE
               INTO OUTPUT-LINE
        END-STRING
        PERFORM WRITE-AND-DISPLAY
+
        MOVE PR-GRAD-YEAR TO WS-GRAD-YEAR-STR
        MOVE SPACES TO OUTPUT-LINE
-       STRING "Graduation Year: " DELIMITED BY SIZE
+       STRING "Graduation Year:  " DELIMITED BY SIZE
               FUNCTION TRIM(WS-GRAD-YEAR-STR) DELIMITED BY SIZE
               INTO OUTPUT-LINE
        END-STRING
        PERFORM WRITE-AND-DISPLAY
+
        IF FUNCTION TRIM(PR-ABOUT) NOT = SPACE
            MOVE SPACES TO OUTPUT-LINE
-           STRING "About Me: " DELIMITED BY SIZE
-                  FUNCTION TRIM(PR-ABOUT) DELIMITED BY SIZE
+           PERFORM WRITE-AND-DISPLAY
+           MOVE "ABOUT ME:" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           MOVE "--------------------------------------" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           MOVE SPACES TO OUTPUT-LINE
+           STRING FUNCTION TRIM(PR-ABOUT) DELIMITED BY SIZE
                   INTO OUTPUT-LINE
            END-STRING
            PERFORM WRITE-AND-DISPLAY
        END-IF
+
+       *> Experience Section
        IF PR-EXP-COUNT > 0
-           MOVE "Experience:" TO OUTPUT-LINE
+           MOVE SPACES TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
+           MOVE "EXPERIENCE:" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           MOVE "--------------------------------------" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+
            PERFORM VARYING I FROM 1 BY 1 UNTIL I > PR-EXP-COUNT
+               MOVE I TO WS-INDEX-TEXT
                MOVE SPACES TO OUTPUT-LINE
-               STRING "Title: " DELIMITED BY SIZE
+               STRING "Experience #" WS-INDEX-TEXT ":" DELIMITED BY SIZE
+                      INTO OUTPUT-LINE
+               END-STRING
+               PERFORM WRITE-AND-DISPLAY
+
+               MOVE SPACES TO OUTPUT-LINE
+               STRING "  Title:         " DELIMITED BY SIZE
                       FUNCTION TRIM(PR-EXP-TITLE(I)) DELIMITED BY SIZE
                       INTO OUTPUT-LINE
                END-STRING
                PERFORM WRITE-AND-DISPLAY
+
                MOVE SPACES TO OUTPUT-LINE
-               STRING "Company: " DELIMITED BY SIZE
+               STRING "  Company:       " DELIMITED BY SIZE
                       FUNCTION TRIM(PR-EXP-COMPANY(I)) DELIMITED BY SIZE
                       INTO OUTPUT-LINE
                END-STRING
                PERFORM WRITE-AND-DISPLAY
+
                MOVE SPACES TO OUTPUT-LINE
-               STRING "Dates: " DELIMITED BY SIZE
+               STRING "  Dates:         " DELIMITED BY SIZE
                       FUNCTION TRIM(PR-EXP-DATES(I)) DELIMITED BY SIZE
                       INTO OUTPUT-LINE
                END-STRING
                PERFORM WRITE-AND-DISPLAY
+
                IF FUNCTION TRIM(PR-EXP-DESC(I)) NOT = SPACE
                    MOVE SPACES TO OUTPUT-LINE
-                   STRING "Description: " DELIMITED BY SIZE
+                   STRING "  Description:   " DELIMITED BY SIZE
                           FUNCTION TRIM(PR-EXP-DESC(I)) DELIMITED BY SIZE
                           INTO OUTPUT-LINE
                    END-STRING
                    PERFORM WRITE-AND-DISPLAY
                END-IF
+
+               IF I < PR-EXP-COUNT
+                   MOVE SPACES TO OUTPUT-LINE
+                   PERFORM WRITE-AND-DISPLAY
+               END-IF
            END-PERFORM
        END-IF
+
+       *> Education Section
        IF PR-EDU-COUNT > 0
-           MOVE "Education:" TO OUTPUT-LINE
+           MOVE SPACES TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
+           MOVE "EDUCATION:" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           MOVE "--------------------------------------" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+
            PERFORM VARYING I FROM 1 BY 1 UNTIL I > PR-EDU-COUNT
+               MOVE I TO WS-INDEX-TEXT
                MOVE SPACES TO OUTPUT-LINE
-               STRING "Degree: " DELIMITED BY SIZE
+               STRING "Education #" WS-INDEX-TEXT ":" DELIMITED BY SIZE
+                      INTO OUTPUT-LINE
+               END-STRING
+               PERFORM WRITE-AND-DISPLAY
+
+               MOVE SPACES TO OUTPUT-LINE
+               STRING "  Degree:        " DELIMITED BY SIZE
                       FUNCTION TRIM(PR-EDU-DEGREE(I)) DELIMITED BY SIZE
                       INTO OUTPUT-LINE
                END-STRING
                PERFORM WRITE-AND-DISPLAY
+
                MOVE SPACES TO OUTPUT-LINE
-               STRING "University: " DELIMITED BY SIZE
+               STRING "  University:    " DELIMITED BY SIZE
                       FUNCTION TRIM(PR-EDU-UNIV(I)) DELIMITED BY SIZE
                       INTO OUTPUT-LINE
                END-STRING
                PERFORM WRITE-AND-DISPLAY
+
                MOVE SPACES TO OUTPUT-LINE
-               STRING "Years: " DELIMITED BY SIZE
+               STRING "  Years:         " DELIMITED BY SIZE
                       FUNCTION TRIM(PR-EDU-YEARS(I)) DELIMITED BY SIZE
                       INTO OUTPUT-LINE
                END-STRING
                PERFORM WRITE-AND-DISPLAY
+
+               IF I < PR-EDU-COUNT
+                   MOVE SPACES TO OUTPUT-LINE
+                   PERFORM WRITE-AND-DISPLAY
+               END-IF
            END-PERFORM
        END-IF
-       MOVE "--------------------" TO OUTPUT-LINE
+
+       MOVE SPACES TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+       MOVE "======================================" TO OUTPUT-LINE
        PERFORM WRITE-AND-DISPLAY.
 
 SAVE-CURRENT-PROFILE.

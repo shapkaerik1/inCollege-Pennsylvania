@@ -1,0 +1,28 @@
+new account
+testuser1
+ValidP1!
+Create/Edit My Profile
+John
+Doe
+University of South Florida
+Computer Science
+2025
+I am a passionate computer science student interested in software development and artificial intelligence.
+Software Engineering Intern
+Tech Solutions Inc
+Summer 2024
+Developed web applications using React and Node.js
+Data Analyst Intern
+DataCorp
+Fall 2023
+Analyzed large datasets and created visualization dashboards
+DONE
+Bachelor of Science
+University of South Florida
+2021-2025
+High School Diploma
+Lincoln High School
+2017-2021
+DONE
+View My Profile
+Create/Edit My Profile
