@@ -1,4 +1,4 @@
-*> This is free-form
+*> This is free-form cobol program
 IDENTIFICATION DIVISION.
 PROGRAM-ID. InCollege.
 
