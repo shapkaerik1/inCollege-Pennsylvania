@@ -245,9 +245,7 @@ MAIN-MENU-DISPLAY.
        PERFORM WRITE-AND-DISPLAY.
        MOVE "Create New Account" TO OUTPUT-LINE.
        PERFORM WRITE-AND-DISPLAY.
-       MOVE "Please enter your username:" TO OUTPUT-LINE.
-       PERFORM WRITE-AND-DISPLAY.
-       MOVE "Please enter your password:" TO OUTPUT-LINE.
+       MOVE "Enter your selection:" TO OUTPUT-LINE.
        PERFORM WRITE-AND-DISPLAY.
 
 PROCESS-INPUT-COMMANDS.
@@ -260,12 +258,12 @@ PROCESS-INPUT-COMMANDS.
 
                *> switch case
                EVALUATE USER-ACTION
-                   WHEN "new account"
+                   WHEN "Create New Account"
                        PERFORM CREATE-ACCOUNT-SECTION
-                   WHEN "login"
+                   WHEN "Log In"
                        PERFORM LOGIN-SECTION
                    WHEN OTHER
-                       MOVE "Error: Input must be 'new account' or 'login'."
+                       MOVE "Error: Input must be 'Log In' or 'Create New Account'."
                            TO OUTPUT-LINE
                        PERFORM WRITE-AND-DISPLAY
                END-EVALUATE
@@ -273,6 +271,8 @@ PROCESS-INPUT-COMMANDS.
 
 GET-USERNAME.
        *> reads the next line from the input file and store it as the username
+       MOVE "Please enter your username:" TO OUTPUT-LINE.
+       PERFORM WRITE-AND-DISPLAY.
        READ INPUT-FILE
            AT END
                SET EOF TO TRUE
@@ -282,6 +282,8 @@ GET-USERNAME.
 
 GET-PASSWORD.
        *> reads the next line from the input file and store it as the password
+       MOVE "Please enter your password:" TO OUTPUT-LINE.
+       PERFORM WRITE-AND-DISPLAY.
        READ INPUT-FILE
            AT END
                SET EOF TO TRUE
