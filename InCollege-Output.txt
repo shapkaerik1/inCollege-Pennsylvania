@@ -16,8 +16,9 @@ Welcome, testuser1!
 
 Create/Edit My Profile
 View My Profile
-Search for User
-Learn a new skill
+Search for a job
+Find someone you know
+Learn a New Skill
 Enter your choice:
 
 --- Create/Edit Profile ---
@@ -53,8 +54,9 @@ Profile saved successfully!
 
 Create/Edit My Profile
 View My Profile
-Search for User
-Learn a new skill
+Search for a job
+Find someone you know
+Learn a New Skill
 Enter your choice:
 
 ======================================
@@ -103,6 +105,7 @@ Education #2:
 
 Create/Edit My Profile
 View My Profile
-Search for User
-Learn a new skill
+Search for a job
+Find someone you know
+Learn a New Skill
 Enter your choice:
