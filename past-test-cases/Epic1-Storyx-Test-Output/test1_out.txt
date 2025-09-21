@@ -1,0 +1,220 @@
+****************************************
+*                                      *
+*         Welcome to InCollege!        *
+*                                      *
+****************************************
+
+Log In
+Create New Account
+Enter your selection:
+Please enter your username:
+Please enter your password:
+Account created successfully.
+You have successfully logged in.
+
+Welcome, testuser1!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+Enter your choice:
+
+
+****************************************
+*                                      *
+*         Welcome to InCollege!        *
+*                                      *
+****************************************
+
+Log In
+Create New Account
+Enter your selection:
+Please enter your username:
+Please enter your password:
+Account created successfully.
+You have successfully logged in.
+
+Welcome, testuser2!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+Enter your choice:
+
+
+****************************************
+*                                      *
+*         Welcome to InCollege!        *
+*                                      *
+****************************************
+
+Log In
+Create New Account
+Enter your selection:
+Please enter your username:
+Please enter your password:
+Error: Password must be 8-12 characters.
+Please enter your password:
+Account created successfully.
+You have successfully logged in.
+
+Welcome, testuser3!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+Enter your choice:
+
+
+****************************************
+*                                      *
+*         Welcome to InCollege!        *
+*                                      *
+****************************************
+
+Log In
+Create New Account
+Enter your selection:
+Please enter your username:
+Please enter your password:
+Error: Password must be 8-12 characters.
+Please enter your password:
+Account created successfully.
+You have successfully logged in.
+
+Welcome, testuser4!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+Enter your choice:
+
+
+****************************************
+*                                      *
+*         Welcome to InCollege!        *
+*                                      *
+****************************************
+
+Log In
+Create New Account
+Enter your selection:
+Please enter your username:
+Please enter your password:
+Error: Password must have a capital letter.
+Please enter your password:
+Account created successfully.
+You have successfully logged in.
+
+Welcome, testuser5!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+Enter your choice:
+
+
+****************************************
+*                                      *
+*         Welcome to InCollege!        *
+*                                      *
+****************************************
+
+Log In
+Create New Account
+Enter your selection:
+All permitted accounts have been created, please come back later.
+Please enter your username:
+Please enter your password:
+Please enter your username:
+Please enter your password:
+You have successfully logged in.
+
+Welcome, testuser1!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+Enter your choice:
+
+Search for a job is under construction.
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+Enter your choice:
+
+Find someone you know is under construction.
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+Enter your choice:
+
+
+Learn a New Skill:
+Resume Writing
+Agile and Scrum Basics
+Git and GitHub Fundamentals
+Cloud Fundamentals
+Networking Basics
+Go Back
+Enter your choice:
+This Skill is under construction.
+
+Learn a New Skill:
+Resume Writing
+Agile and Scrum Basics
+Git and GitHub Fundamentals
+Cloud Fundamentals
+Networking Basics
+Go Back
+Enter your choice:
+Error: Skill does not exist. Please try again.
+
+Learn a New Skill:
+Resume Writing
+Agile and Scrum Basics
+Git and GitHub Fundamentals
+Cloud Fundamentals
+Networking Basics
+Go Back
+Enter your choice:
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+Enter your choice:
+
+
+****************************************
+*                                      *
+*         Welcome to InCollege!        *
+*                                      *
+****************************************
+
+Log In
+Create New Account
+Enter your selection:
+Please enter your username:
+Please enter your password:
+Incorrect username/password, please try again.
+Please enter your username:

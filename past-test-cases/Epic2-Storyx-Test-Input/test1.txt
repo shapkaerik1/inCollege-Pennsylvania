@@ -1,4 +1,4 @@
-new account
+Create New Account
 testuser1
 ValidP1!
 Create/Edit My Profile
@@ -32,7 +32,7 @@ USF
 DONE
 View My Profile
 Go Back
-new account
+Create New Account
 testuser2
 ValidPass1*
 Create/Edit My Profile

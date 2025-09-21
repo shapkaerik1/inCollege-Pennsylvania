@@ -1,27 +1,34 @@
 Create New Account
-testuser1
-ValidP1!
+testuser3
+Validpass3#
 Create/Edit My Profile
-John
+Jane
 Doe
-University of South Florida
+Uni 1
 Computer Science
 2025
-I am a passionate computer science student interested in software development and artificial intelligence.
-Software Engineering Intern
-Tech Solutions Inc
-Summer 2024
-Developed web applications using React and Node.js
-Data Analyst Intern
-DataCorp
-Fall 2023
-Analyzed large datasets and created visualization dashboards
+
 DONE
-Bachelor of Science
-University of South Florida
-2021-2025
-High School Diploma
-Lincoln High School
-2017-2021
+Bachelor of Computer Science
+UCF
+2022-2026
+DONE
+View My Profile
+Go Back
+Create New Account
+testuser5
+Validpass1!
+Create/Edit My Profile
+Johnnie
+Doe
+Uni 2
+Electrical Engineering
+2025
+
+Electrical Intern
+Tech Corp
+Summer 2024
+
+DONE
 DONE
 View My Profile

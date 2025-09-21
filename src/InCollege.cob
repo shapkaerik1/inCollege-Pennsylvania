@@ -481,9 +481,11 @@ POST-LOGIN-MENU.
            PERFORM WRITE-AND-DISPLAY
            MOVE "View My Profile" TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
-           MOVE "Search for User" TO OUTPUT-LINE
+           MOVE "Search for a job" TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
-           MOVE "Learn a new skill" TO OUTPUT-LINE
+           MOVE "Find someone you know" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           MOVE "Learn a New Skill" TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
            MOVE "Enter your choice:" TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
@@ -501,10 +503,13 @@ POST-LOGIN-MENU.
                        PERFORM CREATE-OR-EDIT-PROFILE
                    WHEN "View My Profile"
                        PERFORM VIEW-MY-PROFILE
-                   WHEN "Search for User"
-                       MOVE "Search for user is under construction." TO OUTPUT-LINE
+                   WHEN "Search for a job"
+                       MOVE "Search for a job is under construction." TO OUTPUT-LINE
                        PERFORM WRITE-AND-DISPLAY
-                   WHEN "Learn a new skill"
+                   WHEN "Find someone you know"
+                       MOVE "Find someone you know is under construction." TO OUTPUT-LINE
+                       PERFORM WRITE-AND-DISPLAY
+                   WHEN "Learn a New Skill"
                        PERFORM LEARN-A-SKILL-SUB-MENU
                    WHEN "Go Back"
                        MOVE SPACES TO OUTPUT-LINE

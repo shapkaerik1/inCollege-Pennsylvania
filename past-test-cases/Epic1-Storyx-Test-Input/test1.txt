@@ -1,39 +1,39 @@
-new account
+Create New Account
 testuser1
 ValidP1!
 Go Back
-new account
+Create New Account
 testuser2
 ValidPass1*
 Go Back
-new account
+Create New Account
 testuser3
 Short1!
 Validpass3#
 Go Back
-new account
+Create New Account
 testuser4
 TooLongPass1*
 TooLongPas1*
 Go Back
-new account
+Create New Account
 testuser5
 validpass1!
 Validpass1!
 Go Back
-new account
+Create New Account
 testuser6
 ValidPass1!
-login
+Log In
 testuser1
 ValidP1!
 Search for a job
 Find someone you know
-Learn a new skill
+Learn a New Skill
 Resume Writing
 notrealskill
 Go Back
 Go Back
-login
+Log In
 testuser1
 WrongPass1!

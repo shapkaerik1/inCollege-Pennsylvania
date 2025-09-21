@@ -6,6 +6,7 @@
 
 Log In
 Create New Account
+Enter your selection:
 Please enter your username:
 Please enter your password:
 Account created successfully.
@@ -15,8 +16,9 @@ Welcome, testuser1!
 
 Create/Edit My Profile
 View My Profile
-Search for User
-Learn a new skill
+Search for a job
+Find someone you know
+Learn a New Skill
 Enter your choice:
 
 --- Create/Edit Profile ---
@@ -65,31 +67,49 @@ Profile saved successfully!
 
 Create/Edit My Profile
 View My Profile
-Search for User
-Learn a new skill
+Search for a job
+Find someone you know
+Learn a New Skill
 Enter your choice:
 
---- Your Profile ---
-Name: John Doe
-University: Example University
-Major: Computer Science
-Graduation Year: 2025
-About Me: motivated cs student
-Experience:
-Title: Software Intern
-Company: Tech Corp
-Dates: Summer 2024
-Description: creating new technologies
-Education:
-Degree: Bachelor of Science
-University: USF
-Years: 2023-2025
---------------------
+======================================
+            YOUR PROFILE
+======================================
+
+PERSONAL INFORMATION:
+--------------------------------------
+First Name:       John
+Last Name:        Doe
+University:       Example University
+Major:            Computer Science
+Graduation Year:  2025
+
+ABOUT ME:
+--------------------------------------
+motivated cs student
+
+EXPERIENCE:
+--------------------------------------
+Experience #1:
+  Title:         Software Intern
+  Company:       Tech Corp
+  Dates:         Summer 2024
+  Description:   creating new technologies
+
+EDUCATION:
+--------------------------------------
+Education #1:
+  Degree:        Bachelor of Science
+  University:    USF
+  Years:         2023-2025
+
+======================================
 
 Create/Edit My Profile
 View My Profile
-Search for User
-Learn a new skill
+Search for a job
+Find someone you know
+Learn a New Skill
 Enter your choice:
 
 
@@ -101,6 +121,7 @@ Enter your choice:
 
 Log In
 Create New Account
+Enter your selection:
 Please enter your username:
 Please enter your password:
 Account created successfully.
@@ -110,8 +131,9 @@ Welcome, testuser2!
 
 Create/Edit My Profile
 View My Profile
-Search for User
-Learn a new skill
+Search for a job
+Find someone you know
+Learn a New Skill
 Enter your choice:
 
 --- Create/Edit Profile ---
