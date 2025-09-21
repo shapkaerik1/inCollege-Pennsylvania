@@ -1,4 +1,4 @@
-new account
+Create New Account
 testuser2
 ValidPass1*
 Create/Edit My Profile

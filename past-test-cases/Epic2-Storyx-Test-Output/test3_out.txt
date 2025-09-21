@@ -6,6 +6,7 @@
 
 Log In
 Create New Account
+Enter your selection:
 Please enter your username:
 Please enter your password:
 Account created successfully.
@@ -15,8 +16,9 @@ Welcome, testuser3!
 
 Create/Edit My Profile
 View My Profile
-Search for User
-Learn a new skill
+Search for a job
+Find someone you know
+Learn a New Skill
 Enter your choice:
 
 --- Create/Edit Profile ---
@@ -38,25 +40,37 @@ Profile saved successfully!
 
 Create/Edit My Profile
 View My Profile
-Search for User
-Learn a new skill
+Search for a job
+Find someone you know
+Learn a New Skill
 Enter your choice:
 
---- Your Profile ---
-Name: Jane Doe
-University: Uni 1
-Major: Computer Science
-Graduation Year: 2025
-Education:
-Degree: Bachelor of Computer Science
-University: UCF
-Years: 2022-2026
---------------------
+======================================
+            YOUR PROFILE
+======================================
+
+PERSONAL INFORMATION:
+--------------------------------------
+First Name:       Jane
+Last Name:        Doe
+University:       Uni 1
+Major:            Computer Science
+Graduation Year:  2025
+
+EDUCATION:
+--------------------------------------
+Education #1:
+  Degree:        Bachelor of Computer Science
+  University:    UCF
+  Years:         2022-2026
+
+======================================
 
 Create/Edit My Profile
 View My Profile
-Search for User
-Learn a new skill
+Search for a job
+Find someone you know
+Learn a New Skill
 Enter your choice:
 
 
@@ -68,6 +82,7 @@ Enter your choice:
 
 Log In
 Create New Account
+Enter your selection:
 Please enter your username:
 Please enter your password:
 Account created successfully.
@@ -77,8 +92,9 @@ Welcome, testuser5!
 
 Create/Edit My Profile
 View My Profile
-Search for User
-Learn a new skill
+Search for a job
+Find someone you know
+Learn a New Skill
 Enter your choice:
 
 --- Create/Edit Profile ---
@@ -101,23 +117,35 @@ Profile saved successfully!
 
 Create/Edit My Profile
 View My Profile
-Search for User
-Learn a new skill
+Search for a job
+Find someone you know
+Learn a New Skill
 Enter your choice:
 
---- Your Profile ---
-Name: Johnnie Doe
-University: Uni 2
-Major: Electrical Engineering
-Graduation Year: 2025
-Experience:
-Title: Electrical Intern
-Company: Tech Corp
-Dates: Summer 2024
---------------------
+======================================
+            YOUR PROFILE
+======================================
+
+PERSONAL INFORMATION:
+--------------------------------------
+First Name:       Johnnie
+Last Name:        Doe
+University:       Uni 2
+Major:            Electrical Engineering
+Graduation Year:  2025
+
+EXPERIENCE:
+--------------------------------------
+Experience #1:
+  Title:         Electrical Intern
+  Company:       Tech Corp
+  Dates:         Summer 2024
+
+======================================
 
 Create/Edit My Profile
 View My Profile
-Search for User
-Learn a new skill
+Search for a job
+Find someone you know
+Learn a New Skill
 Enter your choice:

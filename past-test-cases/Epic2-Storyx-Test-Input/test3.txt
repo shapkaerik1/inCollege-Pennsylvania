@@ -1,4 +1,4 @@
-new account
+Create New Account
 testuser3
 Validpass3#
 Create/Edit My Profile
@@ -15,7 +15,7 @@ UCF
 DONE
 View My Profile
 Go Back
-new account
+Create New Account
 testuser5
 Validpass1!
 Create/Edit My Profile

@@ -6,6 +6,7 @@
 
 Log In
 Create New Account
+Enter your selection:
 Please enter your username:
 Please enter your password:
 Account created successfully.
@@ -15,8 +16,9 @@ Welcome, testuser1!
 
 Create/Edit My Profile
 View My Profile
-Search for User
-Learn a new skill
+Search for a job
+Find someone you know
+Learn a New Skill
 Enter your choice:
 
 --- Create/Edit Profile ---
@@ -44,57 +46,66 @@ Education #1 - University/College:
 Education #1 - Years Attended (e.g., 2023-2025):
 Add Education (optional, max 3 entries. Enter 'DONE' to finish):
 Education #2 - Degree:
+Education #2 - University/College:
+Education #2 - Years Attended (e.g., 2023-2025):
+Add Education (optional, max 3 entries. Enter 'DONE' to finish):
+Education #3 - Degree:
 Profile saved successfully!
 
 Create/Edit My Profile
 View My Profile
-Search for User
-Learn a new skill
+Search for a job
+Find someone you know
+Learn a New Skill
 Enter your choice:
 
---- Your Profile ---
-Name: John Doe
-University: Example University
-Major: Computer Science
-Graduation Year: 2025
-About Me: Motivated cs student
-Experience:
-Title: Software Intern
-Company: Tech Corp
-Dates: Summer 2024
-Description: Built internal tools.
-Title: Data Science Intern
-Company: Data Sci Corp
-Dates: Summer 2025
-Education:
-Degree: Bachelor of Science
-University: USF
-Years: 2023-2025
---------------------
+======================================
+            YOUR PROFILE
+======================================
+
+PERSONAL INFORMATION:
+--------------------------------------
+First Name:       John
+Last Name:        Doe
+University:       University of South Florida
+Major:            Computer Science
+Graduation Year:  2025
+
+ABOUT ME:
+--------------------------------------
+I am a passionate computer science student interested in software development and artificial intelligence.
+
+EXPERIENCE:
+--------------------------------------
+Experience #1:
+  Title:         Software Engineering Intern
+  Company:       Tech Solutions Inc
+  Dates:         Summer 2024
+  Description:   Developed web applications using React and Node.js
+
+Experience #2:
+  Title:         Data Analyst Intern
+  Company:       DataCorp
+  Dates:         Fall 2023
+  Description:   Analyzed large datasets and created visualization dashboards
+
+EDUCATION:
+--------------------------------------
+Education #1:
+  Degree:        Bachelor of Science
+  University:    University of South Florida
+  Years:         2021-2025
+
+Education #2:
+  Degree:        High School Diploma
+  University:    Lincoln High School
+  Years:         2017-2021
+
+======================================
 
 Create/Edit My Profile
 View My Profile
-Search for User
-Learn a new skill
-Enter your choice:
-
-
-****************************************
-*                                      *
-*         Welcome to InCollege!        *
-*                                      *
-****************************************
-
-Log In
-Create New Account
-Please enter your username:
-Please enter your password:
-You have successfully logged in.
-
-Welcome, testuser1!
-
-Create/Edit My Profile
-View My Profile
-Search for User
-Learn a new skill
+Search for a job
+Find someone you know
+Learn a New Skill
 Enter your choice:
