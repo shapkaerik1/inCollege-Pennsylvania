@@ -9,11 +9,194 @@ Create New Account
 Enter your selection:
 Please enter your username:
 Please enter your password:
-Incorrect username/password, please try again.
+Account created successfully.
+You have successfully logged in.
+
+Welcome, alice!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+Enter your choice:
+
+--- Create/Edit Profile ---
+Enter First Name:
+Enter Last Name:
+Enter University/College Attended:
+Enter Major:
+Enter Graduation Year (YYYY):
+Enter About Me (optional, max 200 chars, enter blank line to skip):
+Add Experience (optional, max 3 entries. Enter 'DONE' to finish):
+Experience #1 - Title:
+Add Education (optional, max 3 entries. Enter 'DONE' to finish):
+Education #1 - Degree:
+Profile saved successfully!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+Enter your choice:
+
+
+****************************************
+*                                      *
+*         Welcome to InCollege!        *
+*                                      *
+****************************************
+
+Log In
+Create New Account
+Enter your selection:
 Please enter your username:
 Please enter your password:
-Incorrect username/password, please try again.
-Please enter your username:
-Please enter your password:
-Incorrect username/password, please try again.
-Please enter your username:
+Account created successfully.
+You have successfully logged in.
+
+Welcome, bob!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+Enter your choice:
+
+--- Create/Edit Profile ---
+Enter First Name:
+Enter Last Name:
+Enter University/College Attended:
+Enter Major:
+Enter Graduation Year (YYYY):
+Enter About Me (optional, max 200 chars, enter blank line to skip):
+Add Experience (optional, max 3 entries. Enter 'DONE' to finish):
+Experience #1 - Title:
+Add Education (optional, max 3 entries. Enter 'DONE' to finish):
+Education #1 - Degree:
+Profile saved successfully!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+Enter your choice:
+
+--- Find Someone You Know ---
+Enter Full Name (First Last) or leave blank:
+User found: Alice Smith (alice)
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+Enter your choice:
+
+--- Find Someone You Know ---
+Enter Full Name (First Last) or leave blank:
+User found: Alice Smith (alice)
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+Enter your choice:
+
+--- Find Someone You Know ---
+Enter Full Name (First Last) or leave blank:
+No users found with full name: Alice
+Tip: Check spacing or try entering first/last separately.
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+Enter your choice:
+
+--- Find Someone You Know ---
+Enter Full Name (First Last) or leave blank:
+No users found with full name: Smith
+Tip: Check spacing or try entering first/last separately.
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+Enter your choice:
+
+--- Find Someone You Know ---
+Enter Full Name (First Last) or leave blank:
+User found: Bob Johnson (bob)
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+Enter your choice:
+
+--- Find Someone You Know ---
+Enter Full Name (First Last) or leave blank:
+User found: Bob Johnson (bob)
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+Enter your choice:
+
+--- Find Someone You Know ---
+Enter Full Name (First Last) or leave blank:
+No users found with full name: Bob
+Tip: Check spacing or try entering first/last separately.
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+Enter your choice:
+
+--- Find Someone You Know ---
+Enter Full Name (First Last) or leave blank:
+No users found with full name: Johnson
+Tip: Check spacing or try entering first/last separately.
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+Enter your choice:
+
+--- Find Someone You Know ---
+Enter Full Name (First Last) or leave blank:
+No users found with full name: Alice Johnson
+Tip: Check spacing or try entering first/last separately.
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+Enter your choice:
+
+--- Find Someone You Know ---
+Enter Full Name (First Last) or leave blank:
+No users found with full name: Bob Smith
+Tip: Check spacing or try entering first/last separately.
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+Enter your choice:
