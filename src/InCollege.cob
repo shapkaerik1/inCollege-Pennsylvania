@@ -146,10 +146,33 @@ DATA DIVISION.
        01 WS-PROFILE-FOUND            PIC X VALUE 'N'.
        01 WS-INDEX-TEXT               PIC 9.
 
+
+        *> ***Added for "find someone you know" function
+
+       01 WS-SEARCH-CRITERIA          PIC X(80).
+       01 WS-SEARCH-TYPE              PIC X(20).
+       01 WS-SEARCH-FIRST-NAME        PIC X(20).
+       01 WS-SEARCH-LAST-NAME         PIC X(20).
+       01 WS-SEARCH-FULL-NAME         PIC X(41).
+       01 WS-CURRENT-FULL-NAME        PIC X(41).
+       01 WS-POSITION                 PIC 9(4).
+       01 WS-MATCH-FIRST              PIC X.
+       01 WS-MATCH-LAST               PIC X.
+       01 WS-SRC                      PIC X(40).
+       01 WS-PAT                      PIC X(40).
+       01 WS-SRC-LEN                  PIC 9(3).
+       01 WS-PAT-LEN                  PIC 9(3).
+       01 WS-I                        PIC 9(3).
+       01 WS-END                      PIC 9(3).
+       01 WS-MATCHES-FOUND            PIC 9 VALUE 0.
+       01 WS-CURRENT-MATCH            PIC X VALUE 'N'.
+
+
 PROCEDURE DIVISION.
        PERFORM OPEN-FILES.
        PERFORM LOAD-ACCOUNTS.
        PERFORM MAIN-MENU-DISPLAY.
+
        *> main loop that drives the program, processing one command per iteration
        PERFORM PROCESS-INPUT-COMMANDS UNTIL EOF.
 
@@ -507,8 +530,7 @@ POST-LOGIN-MENU.
                        MOVE "Search for a job is under construction." TO OUTPUT-LINE
                        PERFORM WRITE-AND-DISPLAY
                    WHEN "Find someone you know"
-                       MOVE "Find someone you know is under construction." TO OUTPUT-LINE
-                       PERFORM WRITE-AND-DISPLAY
+                      PERFORM FIND-SOMEONE-YOU-KNOW
                    WHEN "Learn a New Skill"
                        PERFORM LEARN-A-SKILL-SUB-MENU
                    WHEN "Go Back"
@@ -1178,3 +1200,165 @@ LOAD-PROFILE-FOR-CURRENT-USER.
            END-READ
        END-PERFORM
        CLOSE PROFILES-FILE.
+
+FIND-SOMEONE-YOU-KNOW.
+
+       MOVE 0 TO WS-MATCHES-FOUND
+       MOVE SPACES TO WS-SEARCH-FULL-NAME WS-CURRENT-FULL-NAME
+       MOVE SPACES TO WS-SEARCH-FIRST-NAME WS-SEARCH-LAST-NAME
+       MOVE "--- Find Someone You Know ---" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+
+       MOVE "Enter Full Name (First Last) or leave blank:" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+       READ INPUT-FILE
+           AT END SET EOF TO TRUE
+           NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-SEARCH-FULL-NAME
+       END-READ
+       IF EOF EXIT PARAGRAPH END-IF
+
+       IF FUNCTION TRIM(WS-SEARCH-FULL-NAME) = SPACE
+           MOVE "Enter First Name (partial allowed, blank to skip):" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           READ INPUT-FILE
+               AT END SET EOF TO TRUE
+               NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-SEARCH-FIRST-NAME
+           END-READ
+           IF EOF EXIT PARAGRAPH END-IF
+           MOVE "Enter Last Name (partial allowed, blank to skip):" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           READ INPUT-FILE
+               AT END SET EOF TO TRUE
+               NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-SEARCH-LAST-NAME
+           END-READ
+           IF EOF EXIT PARAGRAPH END-IF
+       END-IF
+
+       OPEN INPUT PROFILES-FILE
+       IF PROFILES-STATUS NOT = "00"
+           MOVE "No profiles found." TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           EXIT PARAGRAPH
+       END-IF
+
+       PERFORM UNTIL 1 = 2
+           READ PROFILES-FILE
+               AT END EXIT PERFORM
+               NOT AT END
+                   MOVE SPACES TO WS-CURRENT-FULL-NAME
+                   STRING FUNCTION TRIM(PR-FIRST-NAME) DELIMITED BY SIZE
+                          " " DELIMITED BY SIZE
+                          FUNCTION TRIM(PR-LAST-NAME) DELIMITED BY SIZE
+                          INTO WS-CURRENT-FULL-NAME
+                   END-STRING
+
+                   IF FUNCTION TRIM(WS-SEARCH-FULL-NAME) NOT = SPACE
+                       IF FUNCTION UPPER-CASE(FUNCTION TRIM(WS-CURRENT-FULL-NAME)) =
+                          FUNCTION UPPER-CASE(FUNCTION TRIM(WS-SEARCH-FULL-NAME))
+                           ADD 1 TO WS-MATCHES-FOUND
+                           MOVE SPACES TO OUTPUT-LINE
+                           STRING "User found: " DELIMITED BY SIZE
+                                  FUNCTION TRIM(PR-FIRST-NAME) DELIMITED BY SIZE
+                                  " " DELIMITED BY SIZE
+                                  FUNCTION TRIM(PR-LAST-NAME) DELIMITED BY SIZE
+                                  " (" DELIMITED BY SIZE
+                                  FUNCTION TRIM(PR-USERNAME) DELIMITED BY SIZE
+                                  ")" DELIMITED BY SIZE
+                                  INTO OUTPUT-LINE
+                           END-STRING
+                           PERFORM WRITE-AND-DISPLAY
+                       END-IF
+                   ELSE
+                       MOVE 'Y' TO WS-MATCH-FIRST
+                       MOVE 'Y' TO WS-MATCH-LAST
+                       IF FUNCTION TRIM(WS-SEARCH-FIRST-NAME) NOT = SPACE
+                           MOVE FUNCTION UPPER-CASE(FUNCTION TRIM(PR-FIRST-NAME)) TO WS-SRC
+                           MOVE FUNCTION UPPER-CASE(FUNCTION TRIM(WS-SEARCH-FIRST-NAME)) TO WS-PAT
+                           MOVE FUNCTION LENGTH(FUNCTION TRIM(WS-SRC)) TO WS-SRC-LEN
+                           MOVE FUNCTION LENGTH(FUNCTION TRIM(WS-PAT)) TO WS-PAT-LEN
+                           IF WS-PAT-LEN > WS-SRC-LEN
+                               MOVE 'N' TO WS-MATCH-FIRST
+                           ELSE
+                               COMPUTE WS-END = WS-SRC-LEN - WS-PAT-LEN + 1
+                               MOVE 'N' TO WS-MATCH-FIRST
+                               PERFORM VARYING WS-I FROM 1 BY 1 UNTIL WS-I > WS-END
+                                   IF WS-SRC(WS-I:WS-PAT-LEN) = WS-PAT(1:WS-PAT-LEN)
+                                       MOVE 'Y' TO WS-MATCH-FIRST
+                                       EXIT PERFORM
+                                   END-IF
+                               END-PERFORM
+                           END-IF
+                       END-IF
+                       IF FUNCTION TRIM(WS-SEARCH-LAST-NAME) NOT = SPACE
+                           MOVE FUNCTION UPPER-CASE(FUNCTION TRIM(PR-LAST-NAME)) TO WS-SRC
+                           MOVE FUNCTION UPPER-CASE(FUNCTION TRIM(WS-SEARCH-LAST-NAME)) TO WS-PAT
+                           MOVE FUNCTION LENGTH(FUNCTION TRIM(WS-SRC)) TO WS-SRC-LEN
+                           MOVE FUNCTION LENGTH(FUNCTION TRIM(WS-PAT)) TO WS-PAT-LEN
+                           IF WS-PAT-LEN > WS-SRC-LEN
+                               MOVE 'N' TO WS-MATCH-LAST
+                           ELSE
+                               COMPUTE WS-END = WS-SRC-LEN - WS-PAT-LEN + 1
+                               MOVE 'N' TO WS-MATCH-LAST
+                               PERFORM VARYING WS-I FROM 1 BY 1 UNTIL WS-I > WS-END
+                                   IF WS-SRC(WS-I:WS-PAT-LEN) = WS-PAT(1:WS-PAT-LEN)
+                                       MOVE 'Y' TO WS-MATCH-LAST
+                                       EXIT PERFORM
+                                   END-IF
+                               END-PERFORM
+                           END-IF
+                       END-IF
+
+                       IF WS-MATCH-FIRST = 'Y' AND WS-MATCH-LAST = 'Y'
+                           ADD 1 TO WS-MATCHES-FOUND
+                           MOVE SPACES TO OUTPUT-LINE
+                           STRING "User found: " DELIMITED BY SIZE
+                                  FUNCTION TRIM(PR-FIRST-NAME) DELIMITED BY SIZE
+                                  " " DELIMITED BY SIZE
+                                  FUNCTION TRIM(PR-LAST-NAME) DELIMITED BY SIZE
+                                  " (" DELIMITED BY SIZE
+                                  FUNCTION TRIM(PR-USERNAME) DELIMITED BY SIZE
+                                  ")" DELIMITED BY SIZE
+                                  INTO OUTPUT-LINE
+                           END-STRING
+                           PERFORM WRITE-AND-DISPLAY
+                       END-IF
+                   END-IF
+           END-READ
+       END-PERFORM
+       CLOSE PROFILES-FILE
+
+       IF WS-MATCHES-FOUND = 0
+           IF FUNCTION TRIM(WS-SEARCH-FULL-NAME) NOT = SPACE
+               MOVE SPACES TO OUTPUT-LINE
+               STRING "No users found with full name: " DELIMITED BY SIZE
+                      FUNCTION TRIM(WS-SEARCH-FULL-NAME) DELIMITED BY SIZE
+                      INTO OUTPUT-LINE
+               END-STRING
+               PERFORM WRITE-AND-DISPLAY
+               MOVE "Tip: Check spacing or try entering first/last separately." TO OUTPUT-LINE
+               PERFORM WRITE-AND-DISPLAY
+           ELSE
+               MOVE "No users found matching:" TO OUTPUT-LINE
+               PERFORM WRITE-AND-DISPLAY
+               IF FUNCTION TRIM(WS-SEARCH-FIRST-NAME) NOT = SPACE
+                   MOVE SPACES TO OUTPUT-LINE
+                   STRING "  First contains: " DELIMITED BY SIZE
+                          FUNCTION TRIM(WS-SEARCH-FIRST-NAME) DELIMITED BY SIZE
+                          INTO OUTPUT-LINE
+                   END-STRING
+                   PERFORM WRITE-AND-DISPLAY
+               END-IF
+               IF FUNCTION TRIM(WS-SEARCH-LAST-NAME) NOT = SPACE
+                   MOVE SPACES TO OUTPUT-LINE
+                   STRING "  Last contains:  " DELIMITED BY SIZE
+                          FUNCTION TRIM(WS-SEARCH-LAST-NAME) DELIMITED BY SIZE
+                          INTO OUTPUT-LINE
+                   END-STRING
+                   PERFORM WRITE-AND-DISPLAY
+               END-IF
+               MOVE "Tip: Try fewer letters for partial matches (case-insensitive)." TO OUTPUT-LINE
+               PERFORM WRITE-AND-DISPLAY
+           END-IF
+       END-IF.
+
+
