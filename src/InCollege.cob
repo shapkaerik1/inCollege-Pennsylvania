@@ -1209,7 +1209,7 @@ FIND-SOMEONE-YOU-KNOW.
        MOVE "--- Find Someone You Know ---" TO OUTPUT-LINE
        PERFORM WRITE-AND-DISPLAY
 
-       MOVE "Enter Full Name (First Last) or leave blank:" TO OUTPUT-LINE
+       MOVE "Enter Full Name (First Last):" TO OUTPUT-LINE
        PERFORM WRITE-AND-DISPLAY
        READ INPUT-FILE
            AT END SET EOF TO TRUE
@@ -1218,20 +1218,9 @@ FIND-SOMEONE-YOU-KNOW.
        IF EOF EXIT PARAGRAPH END-IF
 
        IF FUNCTION TRIM(WS-SEARCH-FULL-NAME) = SPACE
-           MOVE "Enter First Name (partial allowed, blank to skip):" TO OUTPUT-LINE
+           MOVE "Error: Full name is required for searching another person." TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
-           READ INPUT-FILE
-               AT END SET EOF TO TRUE
-               NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-SEARCH-FIRST-NAME
-           END-READ
-           IF EOF EXIT PARAGRAPH END-IF
-           MOVE "Enter Last Name (partial allowed, blank to skip):" TO OUTPUT-LINE
-           PERFORM WRITE-AND-DISPLAY
-           READ INPUT-FILE
-               AT END SET EOF TO TRUE
-               NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-SEARCH-LAST-NAME
-           END-READ
-           IF EOF EXIT PARAGRAPH END-IF
+           EXIT PARAGRAPH
        END-IF
 
        OPEN INPUT PROFILES-FILE
@@ -1252,113 +1241,216 @@ FIND-SOMEONE-YOU-KNOW.
                           INTO WS-CURRENT-FULL-NAME
                    END-STRING
 
-                   IF FUNCTION TRIM(WS-SEARCH-FULL-NAME) NOT = SPACE
-                       IF FUNCTION UPPER-CASE(FUNCTION TRIM(WS-CURRENT-FULL-NAME)) =
-                          FUNCTION UPPER-CASE(FUNCTION TRIM(WS-SEARCH-FULL-NAME))
-                           ADD 1 TO WS-MATCHES-FOUND
-                           MOVE SPACES TO OUTPUT-LINE
-                           STRING "User found: " DELIMITED BY SIZE
-                                  FUNCTION TRIM(PR-FIRST-NAME) DELIMITED BY SIZE
-                                  " " DELIMITED BY SIZE
-                                  FUNCTION TRIM(PR-LAST-NAME) DELIMITED BY SIZE
-                                  " (" DELIMITED BY SIZE
-                                  FUNCTION TRIM(PR-USERNAME) DELIMITED BY SIZE
-                                  ")" DELIMITED BY SIZE
-                                  INTO OUTPUT-LINE
-                           END-STRING
-                           PERFORM WRITE-AND-DISPLAY
-                       END-IF
-                   ELSE
-                       MOVE 'Y' TO WS-MATCH-FIRST
-                       MOVE 'Y' TO WS-MATCH-LAST
-                       IF FUNCTION TRIM(WS-SEARCH-FIRST-NAME) NOT = SPACE
-                           MOVE FUNCTION UPPER-CASE(FUNCTION TRIM(PR-FIRST-NAME)) TO WS-SRC
-                           MOVE FUNCTION UPPER-CASE(FUNCTION TRIM(WS-SEARCH-FIRST-NAME)) TO WS-PAT
-                           MOVE FUNCTION LENGTH(FUNCTION TRIM(WS-SRC)) TO WS-SRC-LEN
-                           MOVE FUNCTION LENGTH(FUNCTION TRIM(WS-PAT)) TO WS-PAT-LEN
-                           IF WS-PAT-LEN > WS-SRC-LEN
-                               MOVE 'N' TO WS-MATCH-FIRST
-                           ELSE
-                               COMPUTE WS-END = WS-SRC-LEN - WS-PAT-LEN + 1
-                               MOVE 'N' TO WS-MATCH-FIRST
-                               PERFORM VARYING WS-I FROM 1 BY 1 UNTIL WS-I > WS-END
-                                   IF WS-SRC(WS-I:WS-PAT-LEN) = WS-PAT(1:WS-PAT-LEN)
-                                       MOVE 'Y' TO WS-MATCH-FIRST
-                                       EXIT PERFORM
-                                   END-IF
-                               END-PERFORM
-                           END-IF
-                       END-IF
-                       IF FUNCTION TRIM(WS-SEARCH-LAST-NAME) NOT = SPACE
-                           MOVE FUNCTION UPPER-CASE(FUNCTION TRIM(PR-LAST-NAME)) TO WS-SRC
-                           MOVE FUNCTION UPPER-CASE(FUNCTION TRIM(WS-SEARCH-LAST-NAME)) TO WS-PAT
-                           MOVE FUNCTION LENGTH(FUNCTION TRIM(WS-SRC)) TO WS-SRC-LEN
-                           MOVE FUNCTION LENGTH(FUNCTION TRIM(WS-PAT)) TO WS-PAT-LEN
-                           IF WS-PAT-LEN > WS-SRC-LEN
-                               MOVE 'N' TO WS-MATCH-LAST
-                           ELSE
-                               COMPUTE WS-END = WS-SRC-LEN - WS-PAT-LEN + 1
-                               MOVE 'N' TO WS-MATCH-LAST
-                               PERFORM VARYING WS-I FROM 1 BY 1 UNTIL WS-I > WS-END
-                                   IF WS-SRC(WS-I:WS-PAT-LEN) = WS-PAT(1:WS-PAT-LEN)
-                                       MOVE 'Y' TO WS-MATCH-LAST
-                                       EXIT PERFORM
-                                   END-IF
-                               END-PERFORM
-                           END-IF
-                       END-IF
-
-                       IF WS-MATCH-FIRST = 'Y' AND WS-MATCH-LAST = 'Y'
-                           ADD 1 TO WS-MATCHES-FOUND
-                           MOVE SPACES TO OUTPUT-LINE
-                           STRING "User found: " DELIMITED BY SIZE
-                                  FUNCTION TRIM(PR-FIRST-NAME) DELIMITED BY SIZE
-                                  " " DELIMITED BY SIZE
-                                  FUNCTION TRIM(PR-LAST-NAME) DELIMITED BY SIZE
-                                  " (" DELIMITED BY SIZE
-                                  FUNCTION TRIM(PR-USERNAME) DELIMITED BY SIZE
-                                  ")" DELIMITED BY SIZE
-                                  INTO OUTPUT-LINE
-                           END-STRING
-                           PERFORM WRITE-AND-DISPLAY
-                       END-IF
+                   IF FUNCTION UPPER-CASE(FUNCTION TRIM(WS-CURRENT-FULL-NAME)) =
+                      FUNCTION UPPER-CASE(FUNCTION TRIM(WS-SEARCH-FULL-NAME))
+                       ADD 1 TO WS-MATCHES-FOUND
+                       MOVE SPACES TO OUTPUT-LINE
+                       STRING "User found: " DELIMITED BY SIZE
+                              FUNCTION TRIM(PR-FIRST-NAME) DELIMITED BY SIZE
+                              " " DELIMITED BY SIZE
+                              FUNCTION TRIM(PR-LAST-NAME) DELIMITED BY SIZE
+                              " (" DELIMITED BY SIZE
+                              FUNCTION TRIM(PR-USERNAME) DELIMITED BY SIZE
+                              ")" DELIMITED BY SIZE
+                              INTO OUTPUT-LINE
+                       END-STRING
+                       PERFORM WRITE-AND-DISPLAY
+                       PERFORM DISPLAY-FOUND-PROFILE
                    END-IF
            END-READ
        END-PERFORM
        CLOSE PROFILES-FILE
 
        IF WS-MATCHES-FOUND = 0
-           IF FUNCTION TRIM(WS-SEARCH-FULL-NAME) NOT = SPACE
+           MOVE SPACES TO OUTPUT-LINE
+           STRING "No users found with full name: " DELIMITED BY SIZE
+                  FUNCTION TRIM(WS-SEARCH-FULL-NAME) DELIMITED BY SIZE
+                  INTO OUTPUT-LINE
+           END-STRING
+           PERFORM WRITE-AND-DISPLAY
+           MOVE "Tip: Make sure to enter the exact full name (First Last)." TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+       END-IF.
+
+DISPLAY-FOUND-PROFILE.
+       *> Display the full profile of a found user with cool design
+       MOVE SPACES TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+       MOVE "╔══════════════════════════════════════════════════════════════╗" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+       MOVE "║                                                              ║" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+       MOVE "║                    🎯 FOUND PROFILE 🎯                        ║" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+       MOVE "║                                                              ║" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+       MOVE "╚══════════════════════════════════════════════════════════════╝" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+       MOVE SPACES TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+
+       *> Personal Information Section
+       MOVE "┌──────────────────────────────────────────────────────────────┐" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+       MOVE "│                      👤 PERSONAL INFO                        │" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+       MOVE "└──────────────────────────────────────────────────────────────┘" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+       MOVE SPACES TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+
+       MOVE SPACES TO OUTPUT-LINE
+       STRING "🔸 First Name:     " DELIMITED BY SIZE
+              FUNCTION TRIM(PR-FIRST-NAME) DELIMITED BY SIZE
+              INTO OUTPUT-LINE
+       END-STRING
+       PERFORM WRITE-AND-DISPLAY
+
+       MOVE SPACES TO OUTPUT-LINE
+       STRING "🔸 Last Name:      " DELIMITED BY SIZE
+              FUNCTION TRIM(PR-LAST-NAME) DELIMITED BY SIZE
+              INTO OUTPUT-LINE
+       END-STRING
+       PERFORM WRITE-AND-DISPLAY
+
+       MOVE SPACES TO OUTPUT-LINE
+       STRING "🏫 University:     " DELIMITED BY SIZE
+              FUNCTION TRIM(PR-UNIVERSITY) DELIMITED BY SIZE
+              INTO OUTPUT-LINE
+       END-STRING
+       PERFORM WRITE-AND-DISPLAY
+
+       MOVE SPACES TO OUTPUT-LINE
+       STRING "📚 Major:          " DELIMITED BY SIZE
+              FUNCTION TRIM(PR-MAJOR) DELIMITED BY SIZE
+              INTO OUTPUT-LINE
+       END-STRING
+       PERFORM WRITE-AND-DISPLAY
+
+       MOVE PR-GRAD-YEAR TO WS-GRAD-YEAR-STR
+       MOVE SPACES TO OUTPUT-LINE
+       STRING "🎓 Graduation:     " DELIMITED BY SIZE
+              FUNCTION TRIM(WS-GRAD-YEAR-STR) DELIMITED BY SIZE
+              INTO OUTPUT-LINE
+       END-STRING
+       PERFORM WRITE-AND-DISPLAY
+
+       IF FUNCTION TRIM(PR-ABOUT) NOT = SPACE
+           MOVE SPACES TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           MOVE "ABOUT ME:" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           MOVE "--------------------------------------" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           MOVE SPACES TO OUTPUT-LINE
+           STRING FUNCTION TRIM(PR-ABOUT) DELIMITED BY SIZE
+                  INTO OUTPUT-LINE
+           END-STRING
+           PERFORM WRITE-AND-DISPLAY
+       END-IF
+
+       *> Experience Section
+       IF PR-EXP-COUNT > 0
+           MOVE SPACES TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           MOVE "EXPERIENCE:" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           MOVE "--------------------------------------" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+
+           PERFORM VARYING I FROM 1 BY 1 UNTIL I > PR-EXP-COUNT
+               MOVE I TO WS-INDEX-TEXT
                MOVE SPACES TO OUTPUT-LINE
-               STRING "No users found with full name: " DELIMITED BY SIZE
-                      FUNCTION TRIM(WS-SEARCH-FULL-NAME) DELIMITED BY SIZE
+               STRING "Experience #" WS-INDEX-TEXT ":" DELIMITED BY SIZE
                       INTO OUTPUT-LINE
                END-STRING
                PERFORM WRITE-AND-DISPLAY
-               MOVE "Tip: Check spacing or try entering first/last separately." TO OUTPUT-LINE
+
+               MOVE SPACES TO OUTPUT-LINE
+               STRING "  Title:         " DELIMITED BY SIZE
+                      FUNCTION TRIM(PR-EXP-TITLE(I)) DELIMITED BY SIZE
+                      INTO OUTPUT-LINE
+               END-STRING
                PERFORM WRITE-AND-DISPLAY
-           ELSE
-               MOVE "No users found matching:" TO OUTPUT-LINE
+
+               MOVE SPACES TO OUTPUT-LINE
+               STRING "  Company:       " DELIMITED BY SIZE
+                      FUNCTION TRIM(PR-EXP-COMPANY(I)) DELIMITED BY SIZE
+                      INTO OUTPUT-LINE
+               END-STRING
                PERFORM WRITE-AND-DISPLAY
-               IF FUNCTION TRIM(WS-SEARCH-FIRST-NAME) NOT = SPACE
+
+               MOVE SPACES TO OUTPUT-LINE
+               STRING "  Dates:         " DELIMITED BY SIZE
+                      FUNCTION TRIM(PR-EXP-DATES(I)) DELIMITED BY SIZE
+                      INTO OUTPUT-LINE
+               END-STRING
+               PERFORM WRITE-AND-DISPLAY
+
+               IF FUNCTION TRIM(PR-EXP-DESC(I)) NOT = SPACE
                    MOVE SPACES TO OUTPUT-LINE
-                   STRING "  First contains: " DELIMITED BY SIZE
-                          FUNCTION TRIM(WS-SEARCH-FIRST-NAME) DELIMITED BY SIZE
+                   STRING "  Description:   " DELIMITED BY SIZE
+                          FUNCTION TRIM(PR-EXP-DESC(I)) DELIMITED BY SIZE
                           INTO OUTPUT-LINE
                    END-STRING
                    PERFORM WRITE-AND-DISPLAY
                END-IF
-               IF FUNCTION TRIM(WS-SEARCH-LAST-NAME) NOT = SPACE
+
+               IF I < PR-EXP-COUNT
                    MOVE SPACES TO OUTPUT-LINE
-                   STRING "  Last contains:  " DELIMITED BY SIZE
-                          FUNCTION TRIM(WS-SEARCH-LAST-NAME) DELIMITED BY SIZE
-                          INTO OUTPUT-LINE
-                   END-STRING
                    PERFORM WRITE-AND-DISPLAY
                END-IF
-               MOVE "Tip: Try fewer letters for partial matches (case-insensitive)." TO OUTPUT-LINE
+           END-PERFORM
+       END-IF
+
+       *> Education Section
+       IF PR-EDU-COUNT > 0
+           MOVE SPACES TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           MOVE "EDUCATION:" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           MOVE "--------------------------------------" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+
+           PERFORM VARYING I FROM 1 BY 1 UNTIL I > PR-EDU-COUNT
+               MOVE I TO WS-INDEX-TEXT
+               MOVE SPACES TO OUTPUT-LINE
+               STRING "Education #" WS-INDEX-TEXT ":" DELIMITED BY SIZE
+                      INTO OUTPUT-LINE
+               END-STRING
                PERFORM WRITE-AND-DISPLAY
-           END-IF
-       END-IF.
+
+               MOVE SPACES TO OUTPUT-LINE
+               STRING "  Degree:        " DELIMITED BY SIZE
+                      FUNCTION TRIM(PR-EDU-DEGREE(I)) DELIMITED BY SIZE
+                      INTO OUTPUT-LINE
+               END-STRING
+               PERFORM WRITE-AND-DISPLAY
+
+               MOVE SPACES TO OUTPUT-LINE
+               STRING "  University:    " DELIMITED BY SIZE
+                      FUNCTION TRIM(PR-EDU-UNIV(I)) DELIMITED BY SIZE
+                      INTO OUTPUT-LINE
+               END-STRING
+               PERFORM WRITE-AND-DISPLAY
+
+               MOVE SPACES TO OUTPUT-LINE
+               STRING "  Years:         " DELIMITED BY SIZE
+                      FUNCTION TRIM(PR-EDU-YEARS(I)) DELIMITED BY SIZE
+                      INTO OUTPUT-LINE
+               END-STRING
+               PERFORM WRITE-AND-DISPLAY
+
+               IF I < PR-EDU-COUNT
+                   MOVE SPACES TO OUTPUT-LINE
+                   PERFORM WRITE-AND-DISPLAY
+               END-IF
+           END-PERFORM
+       END-IF
+
+       MOVE SPACES TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+       MOVE "======================================" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY.
 
 

@@ -24,22 +24,12 @@ Passionate about robotics.
 DONE
 DONE
 Find someone you know
-Alice Smith
-Find someone you know
-alice smith
-Find someone you know
 Alice
 Find someone you know
 Smith
 Find someone you know
+Alice Smith
+Find someone you know
+alice smith
+Find someone you know
 Bob Johnson
-Find someone you know
-bob johnson
-Find someone you know
-Bob
-Find someone you know
-Johnson
-Find someone you know
-Alice Johnson
-Find someone you know
-Bob Smith

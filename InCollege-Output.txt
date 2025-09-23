@@ -86,31 +86,9 @@ Learn a New Skill
 Enter your choice:
 
 --- Find Someone You Know ---
-Enter Full Name (First Last) or leave blank:
-User found: Alice Smith (alice)
-
-Create/Edit My Profile
-View My Profile
-Search for a job
-Find someone you know
-Learn a New Skill
-Enter your choice:
-
---- Find Someone You Know ---
-Enter Full Name (First Last) or leave blank:
-User found: Alice Smith (alice)
-
-Create/Edit My Profile
-View My Profile
-Search for a job
-Find someone you know
-Learn a New Skill
-Enter your choice:
-
---- Find Someone You Know ---
-Enter Full Name (First Last) or leave blank:
+Enter Full Name (First Last):
 No users found with full name: Alice
-Tip: Check spacing or try entering first/last separately.
+Tip: Make sure to enter the exact full name (First Last).
 
 Create/Edit My Profile
 View My Profile
@@ -120,9 +98,9 @@ Learn a New Skill
 Enter your choice:
 
 --- Find Someone You Know ---
-Enter Full Name (First Last) or leave blank:
+Enter Full Name (First Last):
 No users found with full name: Smith
-Tip: Check spacing or try entering first/last separately.
+Tip: Make sure to enter the exact full name (First Last).
 
 Create/Edit My Profile
 View My Profile
@@ -132,67 +110,96 @@ Learn a New Skill
 Enter your choice:
 
 --- Find Someone You Know ---
-Enter Full Name (First Last) or leave blank:
+Enter Full Name (First Last):
+User found: Alice Smith (alice)
+
+╔══════════════════════════════════════════════════════════════╗
+║                                                              ║
+║                    🎯 FOUND PROFILE 🎯                        ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝
+
+┌──────────────────────────────────────────────────────────────┐
+│                      👤 PERSONAL INFO                        │
+└──────────────────────────────────────────────────────────────┘
+
+🔸 First Name:     Alice
+🔸 Last Name:      Smith
+🏫 University:     University of Florida
+📚 Major:          Computer Science
+🎓 Graduation:     2025
+
+ABOUT ME:
+--------------------------------------
+I love programming.
+
+======================================
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+Enter your choice:
+
+--- Find Someone You Know ---
+Enter Full Name (First Last):
+User found: Alice Smith (alice)
+
+╔══════════════════════════════════════════════════════════════╗
+║                                                              ║
+║                    🎯 FOUND PROFILE 🎯                        ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝
+
+┌──────────────────────────────────────────────────────────────┐
+│                      👤 PERSONAL INFO                        │
+└──────────────────────────────────────────────────────────────┘
+
+🔸 First Name:     Alice
+🔸 Last Name:      Smith
+🏫 University:     University of Florida
+📚 Major:          Computer Science
+🎓 Graduation:     2025
+
+ABOUT ME:
+--------------------------------------
+I love programming.
+
+======================================
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+Enter your choice:
+
+--- Find Someone You Know ---
+Enter Full Name (First Last):
 User found: Bob Johnson (bob)
 
-Create/Edit My Profile
-View My Profile
-Search for a job
-Find someone you know
-Learn a New Skill
-Enter your choice:
+╔══════════════════════════════════════════════════════════════╗
+║                                                              ║
+║                    🎯 FOUND PROFILE 🎯                        ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝
 
---- Find Someone You Know ---
-Enter Full Name (First Last) or leave blank:
-User found: Bob Johnson (bob)
+┌──────────────────────────────────────────────────────────────┐
+│                      👤 PERSONAL INFO                        │
+└──────────────────────────────────────────────────────────────┘
 
-Create/Edit My Profile
-View My Profile
-Search for a job
-Find someone you know
-Learn a New Skill
-Enter your choice:
+🔸 First Name:     Bob
+🔸 Last Name:      Johnson
+🏫 University:     Florida State University
+📚 Major:          Engineering
+🎓 Graduation:     2024
 
---- Find Someone You Know ---
-Enter Full Name (First Last) or leave blank:
-No users found with full name: Bob
-Tip: Check spacing or try entering first/last separately.
+ABOUT ME:
+--------------------------------------
+Passionate about robotics.
 
-Create/Edit My Profile
-View My Profile
-Search for a job
-Find someone you know
-Learn a New Skill
-Enter your choice:
-
---- Find Someone You Know ---
-Enter Full Name (First Last) or leave blank:
-No users found with full name: Johnson
-Tip: Check spacing or try entering first/last separately.
-
-Create/Edit My Profile
-View My Profile
-Search for a job
-Find someone you know
-Learn a New Skill
-Enter your choice:
-
---- Find Someone You Know ---
-Enter Full Name (First Last) or leave blank:
-No users found with full name: Alice Johnson
-Tip: Check spacing or try entering first/last separately.
-
-Create/Edit My Profile
-View My Profile
-Search for a job
-Find someone you know
-Learn a New Skill
-Enter your choice:
-
---- Find Someone You Know ---
-Enter Full Name (First Last) or leave blank:
-No users found with full name: Bob Smith
-Tip: Check spacing or try entering first/last separately.
+======================================
 
 Create/Edit My Profile
 View My Profile
