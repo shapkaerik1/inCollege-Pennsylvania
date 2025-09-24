@@ -1,0 +1,40 @@
+Create New Account
+charlie
+Str0ngPass!
+Create/Edit My Profile
+Charlie
+Brown
+University of Tampa
+Information Technology
+2026
+
+IT Intern
+UT Tech
+Fall 2024
+
+Help Desk Assistant
+Campus IT
+Spring 2025
+Resolved student support tickets.
+DONE
+B.S. Information Technology
+University of Tampa
+2022-2026
+DONE
+View My Profile
+Go Back
+Create New Account
+dana
+ValidPass1!
+Create/Edit My Profile
+Dana
+White
+USF
+Data Science
+2027
+
+DONE
+DONE
+Find someone you know
+Charlie Brown
+

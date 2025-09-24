@@ -1,0 +1,60 @@
+Create New Account
+testuser1
+ValidP1!
+Create/Edit My Profile
+
+John
+
+Doe
+
+Example University
+
+Computer Science
+
+wrongdate
+wr1g
+2025
+motivated cs student
+
+Software Intern
+
+Tech Corp
+
+Summer 2024
+creating new technologies
+DONE
+
+Bachelor of Science
+
+USF
+
+2023-2025
+DONE
+View My Profile
+Go Back
+Create New Account
+ethan
+Pyth0n!23
+Create/Edit My Profile
+Ethan
+Lee
+Georgia Tech
+CS
+2025
+TA for Data Structures
+DONE
+DONE
+Go Back
+Log In
+testuser1
+ValidP1!
+Find someone you know
+
+Find someone you know
+Ethan Lee
+Find someone you know
+ethan lee
+Find someone you know
+Lee
+Find someone you know
+ethan

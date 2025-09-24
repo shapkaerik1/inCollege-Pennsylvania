@@ -1,0 +1,217 @@
+****************************************
+*                                      *
+*         Welcome to InCollege!        *
+*                                      *
+****************************************
+
+Log In
+Create New Account
+Enter your selection:
+Please enter your username:
+Please enter your password:
+Account created successfully.
+You have successfully logged in.
+
+Welcome, user1!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+Enter your choice:
+
+--- Create/Edit Profile ---
+Enter First Name:
+Enter Last Name:
+Enter University/College Attended:
+Enter Major:
+Enter Graduation Year (YYYY):
+Enter About Me (optional, max 200 chars, enter blank line to skip):
+Add Experience (optional, max 3 entries. Enter 'DONE' to finish):
+Experience #1 - Title:
+Add Education (optional, max 3 entries. Enter 'DONE' to finish):
+Education #1 - Degree:
+Profile saved successfully!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+Enter your choice:
+
+======================================
+            YOUR PROFILE
+======================================
+
+PERSONAL INFORMATION:
+--------------------------------------
+First Name:       Carol
+Last Name:        Nguyen
+University:       University of Central Florida
+Major:            Computer Science
+Graduation Year:  2026
+
+ABOUT ME:
+--------------------------------------
+Loves OS and C programming
+
+======================================
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+Enter your choice:
+
+
+****************************************
+*                                      *
+*         Welcome to InCollege!        *
+*                                      *
+****************************************
+
+Log In
+Create New Account
+Enter your selection:
+Please enter your username:
+Please enter your password:
+Account created successfully.
+You have successfully logged in.
+
+Welcome, user2!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+Enter your choice:
+
+======================================
+            YOUR PROFILE
+======================================
+
+Profile not found. Please create your profile first.
+
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+Enter your choice:
+
+
+****************************************
+*                                      *
+*         Welcome to InCollege!        *
+*                                      *
+****************************************
+
+Log In
+Create New Account
+Enter your selection:
+Please enter your username:
+Please enter your password:
+Account created successfully.
+You have successfully logged in.
+
+Welcome, user3!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+Enter your choice:
+
+--- Create/Edit Profile ---
+Enter First Name:
+Enter Last Name:
+Enter University/College Attended:
+Enter Major:
+Enter Graduation Year (YYYY):
+Enter About Me (optional, max 200 chars, enter blank line to skip):
+Add Experience (optional, max 3 entries. Enter 'DONE' to finish):
+Experience #1 - Title:
+Add Education (optional, max 3 entries. Enter 'DONE' to finish):
+Education #1 - Degree:
+Profile saved successfully!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+Enter your choice:
+
+--- Find Someone You Know ---
+Enter Full Name (First Last):
+No users found with full name: user1
+Tip: Make sure to enter the exact full name (First Last).
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+Enter your choice:
+
+--- Find Someone You Know ---
+Enter Full Name (First Last):
+User found: Carol Nguyen (user1)
+
+╔══════════════════════════════════════════════════════════════╗
+║                                                              ║
+║                    🎯 FOUND PROFILE 🎯                        ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝
+
+┌──────────────────────────────────────────────────────────────┐
+│                      👤 PERSONAL INFO                        │
+└──────────────────────────────────────────────────────────────┘
+
+🔸 First Name:     Carol
+🔸 Last Name:      Nguyen
+🏫 University:     University of Central Florida
+📚 Major:          Computer Science
+🎓 Graduation:     2026
+
+ABOUT ME:
+--------------------------------------
+Loves OS and C programming
+
+======================================
+User found: Carol Nguyen (user3)
+
+╔══════════════════════════════════════════════════════════════╗
+║                                                              ║
+║                    🎯 FOUND PROFILE 🎯                        ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝
+
+┌──────────────────────────────────────────────────────────────┐
+│                      👤 PERSONAL INFO                        │
+└──────────────────────────────────────────────────────────────┘
+
+🔸 First Name:     Carol
+🔸 Last Name:      Nguyen
+🏫 University:     University of South Florida
+📚 Major:          Mechanical Engineering
+🎓 Graduation:     2025
+
+ABOUT ME:
+--------------------------------------
+motivated student
+
+======================================
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+Enter your choice:
