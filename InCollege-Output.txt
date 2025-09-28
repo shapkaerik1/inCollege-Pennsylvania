@@ -9,11 +9,229 @@ Create New Account
 Enter your selection:
 Please enter your username:
 Please enter your password:
-Incorrect username/password, please try again.
+Account created successfully.
+You have successfully logged in.
+
+Welcome, alice!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+Enter your choice:
+
+--- Create/Edit Profile ---
+Enter First Name:
+Enter Last Name:
+Enter University/College Attended:
+Enter Major:
+Enter Graduation Year (YYYY):
+Enter About Me (optional, max 200 chars, enter blank line to skip):
+Add Experience (optional, max 3 entries. Enter 'DONE' to finish):
+Experience #1 - Title:
+Experience #1 - Company/Organization:
+Experience #1 - Dates (e.g., Summer 2024):
+Experience #1 - Description (optional, max 100 chars, blank to skip):
+Add Experience (optional, max 3 entries. Enter 'DONE' to finish):
+Experience #2 - Title:
+Experience #2 - Company/Organization:
+Experience #2 - Dates (e.g., Summer 2024):
+Experience #2 - Description (optional, max 100 chars, blank to skip):
+Add Experience (optional, max 3 entries. Enter 'DONE' to finish):
+Experience #3 - Title:
+Add Education (optional, max 3 entries. Enter 'DONE' to finish):
+Education #1 - Degree:
+Education #1 - University/College:
+Education #1 - Years Attended (e.g., 2023-2025):
+Add Education (optional, max 3 entries. Enter 'DONE' to finish):
+Education #2 - Degree:
+Education #2 - University/College:
+Education #2 - Years Attended (e.g., 2023-2025):
+Add Education (optional, max 3 entries. Enter 'DONE' to finish):
+Education #3 - Degree:
+Profile saved successfully!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+Enter your choice:
+
+======================================
+            YOUR PROFILE
+======================================
+
+PERSONAL INFORMATION:
+--------------------------------------
+First Name:       Alice
+Last Name:        Smith
+University:       University of Florida
+Major:            Computer Science
+Graduation Year:  2025
+
+ABOUT ME:
+--------------------------------------
+I love programming.
+
+EXPERIENCE:
+--------------------------------------
+Experience #1:
+  Title:         Software Intern
+  Company:       Tech Corp
+  Dates:         Summer 2024
+  Description:   Built internal tools.
+
+Experience #2:
+  Title:         Data Science Intern
+  Company:       Data Corp
+  Dates:         Summer 2025
+
+EDUCATION:
+--------------------------------------
+Education #1:
+  Degree:        Bachelor of Science
+  University:    USF
+  Years:         2020-2024
+
+Education #2:
+  Degree:        Masters of Science
+  University:    USF
+  Years:         2024-2026
+
+======================================
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+Enter your choice:
+
+
+****************************************
+*                                      *
+*         Welcome to InCollege!        *
+*                                      *
+****************************************
+
+Log In
+Create New Account
+Enter your selection:
 Please enter your username:
 Please enter your password:
-Incorrect username/password, please try again.
-Please enter your username:
-Please enter your password:
-Incorrect username/password, please try again.
-Please enter your username:
+Account created successfully.
+You have successfully logged in.
+
+Welcome, bob!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+Enter your choice:
+
+--- Create/Edit Profile ---
+Enter First Name:
+Enter Last Name:
+Enter University/College Attended:
+Enter Major:
+Enter Graduation Year (YYYY):
+Enter About Me (optional, max 200 chars, enter blank line to skip):
+Add Experience (optional, max 3 entries. Enter 'DONE' to finish):
+Experience #1 - Title:
+Add Education (optional, max 3 entries. Enter 'DONE' to finish):
+Education #1 - Degree:
+Profile saved successfully!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+Enter your choice:
+
+======================================
+            YOUR PROFILE
+======================================
+
+PERSONAL INFORMATION:
+--------------------------------------
+First Name:       Bob
+Last Name:        Johnson
+University:       Florida State University
+Major:            Engineering
+Graduation Year:  2024
+
+ABOUT ME:
+--------------------------------------
+Passionate about robotics.
+
+======================================
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+Enter your choice:
+
+--- Find Someone You Know ---
+Enter Full Name (First Last):
+User found: Alice Smith (alice)
+
+╔══════════════════════════════════════════════════════════════╗
+║                                                              ║
+║                    🎯 FOUND PROFILE 🎯                        ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝
+
+┌──────────────────────────────────────────────────────────────┐
+│                      👤 PERSONAL INFO                        │
+└──────────────────────────────────────────────────────────────┘
+
+🔸 First Name:     Alice
+🔸 Last Name:      Smith
+🏫 University:     University of Florida
+📚 Major:          Computer Science
+🎓 Graduation:     2025
+
+ABOUT ME:
+--------------------------------------
+I love programming.
+
+EXPERIENCE:
+--------------------------------------
+Experience #1:
+  Title:         Software Intern
+  Company:       Tech Corp
+  Dates:         Summer 2024
+  Description:   Built internal tools.
+
+Experience #2:
+  Title:         Data Science Intern
+  Company:       Data Corp
+  Dates:         Summer 2025
+
+EDUCATION:
+--------------------------------------
+Education #1:
+  Degree:        Bachelor of Science
+  University:    USF
+  Years:         2020-2024
+
+Education #2:
+  Degree:        Masters of Science
+  University:    USF
+  Years:         2024-2026
+
+======================================
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+Enter your choice:

@@ -8,6 +8,7 @@ InCollege-Output.txt
 InCollege-Input.txt
 
 # Build artifacts / binary
+bin/
 InCollege
 *.o
 *.so
