@@ -41,3 +41,4 @@ DONE
 View My Profile
 Find someone you know
 Alice Smith
+Send Connection Request

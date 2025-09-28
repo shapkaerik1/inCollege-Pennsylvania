@@ -229,6 +229,11 @@ Education #2:
 
 ======================================
 
+1. Send Connection Request
+2. Back to Main Menu
+Enter your choice:
+Connection request sent to alice.
+
 Create/Edit My Profile
 View My Profile
 Search for a job
