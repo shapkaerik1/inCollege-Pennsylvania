@@ -229,6 +229,16 @@ Education #2:
 
 ======================================
 
+1. Send Connection Request
+2. Back to Main Menu
+Enter your choice:
+Connection request sent to alice.
+View Pending Requests
+Pending Request from: alice
+Connection request accepted from alice.
+Error: You are already connected with this user.
+Error: This user has already sent you a connection request.
+
 Create/Edit My Profile
 View My Profile
 Search for a job

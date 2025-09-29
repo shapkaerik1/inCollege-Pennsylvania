@@ -25,6 +25,10 @@ ENVIRONMENT DIVISION.
                      ASSIGN TO "PROFILES.TMP"
                      ORGANIZATION IS LINE SEQUENTIAL
                      FILE STATUS IS TEMP-PROFILES-STATUS.
+                 SELECT CONNECTION-REQUESTS-FILE
+                     ASSIGN TO "CONNECTION_REQUESTS.DAT"
+                     ORGANIZATION IS LINE SEQUENTIAL
+                     FILE STATUS IS CONNECTION-REQUESTS-STATUS.
 
 DATA DIVISION.
        FILE SECTION.
@@ -81,6 +85,11 @@ DATA DIVISION.
               10 TMP-EDU-UNIV          PIC X(40).
               10 TMP-EDU-YEARS         PIC X(20).
 
+       FD CONNECTION-REQUESTS-FILE.
+       01 CONNECTION-REQUEST-RECORD.
+           05 CR-SENDER-USERNAME       PIC X(20).
+           05 CR-RECIPIENT-USERNAME    PIC X(20).
+
        WORKING-STORAGE SECTION.
        *> variables for file handling
        01 INPUT-FILE-STATUS PIC XX.
@@ -88,6 +97,7 @@ DATA DIVISION.
        01 ACCOUNTS-STATUS PIC X(2).
        01 PROFILES-STATUS  PIC X(2).
        01 TEMP-PROFILES-STATUS PIC X(2).
+       01 CONNECTION-REQUESTS-STATUS PIC X(2).
 
        *> end of file flag to control main loop
        01 WS-EOF-FLAG PIC A(1) VALUE 'N'.
@@ -166,6 +176,13 @@ DATA DIVISION.
        01 WS-END                      PIC 9(3).
        01 WS-MATCHES-FOUND            PIC 9 VALUE 0.
        01 WS-CURRENT-MATCH            PIC X VALUE 'N'.
+
+        *> ***Added for connection request functionality
+       01 WS-CONNECTION-VARIABLES.
+           05 WS-TARGET-USERNAME      PIC X(20).
+           05 WS-CONNECTION-EXISTS    PIC X VALUE 'N'.
+           05 WS-REQUEST-EXISTS       PIC X VALUE 'N'.
+           05 WS-CONN-MENU-CHOICE     PIC X(80).
 
 
 PROCEDURE DIVISION.
@@ -1029,6 +1046,93 @@ VIEW-MY-PROFILE.
        MOVE "======================================" TO OUTPUT-LINE
        PERFORM WRITE-AND-DISPLAY.
 
+SEND-CONNECTION-REQUEST.
+       *> Validate connection request and save if valid
+
+       *> Check if user is trying to connect with themselves
+       IF FUNCTION TRIM(USERNAME) = FUNCTION TRIM(WS-TARGET-USERNAME)
+           MOVE "Error: You cannot send a connection request to yourself." TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           EXIT PARAGRAPH
+       END-IF
+
+       *> Check if connection or request already exists
+       PERFORM CHECK-EXISTING-CONNECTION
+
+       IF WS-CONNECTION-EXISTS = 'Y'
+           MOVE "You are already connected with this user." TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           EXIT PARAGRAPH
+       END-IF
+
+       IF WS-REQUEST-EXISTS = 'Y'
+           MOVE "This user has already sent you a connection request." TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           EXIT PARAGRAPH
+       END-IF
+
+       *> If we reach here, the request is valid - save it
+       PERFORM SAVE-CONNECTION-REQUEST
+
+       *> Display success message
+       MOVE SPACES TO OUTPUT-LINE
+       STRING "Connection request sent to " DELIMITED BY SIZE
+              FUNCTION TRIM(WS-TARGET-USERNAME) DELIMITED BY SIZE
+              "." DELIMITED BY SIZE
+              INTO OUTPUT-LINE
+       END-STRING
+       PERFORM WRITE-AND-DISPLAY.
+
+CHECK-EXISTING-CONNECTION.
+       *> This paragraph checks if users are already connected or if a request exists
+       MOVE 'N' TO WS-CONNECTION-EXISTS
+       MOVE 'N' TO WS-REQUEST-EXISTS
+
+       *> For now, we only check for existing requests since connections aren't implemented yet
+       *> Open the connection requests file to check for existing requests
+       OPEN INPUT CONNECTION-REQUESTS-FILE
+       IF CONNECTION-REQUESTS-STATUS NOT = "00"
+           *> File doesn't exist yet, so no existing requests
+           EXIT PARAGRAPH
+       END-IF
+
+       PERFORM UNTIL 1 = 2
+           READ CONNECTION-REQUESTS-FILE
+               AT END EXIT PERFORM
+               NOT AT END
+                   *> Check if target user already sent a request to current user
+                   IF FUNCTION TRIM(CR-SENDER-USERNAME) = FUNCTION TRIM(WS-TARGET-USERNAME) AND
+                      FUNCTION TRIM(CR-RECIPIENT-USERNAME) = FUNCTION TRIM(USERNAME)
+                       MOVE 'Y' TO WS-REQUEST-EXISTS
+                       EXIT PERFORM
+                   END-IF
+                   *> Check if current user already sent a request to target user
+                   IF FUNCTION TRIM(CR-SENDER-USERNAME) = FUNCTION TRIM(USERNAME) AND
+                      FUNCTION TRIM(CR-RECIPIENT-USERNAME) = FUNCTION TRIM(WS-TARGET-USERNAME)
+                       MOVE 'Y' TO WS-REQUEST-EXISTS
+                       EXIT PERFORM
+                   END-IF
+           END-READ
+       END-PERFORM
+       CLOSE CONNECTION-REQUESTS-FILE.
+
+SAVE-CONNECTION-REQUEST.
+       *> Save the connection request to the file
+       MOVE FUNCTION TRIM(USERNAME) TO CR-SENDER-USERNAME
+       MOVE FUNCTION TRIM(WS-TARGET-USERNAME) TO CR-RECIPIENT-USERNAME
+
+       *> Open file for appending (create if doesn't exist)
+       OPEN EXTEND CONNECTION-REQUESTS-FILE
+       IF CONNECTION-REQUESTS-STATUS = "35" *> File not found
+           OPEN OUTPUT CONNECTION-REQUESTS-FILE
+       ELSE
+           CLOSE CONNECTION-REQUESTS-FILE
+           OPEN EXTEND CONNECTION-REQUESTS-FILE
+       END-IF
+
+       WRITE CONNECTION-REQUEST-RECORD
+       CLOSE CONNECTION-REQUESTS-FILE.
+
 SAVE-CURRENT-PROFILE.
        *> populate PR- fields from working copy
        MOVE FUNCTION TRIM(USERNAME)      TO PR-USERNAME
@@ -1271,6 +1375,46 @@ FIND-SOMEONE-YOU-KNOW.
            MOVE "Tip: Make sure to enter the exact full name (First Last)." TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
        END-IF.
+GET-PENDING-CONNECTION-REQUESTS.
+    OPEN INPUT CONNECTION-REQUESTS-FILE
+    IF CONNECTION-REQUESTS-STATUS NOT = "00"
+        MOVE "No connection requests found." TO OUTPUT-LINE
+        PERFORM WRITE-AND-DISPLAY
+        EXIT PARAGRAPH
+    END-IF
+
+    MOVE 0 TO WS-MATCHES-FOUND
+    PERFORM UNTIL 1 = 2
+        READ CONNECTION-REQUESTS-FILE
+            AT END EXIT PERFORM
+            NOT AT END
+                IF FUNCTION TRIM(CR-RECIPIENT-USERNAME) = FUNCTION TRIM(USERNAME) AND
+                   FUNCTION TRIM(CR-STATUS) = "pending"
+                    ADD 1 TO WS-MATCHES-FOUND
+                    MOVE "Pending Request from: " TO OUTPUT-LINE
+                    STRING CR-SENDER-USERNAME DELIMITED BY SIZE INTO OUTPUT-LINE
+                    PERFORM WRITE-AND-DISPLAY
+                END-IF
+        END-READ
+    END-PERFORM
+    CLOSE CONNECTION-REQUESTS-FILE
+
+    IF WS-MATCHES-FOUND = 0
+        MOVE "No pending connection requests." TO OUTPUT-LINE
+        PERFORM WRITE-AND-DISPLAY
+    END-IF
+POST-LOGIN-MENU.
+    MOVE "1. View Pending Requests" TO OUTPUT-LINE
+    PERFORM WRITE-AND-DISPLAY
+    MOVE "2. Log Out" TO OUTPUT-LINE
+    PERFORM WRITE-AND-DISPLAY
+    MOVE "Enter your choice:" TO OUTPUT-LINE
+    PERFORM WRITE-AND-DISPLAY
+      
+ACCEPT-CONNECTION-REQUEST.
+    MOVE 'accepted' TO CR-STATUS
+    WRITE CONNECTION-REQUEST-RECORD
+
 
 DISPLAY-FOUND-PROFILE.
        *> Display the full profile of a found user with cool design
@@ -1451,6 +1595,38 @@ DISPLAY-FOUND-PROFILE.
        MOVE SPACES TO OUTPUT-LINE
        PERFORM WRITE-AND-DISPLAY
        MOVE "======================================" TO OUTPUT-LINE
-       PERFORM WRITE-AND-DISPLAY.
+       PERFORM WRITE-AND-DISPLAY
+
+       *> Store the target username for connection request
+       MOVE FUNCTION TRIM(PR-USERNAME) TO WS-TARGET-USERNAME
+
+       *> Display connection request menu
+       MOVE SPACES TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+       MOVE "Send Connection Request" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+       MOVE "Back to Main Menu" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+       MOVE "Enter your choice:" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+
+       *> Get user's menu choice
+       READ INPUT-FILE
+           AT END SET EOF TO TRUE
+           NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-CONN-MENU-CHOICE
+       END-READ
+
+       IF NOT EOF
+           EVALUATE WS-CONN-MENU-CHOICE
+               WHEN "Send Connection Request"
+                   PERFORM SEND-CONNECTION-REQUEST
+               WHEN "Back to Main Menu"
+                   *> Do nothing, just return to main menu
+                   CONTINUE
+               WHEN OTHER
+                   MOVE "Invalid choice. Returning to main menu." TO OUTPUT-LINE
+                   PERFORM WRITE-AND-DISPLAY
+           END-EVALUATE
+       END-IF.
 
 
