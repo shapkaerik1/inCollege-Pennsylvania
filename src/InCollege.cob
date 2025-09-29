@@ -1375,6 +1375,46 @@ FIND-SOMEONE-YOU-KNOW.
            MOVE "Tip: Make sure to enter the exact full name (First Last)." TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
        END-IF.
+GET-PENDING-CONNECTION-REQUESTS.
+    OPEN INPUT CONNECTION-REQUESTS-FILE
+    IF CONNECTION-REQUESTS-STATUS NOT = "00"
+        MOVE "No connection requests found." TO OUTPUT-LINE
+        PERFORM WRITE-AND-DISPLAY
+        EXIT PARAGRAPH
+    END-IF
+
+    MOVE 0 TO WS-MATCHES-FOUND
+    PERFORM UNTIL 1 = 2
+        READ CONNECTION-REQUESTS-FILE
+            AT END EXIT PERFORM
+            NOT AT END
+                IF FUNCTION TRIM(CR-RECIPIENT-USERNAME) = FUNCTION TRIM(USERNAME) AND
+                   FUNCTION TRIM(CR-STATUS) = "pending"
+                    ADD 1 TO WS-MATCHES-FOUND
+                    MOVE "Pending Request from: " TO OUTPUT-LINE
+                    STRING CR-SENDER-USERNAME DELIMITED BY SIZE INTO OUTPUT-LINE
+                    PERFORM WRITE-AND-DISPLAY
+                END-IF
+        END-READ
+    END-PERFORM
+    CLOSE CONNECTION-REQUESTS-FILE
+
+    IF WS-MATCHES-FOUND = 0
+        MOVE "No pending connection requests." TO OUTPUT-LINE
+        PERFORM WRITE-AND-DISPLAY
+    END-IF
+POST-LOGIN-MENU.
+    MOVE "1. View Pending Requests" TO OUTPUT-LINE
+    PERFORM WRITE-AND-DISPLAY
+    MOVE "2. Log Out" TO OUTPUT-LINE
+    PERFORM WRITE-AND-DISPLAY
+    MOVE "Enter your choice:" TO OUTPUT-LINE
+    PERFORM WRITE-AND-DISPLAY
+      
+ACCEPT-CONNECTION-REQUEST.
+    MOVE 'accepted' TO CR-STATUS
+    WRITE CONNECTION-REQUEST-RECORD
+
 
 DISPLAY-FOUND-PROFILE.
        *> Display the full profile of a found user with cool design
