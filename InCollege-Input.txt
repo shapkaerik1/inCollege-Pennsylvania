@@ -42,3 +42,5 @@ View My Profile
 Find someone you know
 Alice Smith
 Send Connection Request
+View Pending Request
+Accept Connection Request
