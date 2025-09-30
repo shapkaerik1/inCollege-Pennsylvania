@@ -517,6 +517,7 @@ POST-LOGIN-MENU.
        PERFORM UNTIL EOF
            MOVE SPACES TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
+
            MOVE "Create/Edit My Profile" TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
            MOVE "View My Profile" TO OUTPUT-LINE
@@ -527,6 +528,13 @@ POST-LOGIN-MENU.
            PERFORM WRITE-AND-DISPLAY
            MOVE "Learn a New Skill" TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
+
+           *> Newly added options
+           MOVE "View Pending Requests" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           MOVE "Log Out" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+
            MOVE "Enter your choice:" TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
 
@@ -1403,13 +1411,6 @@ GET-PENDING-CONNECTION-REQUESTS.
         MOVE "No pending connection requests." TO OUTPUT-LINE
         PERFORM WRITE-AND-DISPLAY
     END-IF
-POST-LOGIN-MENU.
-    MOVE "1. View Pending Requests" TO OUTPUT-LINE
-    PERFORM WRITE-AND-DISPLAY
-    MOVE "2. Log Out" TO OUTPUT-LINE
-    PERFORM WRITE-AND-DISPLAY
-    MOVE "Enter your choice:" TO OUTPUT-LINE
-    PERFORM WRITE-AND-DISPLAY
       
 ACCEPT-CONNECTION-REQUEST.
     MOVE 'accepted' TO CR-STATUS
