@@ -1,29 +1,46 @@
 Create New Account
-caseuser1
+alice
 ValidPass1!
 Create/Edit My Profile
-Case
-User
-UF
-Testing
-2026
-Case insensitive search target.
+Alice
+Smith
+University of Florida
+Computer Science
+2025
+I love programming.
+Software Intern
+Tech Corp
+Summer 2024
+Built internal tools.
+Data Science Intern
+Data Corp
+Summer 2025
+
 DONE
+Bachelor of Science
+USF
+2020-2024
+Masters of Science
+USF
+2024-2026
 DONE
+View My Profile
 Go Back
 Create New Account
-caseuser2
+bob
 ValidPass2!
 Create/Edit My Profile
-Case
-User
-UCF
-Testing
-2026
-Requester.
+Bob
+Johnson
+Florida State University
+Engineering
+2024
+Passionate about robotics.
 DONE
 DONE
+View My Profile
 Find someone you know
-case user
+Alice Smith
 Send Connection Request
-
+View Pending Request
+Accept Connection Request
