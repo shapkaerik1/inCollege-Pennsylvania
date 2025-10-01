@@ -89,6 +89,7 @@ DATA DIVISION.
        01 CONNECTION-REQUEST-RECORD.
            05 CR-SENDER-USERNAME       PIC X(20).
            05 CR-RECIPIENT-USERNAME    PIC X(20).
+           05 CR-STATUS                PIC X(10).
 
        WORKING-STORAGE SECTION.
        *> variables for file handling
@@ -527,6 +528,8 @@ POST-LOGIN-MENU.
            PERFORM WRITE-AND-DISPLAY
            MOVE "Learn a New Skill" TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
+           MOVE "View My Pending Connection Requests" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
            MOVE "Enter your choice:" TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
 
@@ -550,6 +553,8 @@ POST-LOGIN-MENU.
                       PERFORM FIND-SOMEONE-YOU-KNOW
                    WHEN "Learn a New Skill"
                        PERFORM LEARN-A-SKILL-SUB-MENU
+                   WHEN "View My Pending Connection Requests"
+                       PERFORM VIEW-PENDING-CONNECTION-REQUESTS
                    WHEN "Go Back"
                        MOVE SPACES TO OUTPUT-LINE
                        PERFORM WRITE-AND-DISPLAY
@@ -1102,13 +1107,15 @@ CHECK-EXISTING-CONNECTION.
                NOT AT END
                    *> Check if target user already sent a request to current user
                    IF FUNCTION TRIM(CR-SENDER-USERNAME) = FUNCTION TRIM(WS-TARGET-USERNAME) AND
-                      FUNCTION TRIM(CR-RECIPIENT-USERNAME) = FUNCTION TRIM(USERNAME)
+                      FUNCTION TRIM(CR-RECIPIENT-USERNAME) = FUNCTION TRIM(USERNAME) AND
+                      FUNCTION TRIM(CR-STATUS) = "pending"
                        MOVE 'Y' TO WS-REQUEST-EXISTS
                        EXIT PERFORM
                    END-IF
                    *> Check if current user already sent a request to target user
                    IF FUNCTION TRIM(CR-SENDER-USERNAME) = FUNCTION TRIM(USERNAME) AND
-                      FUNCTION TRIM(CR-RECIPIENT-USERNAME) = FUNCTION TRIM(WS-TARGET-USERNAME)
+                      FUNCTION TRIM(CR-RECIPIENT-USERNAME) = FUNCTION TRIM(WS-TARGET-USERNAME) AND
+                      FUNCTION TRIM(CR-STATUS) = "pending"
                        MOVE 'Y' TO WS-REQUEST-EXISTS
                        EXIT PERFORM
                    END-IF
@@ -1120,6 +1127,7 @@ SAVE-CONNECTION-REQUEST.
        *> Save the connection request to the file
        MOVE FUNCTION TRIM(USERNAME) TO CR-SENDER-USERNAME
        MOVE FUNCTION TRIM(WS-TARGET-USERNAME) TO CR-RECIPIENT-USERNAME
+       MOVE "pending" TO CR-STATUS
 
        *> Open file for appending (create if doesn't exist)
        OPEN EXTEND CONNECTION-REQUESTS-FILE
@@ -1375,45 +1383,43 @@ FIND-SOMEONE-YOU-KNOW.
            MOVE "Tip: Make sure to enter the exact full name (First Last)." TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
        END-IF.
-GET-PENDING-CONNECTION-REQUESTS.
-    OPEN INPUT CONNECTION-REQUESTS-FILE
-    IF CONNECTION-REQUESTS-STATUS NOT = "00"
-        MOVE "No connection requests found." TO OUTPUT-LINE
-        PERFORM WRITE-AND-DISPLAY
-        EXIT PARAGRAPH
-    END-IF
+VIEW-PENDING-CONNECTION-REQUESTS.
+       MOVE "--- Pending Connection Requests ---" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+       OPEN INPUT CONNECTION-REQUESTS-FILE
+       IF CONNECTION-REQUESTS-STATUS NOT = "00"
+           MOVE "You have no pending connection requests at this time." TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           MOVE "-----------------------------------" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           EXIT PARAGRAPH
+       END-IF
 
-    MOVE 0 TO WS-MATCHES-FOUND
-    PERFORM UNTIL 1 = 2
-        READ CONNECTION-REQUESTS-FILE
-            AT END EXIT PERFORM
-            NOT AT END
-                IF FUNCTION TRIM(CR-RECIPIENT-USERNAME) = FUNCTION TRIM(USERNAME) AND
-                   FUNCTION TRIM(CR-STATUS) = "pending"
-                    ADD 1 TO WS-MATCHES-FOUND
-                    MOVE "Pending Request from: " TO OUTPUT-LINE
-                    STRING CR-SENDER-USERNAME DELIMITED BY SIZE INTO OUTPUT-LINE
-                    PERFORM WRITE-AND-DISPLAY
-                END-IF
-        END-READ
-    END-PERFORM
-    CLOSE CONNECTION-REQUESTS-FILE
+       MOVE 0 TO WS-MATCHES-FOUND
+       PERFORM UNTIL 1 = 2
+           READ CONNECTION-REQUESTS-FILE
+               AT END EXIT PERFORM
+               NOT AT END
+                   IF FUNCTION TRIM(CR-RECIPIENT-USERNAME) = FUNCTION TRIM(USERNAME) AND
+                      FUNCTION TRIM(CR-STATUS) = "pending"
+                       ADD 1 TO WS-MATCHES-FOUND
+                       MOVE SPACES TO OUTPUT-LINE
+                       STRING "From: " DELIMITED BY SIZE
+                              FUNCTION TRIM(CR-SENDER-USERNAME) DELIMITED BY SIZE
+                              INTO OUTPUT-LINE
+                       END-STRING
+                       PERFORM WRITE-AND-DISPLAY
+                   END-IF
+           END-READ
+       END-PERFORM
+       CLOSE CONNECTION-REQUESTS-FILE
 
-    IF WS-MATCHES-FOUND = 0
-        MOVE "No pending connection requests." TO OUTPUT-LINE
-        PERFORM WRITE-AND-DISPLAY
-    END-IF
-POST-LOGIN-MENU.
-    MOVE "1. View Pending Requests" TO OUTPUT-LINE
-    PERFORM WRITE-AND-DISPLAY
-    MOVE "2. Log Out" TO OUTPUT-LINE
-    PERFORM WRITE-AND-DISPLAY
-    MOVE "Enter your choice:" TO OUTPUT-LINE
-    PERFORM WRITE-AND-DISPLAY
-      
-ACCEPT-CONNECTION-REQUEST.
-    MOVE 'accepted' TO CR-STATUS
-    WRITE CONNECTION-REQUEST-RECORD
+       IF WS-MATCHES-FOUND = 0
+           MOVE "You have no pending connection requests at this time." TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+       END-IF
+       MOVE "-----------------------------------" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY.
 
 
 DISPLAY-FOUND-PROFILE.

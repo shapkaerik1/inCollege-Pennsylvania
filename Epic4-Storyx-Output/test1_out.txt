@@ -12,7 +12,7 @@ Please enter your password:
 Account created successfully.
 You have successfully logged in.
 
-Welcome, caseuser1!
+Welcome, newstudent!
 
 Create/Edit My Profile
 View My Profile
@@ -58,7 +58,7 @@ Please enter your password:
 Account created successfully.
 You have successfully logged in.
 
-Welcome, caseuser2!
+Welcome, testuser1!
 
 Create/Edit My Profile
 View My Profile
@@ -89,9 +89,21 @@ Learn a New Skill
 View My Pending Connection Requests
 Enter your choice:
 
+--- Pending Connection Requests ---
+You have no pending connection requests at this time.
+-----------------------------------
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View My Pending Connection Requests
+Enter your choice:
+
 --- Find Someone You Know ---
 Enter Full Name (First Last):
-User found: Case User (caseuser1)
+User found: New Student (newstudent)
 
 ╔══════════════════════════════════════════════════════════════╗
 ║                                                              ║
@@ -103,50 +115,32 @@ User found: Case User (caseuser1)
 │                      👤 PERSONAL INFO                        │
 └──────────────────────────────────────────────────────────────┘
 
-🔸 First Name:     Case
-🔸 Last Name:      User
-🏫 University:     UF
-📚 Major:          Testing
-🎓 Graduation:     2026
+🔸 First Name:     New
+🔸 Last Name:      Student
+🏫 University:     West Coast Uni
+📚 Major:          Business
+🎓 Graduation:     2027
 
 ABOUT ME:
 --------------------------------------
-Case insensitive search target.
+Passionate learner.
 
 ======================================
 
 Send Connection Request
 Back to Main Menu
 Enter your choice:
-Connection request sent to caseuser1.
-User found: Case User (caseuser2)
+Connection request sent to newstudent.
 
-╔══════════════════════════════════════════════════════════════╗
-║                                                              ║
-║                    🎯 FOUND PROFILE 🎯                        ║
-║                                                              ║
-╚══════════════════════════════════════════════════════════════╝
-
-┌──────────────────────────────────────────────────────────────┐
-│                      👤 PERSONAL INFO                        │
-└──────────────────────────────────────────────────────────────┘
-
-🔸 First Name:     Case
-🔸 Last Name:      User
-🏫 University:     UCF
-📚 Major:          Testing
-🎓 Graduation:     2026
-
-ABOUT ME:
---------------------------------------
-Requester.
-
-======================================
-
-Send Connection Request
-Back to Main Menu
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View My Pending Connection Requests
 Enter your choice:
-Invalid choice. Returning to main menu.
+
+Invalid choice. Please try again.
 
 Create/Edit My Profile
 View My Profile
