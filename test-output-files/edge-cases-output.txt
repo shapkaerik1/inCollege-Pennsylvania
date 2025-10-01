@@ -1,0 +1,853 @@
+****************************************
+*                                      *
+*         Welcome to InCollege!        *
+*                                      *
+****************************************
+
+Log In
+Create New Account
+Enter your selection:
+Please enter your username:
+Please enter your password:
+Account created successfully.
+You have successfully logged in.
+
+Welcome, alice!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+Log Out
+Enter your choice:
+
+--- Create/Edit Profile ---
+Enter First Name:
+Enter Last Name:
+Enter University/College Attended:
+Enter Major:
+Enter Graduation Year (YYYY):
+Enter About Me (optional, max 200 chars, enter blank line to skip):
+Add Experience (optional, max 3 entries. Enter 'DONE' to finish):
+Experience #1 - Title:
+Add Education (optional, max 3 entries. Enter 'DONE' to finish):
+Education #1 - Degree:
+Profile saved successfully!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+Log Out
+Enter your choice:
+
+======================================
+            YOUR PROFILE
+======================================
+
+PERSONAL INFORMATION:
+--------------------------------------
+First Name:       Alice
+Last Name:        Smith
+University:       University of Florida
+Major:            Computer Science
+Graduation Year:  2025
+
+ABOUT ME:
+--------------------------------------
+I love programming.
+
+======================================
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+Log Out
+Enter your choice:
+
+
+****************************************
+*                                      *
+*         Welcome to InCollege!        *
+*                                      *
+****************************************
+
+Log In
+Create New Account
+Enter your selection:
+Please enter your username:
+Please enter your password:
+Account created successfully.
+You have successfully logged in.
+
+Welcome, bob!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+Log Out
+Enter your choice:
+
+--- Create/Edit Profile ---
+Enter First Name:
+Enter Last Name:
+Enter University/College Attended:
+Enter Major:
+Enter Graduation Year (YYYY):
+Enter About Me (optional, max 200 chars, enter blank line to skip):
+Add Experience (optional, max 3 entries. Enter 'DONE' to finish):
+Experience #1 - Title:
+Add Education (optional, max 3 entries. Enter 'DONE' to finish):
+Education #1 - Degree:
+Profile saved successfully!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+Log Out
+Enter your choice:
+
+======================================
+            YOUR PROFILE
+======================================
+
+PERSONAL INFORMATION:
+--------------------------------------
+First Name:       Bob
+Last Name:        Johnson
+University:       Florida State University
+Major:            Engineering
+Graduation Year:  2024
+
+ABOUT ME:
+--------------------------------------
+Passionate about robotics.
+
+======================================
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+Log Out
+Enter your choice:
+
+--- Find Someone You Know ---
+Enter Full Name (First Last):
+User found: Alice Smith (alice)
+
+╔══════════════════════════════════════════════════════════════╗
+║                                                              ║
+║                    🎯 FOUND PROFILE 🎯                        ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝
+
+┌──────────────────────────────────────────────────────────────┐
+│                      👤 PERSONAL INFO                        │
+└──────────────────────────────────────────────────────────────┘
+
+🔸 First Name:     Alice
+🔸 Last Name:      Smith
+🏫 University:     University of Florida
+📚 Major:          Computer Science
+🎓 Graduation:     2025
+
+ABOUT ME:
+--------------------------------------
+I love programming.
+
+======================================
+
+Send Connection Request
+Back to Main Menu
+Enter your choice:
+Connection request sent to alice.
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+Log Out
+Enter your choice:
+
+
+****************************************
+*                                      *
+*         Welcome to InCollege!        *
+*                                      *
+****************************************
+
+Log In
+Create New Account
+Enter your selection:
+Please enter your username:
+Please enter your password:
+You have successfully logged in.
+
+Welcome, alice!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+Log Out
+Enter your choice:
+
+=== PENDING CONNECTION REQUESTS ===
+
+Connection Request #1 from: bob
+
+Enter sender's username to manage:
+
+Accept Connection Request
+Reject Connection Request
+Go Back
+Enter your choice:
+Connection request from bob has been accepted.
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+Log Out
+Enter your choice:
+
+
+****************************************
+*                                      *
+*         Welcome to InCollege!        *
+*                                      *
+****************************************
+
+Log In
+Create New Account
+Enter your selection:
+Error: Input must be 'Log In' or 'Create New Account'.
+Error: Input must be 'Log In' or 'Create New Account'.
+Error: Input must be 'Log In' or 'Create New Account'.
+Please enter your username:
+Please enter your password:
+You have successfully logged in.
+
+Welcome, bob!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+Log Out
+Enter your choice:
+
+--- Find Someone You Know ---
+Enter Full Name (First Last):
+User found: Alice Smith (alice)
+
+╔══════════════════════════════════════════════════════════════╗
+║                                                              ║
+║                    🎯 FOUND PROFILE 🎯                        ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝
+
+┌──────────────────────────────────────────────────────────────┐
+│                      👤 PERSONAL INFO                        │
+└──────────────────────────────────────────────────────────────┘
+
+🔸 First Name:     Alice
+🔸 Last Name:      Smith
+🏫 University:     University of Florida
+📚 Major:          Computer Science
+🎓 Graduation:     2025
+
+ABOUT ME:
+--------------------------------------
+I love programming.
+
+======================================
+
+Send Connection Request
+Back to Main Menu
+Enter your choice:
+This user has already sent you a connection request.
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+Log Out
+Enter your choice:
+
+
+****************************************
+*                                      *
+*         Welcome to InCollege!        *
+*                                      *
+****************************************
+
+Log In
+Create New Account
+Enter your selection:
+Please enter your username:
+Please enter your password:
+You have successfully logged in.
+
+Welcome, alice!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+Log Out
+Enter your choice:
+
+--- Find Someone You Know ---
+Enter Full Name (First Last):
+User found: Alice Smith (alice)
+
+╔══════════════════════════════════════════════════════════════╗
+║                                                              ║
+║                    🎯 FOUND PROFILE 🎯                        ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝
+
+┌──────────────────────────────────────────────────────────────┐
+│                      👤 PERSONAL INFO                        │
+└──────────────────────────────────────────────────────────────┘
+
+🔸 First Name:     Alice
+🔸 Last Name:      Smith
+🏫 University:     University of Florida
+📚 Major:          Computer Science
+🎓 Graduation:     2025
+
+ABOUT ME:
+--------------------------------------
+I love programming.
+
+======================================
+
+Send Connection Request
+Back to Main Menu
+Enter your choice:
+Error: You cannot send a connection request to yourself.
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+Log Out
+Enter your choice:
+
+
+****************************************
+*                                      *
+*         Welcome to InCollege!        *
+*                                      *
+****************************************
+
+Log In
+Create New Account
+Enter your selection:
+Please enter your username:
+Please enter your password:
+You have successfully logged in.
+
+Welcome, bob!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+Log Out
+Enter your choice:
+
+--- Find Someone You Know ---
+Enter Full Name (First Last):
+User found: Bob Johnson (bob)
+
+╔══════════════════════════════════════════════════════════════╗
+║                                                              ║
+║                    🎯 FOUND PROFILE 🎯                        ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝
+
+┌──────────────────────────────────────────────────────────────┐
+│                      👤 PERSONAL INFO                        │
+└──────────────────────────────────────────────────────────────┘
+
+🔸 First Name:     Bob
+🔸 Last Name:      Johnson
+🏫 University:     Florida State University
+📚 Major:          Engineering
+🎓 Graduation:     2024
+
+ABOUT ME:
+--------------------------------------
+Passionate about robotics.
+
+======================================
+
+Send Connection Request
+Back to Main Menu
+Enter your choice:
+Error: You cannot send a connection request to yourself.
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+Log Out
+Enter your choice:
+
+
+****************************************
+*                                      *
+*         Welcome to InCollege!        *
+*                                      *
+****************************************
+
+Log In
+Create New Account
+Enter your selection:
+Please enter your username:
+Please enter your password:
+You have successfully logged in.
+
+Welcome, alice!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+Log Out
+Enter your choice:
+
+--- Find Someone You Know ---
+Enter Full Name (First Last):
+No users found with full name: NonExistent User
+Tip: Make sure to enter the exact full name (First Last).
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+Log Out
+Enter your choice:
+
+Invalid choice. Please try again.
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+Log Out
+Enter your choice:
+
+
+****************************************
+*                                      *
+*         Welcome to InCollege!        *
+*                                      *
+****************************************
+
+Log In
+Create New Account
+Enter your selection:
+Please enter your username:
+Please enter your password:
+You have successfully logged in.
+
+Welcome, bob!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+Log Out
+Enter your choice:
+
+--- Find Someone You Know ---
+Enter Full Name (First Last):
+User found: Alice Smith (alice)
+
+╔══════════════════════════════════════════════════════════════╗
+║                                                              ║
+║                    🎯 FOUND PROFILE 🎯                        ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝
+
+┌──────────────────────────────────────────────────────────────┐
+│                      👤 PERSONAL INFO                        │
+└──────────────────────────────────────────────────────────────┘
+
+🔸 First Name:     Alice
+🔸 Last Name:      Smith
+🏫 University:     University of Florida
+📚 Major:          Computer Science
+🎓 Graduation:     2025
+
+ABOUT ME:
+--------------------------------------
+I love programming.
+
+======================================
+
+Send Connection Request
+Back to Main Menu
+Enter your choice:
+This user has already sent you a connection request.
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+Log Out
+Enter your choice:
+
+
+****************************************
+*                                      *
+*         Welcome to InCollege!        *
+*                                      *
+****************************************
+
+Log In
+Create New Account
+Enter your selection:
+Please enter your username:
+Please enter your password:
+You have successfully logged in.
+
+Welcome, alice!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+Log Out
+Enter your choice:
+
+=== PENDING CONNECTION REQUESTS ===
+
+No pending connection requests.
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+Log Out
+Enter your choice:
+
+Invalid choice. Please try again.
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+Log Out
+Enter your choice:
+
+Invalid choice. Please try again.
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+Log Out
+Enter your choice:
+
+
+****************************************
+*                                      *
+*         Welcome to InCollege!        *
+*                                      *
+****************************************
+
+Log In
+Create New Account
+Enter your selection:
+Error: Input must be 'Log In' or 'Create New Account'.
+Error: Input must be 'Log In' or 'Create New Account'.
+Error: Input must be 'Log In' or 'Create New Account'.
+Please enter your username:
+Please enter your password:
+You have successfully logged in.
+
+Welcome, bob!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+Log Out
+Enter your choice:
+
+--- Find Someone You Know ---
+Enter Full Name (First Last):
+User found: Alice Smith (alice)
+
+╔══════════════════════════════════════════════════════════════╗
+║                                                              ║
+║                    🎯 FOUND PROFILE 🎯                        ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝
+
+┌──────────────────────────────────────────────────────────────┐
+│                      👤 PERSONAL INFO                        │
+└──────────────────────────────────────────────────────────────┘
+
+🔸 First Name:     Alice
+🔸 Last Name:      Smith
+🏫 University:     University of Florida
+📚 Major:          Computer Science
+🎓 Graduation:     2025
+
+ABOUT ME:
+--------------------------------------
+I love programming.
+
+======================================
+
+Send Connection Request
+Back to Main Menu
+Enter your choice:
+This user has already sent you a connection request.
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+Log Out
+Enter your choice:
+
+
+****************************************
+*                                      *
+*         Welcome to InCollege!        *
+*                                      *
+****************************************
+
+Log In
+Create New Account
+Enter your selection:
+Please enter your username:
+Please enter your password:
+You have successfully logged in.
+
+Welcome, alice!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+Log Out
+Enter your choice:
+
+=== PENDING CONNECTION REQUESTS ===
+
+No pending connection requests.
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+Log Out
+Enter your choice:
+
+Invalid choice. Please try again.
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+Log Out
+Enter your choice:
+
+Invalid choice. Please try again.
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+Log Out
+Enter your choice:
+
+
+****************************************
+*                                      *
+*         Welcome to InCollege!        *
+*                                      *
+****************************************
+
+Log In
+Create New Account
+Enter your selection:
+Error: Input must be 'Log In' or 'Create New Account'.
+Error: Input must be 'Log In' or 'Create New Account'.
+Error: Input must be 'Log In' or 'Create New Account'.
+Please enter your username:
+Please enter your password:
+You have successfully logged in.
+
+Welcome, bob!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+Log Out
+Enter your choice:
+
+--- Find Someone You Know ---
+Enter Full Name (First Last):
+User found: Alice Smith (alice)
+
+╔══════════════════════════════════════════════════════════════╗
+║                                                              ║
+║                    🎯 FOUND PROFILE 🎯                        ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝
+
+┌──────────────────────────────────────────────────────────────┐
+│                      👤 PERSONAL INFO                        │
+└──────────────────────────────────────────────────────────────┘
+
+🔸 First Name:     Alice
+🔸 Last Name:      Smith
+🏫 University:     University of Florida
+📚 Major:          Computer Science
+🎓 Graduation:     2025
+
+ABOUT ME:
+--------------------------------------
+I love programming.
+
+======================================
+
+Send Connection Request
+Back to Main Menu
+Enter your choice:
+This user has already sent you a connection request.
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+Log Out
+Enter your choice:
+
+
+****************************************
+*                                      *
+*         Welcome to InCollege!        *
+*                                      *
+****************************************
+
+Log In
+Create New Account
+Enter your selection:
+Please enter your username:
+Please enter your password:
+You have successfully logged in.
+
+Welcome, alice!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+Log Out
+Enter your choice:
+
+=== PENDING CONNECTION REQUESTS ===
+
+No pending connection requests.
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+Log Out
+Enter your choice:
+
+
+****************************************
+*                                      *
+*         Welcome to InCollege!        *
+*                                      *
+****************************************
+
+Log In
+Create New Account
+Enter your selection:
+Error: Input must be 'Log In' or 'Create New Account'.

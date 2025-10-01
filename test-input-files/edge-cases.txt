@@ -1,0 +1,116 @@
+Create New Account
+alice
+ValidPass1!
+Create/Edit My Profile
+Alice
+Smith
+University of Florida
+Computer Science
+2025
+I love programming.
+DONE
+DONE
+View My Profile
+Go Back
+Create New Account
+bob
+ValidPass2!
+Create/Edit My Profile
+Bob
+Johnson
+Florida State University
+Engineering
+2024
+Passionate about robotics.
+DONE
+DONE
+View My Profile
+Find someone you know
+Alice Smith
+Send Connection Request
+Log Out
+Log In
+alice
+ValidPass1!
+View Pending Requests
+bob
+Accept Connection Request
+Go Back
+View Pending Requests
+Go Back
+Log Out
+Log In
+bob
+ValidPass2!
+Find someone you know
+Alice Smith
+Send Connection Request
+Log Out
+Log In
+alice
+ValidPass1!
+Find someone you know
+Alice Smith
+Send Connection Request
+Log Out
+Log In
+bob
+ValidPass2!
+Find someone you know
+Bob Johnson
+Send Connection Request
+Log Out
+Log In
+alice
+ValidPass1!
+Find someone you know
+NonExistent User
+Send Connection Request
+Log Out
+Log In
+bob
+ValidPass2!
+Find someone you know
+Alice Smith
+Send Connection Request
+Log Out
+Log In
+alice
+ValidPass1!
+View Pending Requests
+bob
+Reject Connection Request
+Go Back
+View Pending Requests
+Go Back
+Log Out
+Log In
+bob
+ValidPass2!
+Find someone you know
+Alice Smith
+Send Connection Request
+Log Out
+Log In
+alice
+ValidPass1!
+View Pending Requests
+bob
+Accept Connection Request
+Go Back
+View Pending Requests
+Go Back
+Log Out
+Log In
+bob
+ValidPass2!
+Find someone you know
+Alice Smith
+Send Connection Request
+Log Out
+Log In
+alice
+ValidPass1!
+View Pending Requests
+Go Back
+Log Out
