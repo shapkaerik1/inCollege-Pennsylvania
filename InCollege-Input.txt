@@ -42,5 +42,10 @@ View My Profile
 Find someone you know
 Alice Smith
 Send Connection Request
-View Pending Request
+Log Out
+Log In
+alice
+ValidPass1!
+View Pending Requests
+bob
 Accept Connection Request

@@ -19,6 +19,8 @@ View My Profile
 Search for a job
 Find someone you know
 Learn a New Skill
+View Pending Requests
+Log Out
 Enter your choice:
 
 --- Create/Edit Profile ---
@@ -57,6 +59,8 @@ View My Profile
 Search for a job
 Find someone you know
 Learn a New Skill
+View Pending Requests
+Log Out
 Enter your choice:
 
 ======================================
@@ -107,6 +111,8 @@ View My Profile
 Search for a job
 Find someone you know
 Learn a New Skill
+View Pending Requests
+Log Out
 Enter your choice:
 
 
@@ -131,6 +137,8 @@ View My Profile
 Search for a job
 Find someone you know
 Learn a New Skill
+View Pending Requests
+Log Out
 Enter your choice:
 
 --- Create/Edit Profile ---
@@ -151,6 +159,8 @@ View My Profile
 Search for a job
 Find someone you know
 Learn a New Skill
+View Pending Requests
+Log Out
 Enter your choice:
 
 ======================================
@@ -176,6 +186,8 @@ View My Profile
 Search for a job
 Find someone you know
 Learn a New Skill
+View Pending Requests
+Log Out
 Enter your choice:
 
 --- Find Someone You Know ---
@@ -229,19 +241,62 @@ Education #2:
 
 ======================================
 
-1. Send Connection Request
-2. Back to Main Menu
+Send Connection Request
+Back to Main Menu
 Enter your choice:
 Connection request sent to alice.
-View Pending Requests
-Pending Request from: alice
-Connection request accepted from alice.
-Error: You are already connected with this user.
-Error: This user has already sent you a connection request.
 
 Create/Edit My Profile
 View My Profile
 Search for a job
 Find someone you know
 Learn a New Skill
+View Pending Requests
+Log Out
+Enter your choice:
+
+
+****************************************
+*                                      *
+*         Welcome to InCollege!        *
+*                                      *
+****************************************
+
+Log In
+Create New Account
+Enter your selection:
+Please enter your username:
+Please enter your password:
+You have successfully logged in.
+
+Welcome, alice!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+Log Out
+Enter your choice:
+
+=== PENDING CONNECTION REQUESTS ===
+
+Connection Request #1 from: bob
+
+Enter sender's username to manage:
+
+Accept Connection Request
+Reject Connection Request
+Go Back
+Enter your choice:
+Connection request from bob has been accepted.
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+Log Out
 Enter your choice:

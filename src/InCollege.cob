@@ -25,6 +25,10 @@ ENVIRONMENT DIVISION.
                      ASSIGN TO "PROFILES.TMP"
                      ORGANIZATION IS LINE SEQUENTIAL
                      FILE STATUS IS TEMP-PROFILES-STATUS.
+                 SELECT TEMP-CONNECTIONS-FILE
+                     ASSIGN TO "CONNECTIONS.TMP"
+                     ORGANIZATION IS LINE SEQUENTIAL
+                     FILE STATUS IS TEMP-CONNECTIONS-STATUS.
                  SELECT CONNECTION-REQUESTS-FILE
                      ASSIGN TO "CONNECTION_REQUESTS.DAT"
                      ORGANIZATION IS LINE SEQUENTIAL
@@ -85,10 +89,17 @@ DATA DIVISION.
               10 TMP-EDU-UNIV          PIC X(40).
               10 TMP-EDU-YEARS         PIC X(20).
 
+       FD TEMP-CONNECTIONS-FILE.
+       01 TMP-CONNECTION-RECORD.
+           05 TMP-CR-SENDER-USERNAME    PIC X(20).
+           05 TMP-CR-RECIPIENT-USERNAME PIC X(20).
+           05 TMP-CR-STATUS             PIC X(10).
+
        FD CONNECTION-REQUESTS-FILE.
        01 CONNECTION-REQUEST-RECORD.
            05 CR-SENDER-USERNAME       PIC X(20).
            05 CR-RECIPIENT-USERNAME    PIC X(20).
+           05 CR-STATUS                PIC X(10).
 
        WORKING-STORAGE SECTION.
        *> variables for file handling
@@ -98,6 +109,7 @@ DATA DIVISION.
        01 PROFILES-STATUS  PIC X(2).
        01 TEMP-PROFILES-STATUS PIC X(2).
        01 CONNECTION-REQUESTS-STATUS PIC X(2).
+       01 TEMP-CONNECTIONS-STATUS PIC X(2).
 
        *> end of file flag to control main loop
        01 WS-EOF-FLAG PIC A(1) VALUE 'N'.
@@ -183,6 +195,8 @@ DATA DIVISION.
            05 WS-CONNECTION-EXISTS    PIC X VALUE 'N'.
            05 WS-REQUEST-EXISTS       PIC X VALUE 'N'.
            05 WS-CONN-MENU-CHOICE     PIC X(80).
+           05 WS-SELECTED-SENDER      PIC X(20).
+           05 WS-REQUEST-ACTION       PIC X(30).
 
 
 PROCEDURE DIVISION.
@@ -558,6 +572,13 @@ POST-LOGIN-MENU.
                       PERFORM FIND-SOMEONE-YOU-KNOW
                    WHEN "Learn a New Skill"
                        PERFORM LEARN-A-SKILL-SUB-MENU
+                   WHEN "View Pending Requests"
+                       PERFORM GET-PENDING-CONNECTION-REQUESTS
+                   WHEN "Log Out"
+                       MOVE SPACES TO OUTPUT-LINE
+                       PERFORM WRITE-AND-DISPLAY
+                       PERFORM MAIN-MENU-DISPLAY
+                       EXIT PERFORM
                    WHEN "Go Back"
                        MOVE SPACES TO OUTPUT-LINE
                        PERFORM WRITE-AND-DISPLAY
@@ -1128,6 +1149,7 @@ SAVE-CONNECTION-REQUEST.
        *> Save the connection request to the file
        MOVE FUNCTION TRIM(USERNAME) TO CR-SENDER-USERNAME
        MOVE FUNCTION TRIM(WS-TARGET-USERNAME) TO CR-RECIPIENT-USERNAME
+       MOVE "pending" TO CR-STATUS
 
        *> Open file for appending (create if doesn't exist)
        OPEN EXTEND CONNECTION-REQUESTS-FILE
@@ -1384,6 +1406,11 @@ FIND-SOMEONE-YOU-KNOW.
            PERFORM WRITE-AND-DISPLAY
        END-IF.
 GET-PENDING-CONNECTION-REQUESTS.
+    MOVE "=== PENDING CONNECTION REQUESTS ===" TO OUTPUT-LINE
+    PERFORM WRITE-AND-DISPLAY
+    MOVE SPACES TO OUTPUT-LINE
+    PERFORM WRITE-AND-DISPLAY
+
     OPEN INPUT CONNECTION-REQUESTS-FILE
     IF CONNECTION-REQUESTS-STATUS NOT = "00"
         MOVE "No connection requests found." TO OUTPUT-LINE
@@ -1399,8 +1426,12 @@ GET-PENDING-CONNECTION-REQUESTS.
                 IF FUNCTION TRIM(CR-RECIPIENT-USERNAME) = FUNCTION TRIM(USERNAME) AND
                    FUNCTION TRIM(CR-STATUS) = "pending"
                     ADD 1 TO WS-MATCHES-FOUND
-                    MOVE "Pending Request from: " TO OUTPUT-LINE
-                    STRING CR-SENDER-USERNAME DELIMITED BY SIZE INTO OUTPUT-LINE
+                    MOVE SPACES TO OUTPUT-LINE
+                    STRING "Connection Request #" WS-MATCHES-FOUND
+                           " from: " DELIMITED BY SIZE
+                           FUNCTION TRIM(CR-SENDER-USERNAME) DELIMITED BY SIZE
+                           INTO OUTPUT-LINE
+                    END-STRING
                     PERFORM WRITE-AND-DISPLAY
                 END-IF
         END-READ
@@ -1410,11 +1441,150 @@ GET-PENDING-CONNECTION-REQUESTS.
     IF WS-MATCHES-FOUND = 0
         MOVE "No pending connection requests." TO OUTPUT-LINE
         PERFORM WRITE-AND-DISPLAY
+        EXIT PARAGRAPH
     END-IF
-      
+
+    MOVE SPACES TO OUTPUT-LINE
+    PERFORM WRITE-AND-DISPLAY
+    MOVE "Enter sender's username to manage:" TO OUTPUT-LINE
+    PERFORM WRITE-AND-DISPLAY
+
+    READ INPUT-FILE
+        AT END SET EOF TO TRUE
+        NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-SELECTED-SENDER
+    END-READ
+    IF EOF EXIT PARAGRAPH END-IF
+
+    *> Verify the selected sender has a pending request
+    PERFORM VERIFY-PENDING-REQUEST
+    IF WS-REQUEST-EXISTS = 'N'
+        MOVE "No pending request found from that user." TO OUTPUT-LINE
+        PERFORM WRITE-AND-DISPLAY
+        EXIT PARAGRAPH
+    END-IF
+
+    MOVE SPACES TO OUTPUT-LINE
+    PERFORM WRITE-AND-DISPLAY
+    MOVE "Accept Connection Request" TO OUTPUT-LINE
+    PERFORM WRITE-AND-DISPLAY
+    MOVE "Reject Connection Request" TO OUTPUT-LINE
+    PERFORM WRITE-AND-DISPLAY
+    MOVE "Go Back" TO OUTPUT-LINE
+    PERFORM WRITE-AND-DISPLAY
+    MOVE "Enter your choice:" TO OUTPUT-LINE
+    PERFORM WRITE-AND-DISPLAY
+
+    READ INPUT-FILE
+        AT END SET EOF TO TRUE
+        NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-REQUEST-ACTION
+    END-READ
+    IF EOF EXIT PARAGRAPH END-IF
+
+    EVALUATE FUNCTION TRIM(WS-REQUEST-ACTION)
+        WHEN "Accept Connection Request"
+            PERFORM ACCEPT-CONNECTION-REQUEST
+        WHEN "Reject Connection Request"
+            PERFORM REJECT-CONNECTION-REQUEST
+        WHEN "Go Back"
+            CONTINUE
+        WHEN OTHER
+            MOVE SPACES TO OUTPUT-LINE
+            STRING "Invalid choice: '" DELIMITED BY SIZE
+                   FUNCTION TRIM(WS-REQUEST-ACTION) DELIMITED BY SIZE
+                   "'" DELIMITED BY SIZE
+                   INTO OUTPUT-LINE
+            END-STRING
+            PERFORM WRITE-AND-DISPLAY
+    END-EVALUATE.
+
+VERIFY-PENDING-REQUEST.
+       *> Check if the selected sender has a pending request to current user
+       MOVE 'N' TO WS-REQUEST-EXISTS
+       OPEN INPUT CONNECTION-REQUESTS-FILE
+       IF CONNECTION-REQUESTS-STATUS NOT = "00"
+           EXIT PARAGRAPH
+       END-IF
+
+       PERFORM UNTIL 1 = 2
+           READ CONNECTION-REQUESTS-FILE
+               AT END EXIT PERFORM
+               NOT AT END
+                   IF FUNCTION TRIM(CR-SENDER-USERNAME) = FUNCTION TRIM(WS-SELECTED-SENDER) AND
+                      FUNCTION TRIM(CR-RECIPIENT-USERNAME) = FUNCTION TRIM(USERNAME) AND
+                      FUNCTION TRIM(CR-STATUS) = "pending"
+                       MOVE 'Y' TO WS-REQUEST-EXISTS
+                       EXIT PERFORM
+                   END-IF
+           END-READ
+       END-PERFORM
+       CLOSE CONNECTION-REQUESTS-FILE.
+
 ACCEPT-CONNECTION-REQUEST.
-    MOVE 'accepted' TO CR-STATUS
-    WRITE CONNECTION-REQUEST-RECORD
+       *> Update the specific connection request status to accepted
+       MOVE "accepted" TO WS-REQUEST-ACTION
+       PERFORM UPDATE-CONNECTION-REQUEST-STATUS.
+
+REJECT-CONNECTION-REQUEST.
+       *> Update the specific connection request status to rejected
+       MOVE "rejected" TO WS-REQUEST-ACTION
+       PERFORM UPDATE-CONNECTION-REQUEST-STATUS.
+
+UPDATE-CONNECTION-REQUEST-STATUS.
+       *> This paragraph updates a specific request's status in the file
+       OPEN INPUT CONNECTION-REQUESTS-FILE
+       OPEN OUTPUT TEMP-CONNECTIONS-FILE
+
+       IF CONNECTION-REQUESTS-STATUS = "00"
+           PERFORM UNTIL 1 = 2
+               READ CONNECTION-REQUESTS-FILE
+                   AT END EXIT PERFORM
+                   NOT AT END
+                       IF FUNCTION TRIM(CR-SENDER-USERNAME) = FUNCTION TRIM(WS-SELECTED-SENDER) AND
+                          FUNCTION TRIM(CR-RECIPIENT-USERNAME) = FUNCTION TRIM(USERNAME) AND
+                          FUNCTION TRIM(CR-STATUS) = "pending"
+                           *> This is the request to update - write with new status
+                           MOVE FUNCTION TRIM(WS-SELECTED-SENDER) TO TMP-CR-SENDER-USERNAME
+                           MOVE FUNCTION TRIM(USERNAME) TO TMP-CR-RECIPIENT-USERNAME
+                           MOVE FUNCTION TRIM(WS-REQUEST-ACTION) TO TMP-CR-STATUS
+                           WRITE TMP-CONNECTION-RECORD
+                           *> Show confirmation message
+                           MOVE SPACES TO OUTPUT-LINE
+                           STRING "Connection request from " DELIMITED BY SIZE
+                                  FUNCTION TRIM(WS-SELECTED-SENDER) DELIMITED BY SIZE
+                                  " has been " DELIMITED BY SIZE
+                                  FUNCTION TRIM(WS-REQUEST-ACTION) DELIMITED BY SIZE
+                                  "." DELIMITED BY SIZE
+                                  INTO OUTPUT-LINE
+                           END-STRING
+                           PERFORM WRITE-AND-DISPLAY
+                       ELSE
+                           *> Keep other requests unchanged
+                           MOVE CR-SENDER-USERNAME TO TMP-CR-SENDER-USERNAME
+                           MOVE CR-RECIPIENT-USERNAME TO TMP-CR-RECIPIENT-USERNAME
+                           MOVE CR-STATUS TO TMP-CR-STATUS
+                           WRITE TMP-CONNECTION-RECORD
+                       END-IF
+               END-READ
+           END-PERFORM
+       END-IF
+       CLOSE CONNECTION-REQUESTS-FILE
+       CLOSE TEMP-CONNECTIONS-FILE
+
+       *> Copy updated file back
+       OPEN INPUT TEMP-CONNECTIONS-FILE
+       OPEN OUTPUT CONNECTION-REQUESTS-FILE
+       PERFORM UNTIL 1 = 2
+           READ TEMP-CONNECTIONS-FILE
+               AT END EXIT PERFORM
+               NOT AT END
+                   MOVE TMP-CR-SENDER-USERNAME TO CR-SENDER-USERNAME
+                   MOVE TMP-CR-RECIPIENT-USERNAME TO CR-RECIPIENT-USERNAME
+                   MOVE TMP-CR-STATUS TO CR-STATUS
+                   WRITE CONNECTION-REQUEST-RECORD
+           END-READ
+       END-PERFORM
+       CLOSE CONNECTION-REQUESTS-FILE
+       CLOSE TEMP-CONNECTIONS-FILE.
 
 
 DISPLAY-FOUND-PROFILE.
@@ -1629,5 +1799,3 @@ DISPLAY-FOUND-PROFILE.
                    PERFORM WRITE-AND-DISPLAY
            END-EVALUATE
        END-IF.
-
-
