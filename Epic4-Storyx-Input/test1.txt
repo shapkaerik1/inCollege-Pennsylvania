@@ -1,29 +1,30 @@
 Create New Account
-caseuser1
+newstudent
 ValidPass1!
 Create/Edit My Profile
-Case
-User
-UF
-Testing
-2026
-Case insensitive search target.
+New
+Student
+West Coast Uni
+Business
+2027
+Passionate learner.
 DONE
 DONE
 Go Back
 Create New Account
-caseuser2
+testuser1
 ValidPass2!
 Create/Edit My Profile
-Case
+Test
 User
-UCF
+Test University
 Testing
 2026
-Requester.
+QA mindset.
 DONE
 DONE
+View My Pending Connection Requests
 Find someone you know
-case user
+New Student
 Send Connection Request
 

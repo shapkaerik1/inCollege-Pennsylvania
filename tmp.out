@@ -12,7 +12,7 @@ Please enter your password:
 Account created successfully.
 You have successfully logged in.
 
-Welcome, caseuser1!
+Welcome, newstudent!
 
 Create/Edit My Profile
 View My Profile
@@ -53,12 +53,13 @@ Enter your choice:
 Log In
 Create New Account
 Enter your selection:
+Error: Input must be 'Log In' or 'Create New Account'.
 Please enter your username:
 Please enter your password:
 Account created successfully.
 You have successfully logged in.
 
-Welcome, caseuser2!
+Welcome, sender1!
 
 Create/Edit My Profile
 View My Profile
@@ -91,7 +92,7 @@ Enter your choice:
 
 --- Find Someone You Know ---
 Enter Full Name (First Last):
-User found: Case User (caseuser1)
+User found: New Student (newstudent)
 
 ╔══════════════════════════════════════════════════════════════╗
 ║                                                              ║
@@ -103,23 +104,152 @@ User found: Case User (caseuser1)
 │                      👤 PERSONAL INFO                        │
 └──────────────────────────────────────────────────────────────┘
 
-🔸 First Name:     Case
-🔸 Last Name:      User
-🏫 University:     UF
-📚 Major:          Testing
-🎓 Graduation:     2026
+🔸 First Name:     New
+🔸 Last Name:      Student
+🏫 University:     West Coast Uni
+📚 Major:          Business
+🎓 Graduation:     2027
 
 ABOUT ME:
 --------------------------------------
-Case insensitive search target.
+Eager to learn.
 
 ======================================
 
 Send Connection Request
 Back to Main Menu
 Enter your choice:
-Connection request sent to caseuser1.
-User found: Case User (caseuser2)
+Connection request sent to newstudent.
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View My Pending Connection Requests
+Enter your choice:
+
+
+****************************************
+*                                      *
+*         Welcome to InCollege!        *
+*                                      *
+****************************************
+
+Log In
+Create New Account
+Enter your selection:
+Please enter your username:
+Please enter your password:
+You have successfully logged in.
+
+Welcome, newstudent!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View My Pending Connection Requests
+Enter your choice:
+
+--- Pending Connection Requests ---
+From: sender1
+-----------------------------------
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View My Pending Connection Requests
+Enter your choice:
+
+
+****************************************
+*                                      *
+*         Welcome to InCollege!        *
+*                                      *
+****************************************
+
+Log In
+Create New Account
+Enter your selection:
+Please enter your username:
+Please enter your password:
+You have successfully logged in.
+
+Welcome, newstudent!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View My Pending Connection Requests
+Enter your choice:
+
+--- Pending Connection Requests ---
+From: sender1
+-----------------------------------
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View My Pending Connection Requests
+Enter your choice:
+
+
+****************************************
+*                                      *
+*         Welcome to InCollege!        *
+*                                      *
+****************************************
+
+Log In
+Create New Account
+Enter your selection:
+Please enter your username:
+Please enter your password:
+Account created successfully.
+You have successfully logged in.
+
+Welcome, sender2!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View My Pending Connection Requests
+Enter your choice:
+
+--- Create/Edit Profile ---
+Enter First Name:
+Enter Last Name:
+Enter University/College Attended:
+Enter Major:
+Enter Graduation Year (YYYY):
+Enter About Me (optional, max 200 chars, enter blank line to skip):
+Add Experience (optional, max 3 entries. Enter 'DONE' to finish):
+Experience #1 - Title:
+Add Education (optional, max 3 entries. Enter 'DONE' to finish):
+Education #1 - Degree:
+Profile saved successfully!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View My Pending Connection Requests
+Enter your choice:
+
+--- Find Someone You Know ---
+Enter Full Name (First Last):
+User found: New Student (newstudent)
 
 ╔══════════════════════════════════════════════════════════════╗
 ║                                                              ║
@@ -131,22 +261,32 @@ User found: Case User (caseuser2)
 │                      👤 PERSONAL INFO                        │
 └──────────────────────────────────────────────────────────────┘
 
-🔸 First Name:     Case
-🔸 Last Name:      User
-🏫 University:     UCF
-📚 Major:          Testing
-🎓 Graduation:     2026
+🔸 First Name:     New
+🔸 Last Name:      Student
+🏫 University:     West Coast Uni
+📚 Major:          Business
+🎓 Graduation:     2027
 
 ABOUT ME:
 --------------------------------------
-Requester.
+Eager to learn.
 
 ======================================
 
 Send Connection Request
 Back to Main Menu
 Enter your choice:
-Invalid choice. Returning to main menu.
+Connection request sent to newstudent.
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View My Pending Connection Requests
+Enter your choice:
+
+Invalid choice. Please try again.
 
 Create/Edit My Profile
 View My Profile
