@@ -1,6 +1,0 @@
-bob                 alice               accepted
-charlie             alice               pending
-diana               bob                 pending
-bob                 charlie             pending
-charlie             diana               accepted
-alice               diana               accepted

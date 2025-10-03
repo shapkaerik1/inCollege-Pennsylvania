@@ -1,8 +1,9 @@
 # Runtime data files
 ACCOUNTS.DAT
 PROFILES.DAT
+CONNECTION_REQUESTS.DAT
 PROFILES.TMP
-InCollege-Output.txt
+CONNECTIONS.TMP
 
 # Local input file (developers/testers can generate locally)
 InCollege-Input.txt
