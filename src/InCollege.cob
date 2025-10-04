@@ -208,6 +208,13 @@ DATA DIVISION.
            05 WS-SELECTED-SENDER      PIC X(20).
            05 WS-REQUEST-ACTION       PIC X(30).
 
+       01 WS-NETWORK-VARS.
+           05 WS-FRIEND-USERNAME      PIC X(20).
+           05 WS-NETWORK-COUNT        PIC 99 VALUE 0.
+           05 WS-CONN-EOF-FLAG        PIC X VALUE 'N'.
+               88 CONN-EOF            VALUE 'Y'.
+           05 WS-PROF-EOF-FLAG        PIC X VALUE 'N'.
+               88 PROF-EOF            VALUE 'Y'.
 
 PROCEDURE DIVISION.
        PERFORM OPEN-FILES.
@@ -552,9 +559,9 @@ POST-LOGIN-MENU.
            PERFORM WRITE-AND-DISPLAY
            MOVE "Learn a New Skill" TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
-
-           *> Newly added options
            MOVE "View Pending Requests" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           MOVE "View My Network" TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
            MOVE "Log Out" TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
@@ -584,6 +591,8 @@ POST-LOGIN-MENU.
                        PERFORM LEARN-A-SKILL-SUB-MENU
                    WHEN "View Pending Requests"
                        PERFORM GET-PENDING-CONNECTION-REQUESTS
+                   WHEN "View My Network"
+                       PERFORM VIEW-MY-NETWORK
                    WHEN "Log Out"
                        MOVE SPACES TO OUTPUT-LINE
                        PERFORM WRITE-AND-DISPLAY
@@ -1459,6 +1468,7 @@ GET-PENDING-CONNECTION-REQUESTS.
        IF WS-MATCHES-FOUND = 0
            MOVE "No pending connection requests." TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
+           *> automatically leaves page when there are no more connection requests
            EXIT PERFORM
        END-IF
 
@@ -1672,3 +1682,73 @@ DISPLAY-FOUND-PROFILE.
                    PERFORM WRITE-AND-DISPLAY
            END-EVALUATE
        END-IF.
+
+VIEW-MY-NETWORK.
+       MOVE "=== YOUR NETWORK ===" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+       MOVE SPACES TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+
+       MOVE 0 TO WS-NETWORK-COUNT
+
+       OPEN INPUT CONNECTIONS-FILE
+       IF CONNECTIONS-STATUS NOT = "00"
+           MOVE "No connections in your network yet." TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           CLOSE CONNECTIONS-FILE
+           EXIT PARAGRAPH
+       END-IF.
+
+       MOVE 'N' TO WS-CONN-EOF-FLAG
+       PERFORM UNTIL CONN-EOF
+           READ CONNECTIONS-FILE
+               AT END SET CONN-EOF TO TRUE
+               NOT AT END
+                   *> check if logged-in user is part of the connection record
+                   IF FUNCTION TRIM(CONN-USER1) = FUNCTION TRIM(USERNAME)
+                       MOVE CONN-USER2 TO WS-FRIEND-USERNAME
+                       ADD 1 TO WS-NETWORK-COUNT
+                       PERFORM DISPLAY-FRIEND-DETAILS
+                   ELSE
+                       IF FUNCTION TRIM(CONN-USER2) = FUNCTION TRIM(USERNAME)
+                           MOVE CONN-USER1 TO WS-FRIEND-USERNAME
+                           ADD 1 TO WS-NETWORK-COUNT
+                           PERFORM DISPLAY-FRIEND-DETAILS
+                       END-IF
+                   END-IF
+           END-READ
+       END-PERFORM.
+       CLOSE CONNECTIONS-FILE.
+
+       IF WS-NETWORK-COUNT = 0
+           MOVE "No connections in your network yet." TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+       END-IF.
+
+DISPLAY-FRIEND-DETAILS.
+       *> this paragraph find and displays a friend's profile details
+       OPEN INPUT PROFILES-FILE
+       MOVE 'N' TO WS-PROF-EOF-FLAG
+
+       PERFORM UNTIL PROF-EOF
+           READ PROFILES-FILE
+               AT END SET PROF-EOF TO TRUE
+               NOT AT END
+               IF FUNCTION TRIM(PR-USERNAME) = FUNCTION TRIM(WS-FRIEND-USERNAME)
+                       STRING "Connected with: "        DELIMITED BY SIZE
+                           FUNCTION TRIM(PR-FIRST-NAME) DELIMITED BY SIZE
+                           " "                          DELIMITED BY SIZE
+                           FUNCTION TRIM(PR-LAST-NAME)  DELIMITED BY SIZE
+                           " (University: "             DELIMITED BY SIZE
+                           FUNCTION TRIM(PR-UNIVERSITY) DELIMITED BY SIZE
+                           ", Major: "                  DELIMITED BY SIZE
+                           FUNCTION TRIM(PR-MAJOR)      DELIMITED BY SIZE
+                           ")"                          DELIMITED BY SIZE
+                           INTO OUTPUT-LINE
+                       END-STRING
+                       PERFORM WRITE-AND-DISPLAY
+                       SET PROF-EOF TO TRUE
+                   END-IF
+              END-READ
+           END-PERFORM.
+           CLOSE PROFILES-FILE.

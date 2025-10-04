@@ -20,6 +20,7 @@ Search for a job
 Find someone you know
 Learn a New Skill
 View Pending Requests
+View My Network
 Log Out
 Enter your choice:
 
@@ -42,6 +43,7 @@ Search for a job
 Find someone you know
 Learn a New Skill
 View Pending Requests
+View My Network
 Log Out
 Enter your choice:
 
@@ -68,6 +70,7 @@ Search for a job
 Find someone you know
 Learn a New Skill
 View Pending Requests
+View My Network
 Log Out
 Enter your choice:
 
@@ -90,6 +93,7 @@ Search for a job
 Find someone you know
 Learn a New Skill
 View Pending Requests
+View My Network
 Log Out
 Enter your choice:
 
@@ -125,6 +129,7 @@ Search for a job
 Find someone you know
 Learn a New Skill
 View Pending Requests
+View My Network
 Log Out
 Enter your choice:
 
@@ -151,6 +156,7 @@ Search for a job
 Find someone you know
 Learn a New Skill
 View Pending Requests
+View My Network
 Log Out
 Enter your choice:
 
@@ -173,6 +179,7 @@ Search for a job
 Find someone you know
 Learn a New Skill
 View Pending Requests
+View My Network
 Log Out
 Enter your choice:
 
@@ -208,6 +215,7 @@ Search for a job
 Find someone you know
 Learn a New Skill
 View Pending Requests
+View My Network
 Log Out
 Enter your choice:
 
@@ -234,6 +242,7 @@ Search for a job
 Find someone you know
 Learn a New Skill
 View Pending Requests
+View My Network
 Log Out
 Enter your choice:
 
@@ -256,6 +265,7 @@ Search for a job
 Find someone you know
 Learn a New Skill
 View Pending Requests
+View My Network
 Log Out
 Enter your choice:
 
@@ -291,6 +301,7 @@ Search for a job
 Find someone you know
 Learn a New Skill
 View Pending Requests
+View My Network
 Log Out
 Enter your choice:
 
@@ -316,6 +327,7 @@ Search for a job
 Find someone you know
 Learn a New Skill
 View Pending Requests
+View My Network
 Log Out
 Enter your choice:
 
@@ -332,6 +344,7 @@ Search for a job
 Find someone you know
 Learn a New Skill
 View Pending Requests
+View My Network
 Log Out
 Enter your choice:
 
@@ -360,6 +373,7 @@ Search for a job
 Find someone you know
 Learn a New Skill
 View Pending Requests
+View My Network
 Log Out
 Enter your choice:
 
@@ -399,5 +413,20 @@ Search for a job
 Find someone you know
 Learn a New Skill
 View Pending Requests
+View My Network
+Log Out
+Enter your choice:
+
+=== YOUR NETWORK ===
+
+Connected with: Bob Johnson (University: Florida State University, Major: Engineering)
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
 Log Out
 Enter your choice:
