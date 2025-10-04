@@ -1,29 +1,25 @@
+# VS Code
+.vscode/*
+!.vscode/tasks.json
+
+# Devcontainer local stuff
+.devcontainer/local-*
+
+# Build outputs
+bin/
+*.o
+*.obj
+*.exe
+*.out
+
+# OS
+.DS_Store
+Thumbs.db
+
 # Runtime data files
 ACCOUNTS.DAT
 PROFILES.DAT
 CONNECTION_REQUESTS.DAT
 PROFILES.TMP
 CONNECTIONS.TMP
-
-# Local input file (developers/testers can generate locally)
-InCollege-Input.txt
-
-# Build artifacts / binary
-bin/
-InCollege
-*.o
-*.so
-*.dll
-
-# Generated test outputs (keep inputs tracked)
-/cs-tests/outputs/
-/spec-tests/
-/test-outputs/
-
-# OS/editor noise
-.DS_Store
-Thumbs.db
-*.swp
-*.swo
-.idea/
-.vscode/
+CONNECTIONS.DAT
