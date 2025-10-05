@@ -1140,7 +1140,31 @@ CHECK-EXISTING-CONNECTION.
        MOVE 'N' TO WS-CONNECTION-EXISTS
        MOVE 'N' TO WS-REQUEST-EXISTS
 
-       *> For now, we only check for existing requests since connections aren't implemented yet
+       *> Check if users are already friends
+       OPEN INPUT CONNECTIONS-FILE
+       IF CONNECTIONS-STATUS = "00"
+              PERFORM UNTIL 1 = 2
+                  READ CONNECTIONS-FILE
+                      AT END EXIT PERFORM
+                      NOT AT END
+                           *> Check if current user is already connected to target user
+                           IF (FUNCTION TRIM(CONN-USER1) = FUNCTION TRIM(USERNAME) AND
+                               FUNCTION TRIM(CONN-USER2) = FUNCTION TRIM(WS-TARGET-USERNAME)) OR
+                               (FUNCTION TRIM(CONN-USER1) = FUNCTION TRIM(WS-TARGET-USERNAME) AND
+                               FUNCTION TRIM(CONN-USER2) = FUNCTION TRIM(USERNAME))
+
+                               MOVE 'Y' TO WS-CONNECTION-EXISTS
+                              EXIT PERFORM
+                          END-IF
+                  END-READ
+              END-PERFORM
+              CLOSE CONNECTIONS-FILE.
+
+           *> If users are already connected, we don't need to check for pending requests.
+           IF WS-CONNECTION-EXISTS = 'Y'
+               EXIT PARAGRAPH
+           END-IF.
+
        *> Open the connection requests file to check for existing requests
        OPEN INPUT CONNECTION-REQUESTS-FILE
        IF CONNECTION-REQUESTS-STATUS NOT = "00"
