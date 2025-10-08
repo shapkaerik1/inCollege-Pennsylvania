@@ -1,0 +1,127 @@
+****************************************
+*                                      *
+*         Welcome to InCollege!        *
+*                                      *
+****************************************
+
+Log In
+Create New Account
+Enter your selection:
+Please enter your username:
+Please enter your password:
+Account created successfully.
+You have successfully logged in.
+
+Welcome, alice!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Log Out
+Enter your choice:
+
+--- Create/Edit Profile ---
+Enter First Name:
+Enter Last Name:
+Enter University/College Attended:
+Enter Major:
+Enter Graduation Year (YYYY):
+Enter About Me (optional, max 200 chars, enter blank line to skip):
+Add Experience (optional, max 3 entries. Enter 'DONE' to finish):
+Experience #1 - Title:
+Add Education (optional, max 3 entries. Enter 'DONE' to finish):
+Education #1 - Degree:
+Profile saved successfully!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Log Out
+Enter your choice:
+
+======================================
+            YOUR PROFILE
+======================================
+
+PERSONAL INFORMATION:
+--------------------------------------
+First Name:       Alice
+Last Name:        Smith
+University:       University of Florida
+Major:            Computer Science
+Graduation Year:  2025
+
+ABOUT ME:
+--------------------------------------
+I love programming and software development.
+
+======================================
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Log Out
+Enter your choice:
+
+
+****************************************
+*                                      *
+*         Welcome to InCollege!        *
+*                                      *
+****************************************
+
+Log In
+Create New Account
+Enter your selection:
+Please enter your username:
+Please enter your password:
+You have successfully logged in.
+
+Welcome, alice!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Log Out
+Enter your choice:
+
+=== PENDING CONNECTION REQUESTS ===
+
+No connection requests found.
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Log Out
+Enter your choice:
+
+
+****************************************
+*                                      *
+*         Welcome to InCollege!        *
+*                                      *
+****************************************
+
+Log In
+Create New Account
+Enter your selection:
