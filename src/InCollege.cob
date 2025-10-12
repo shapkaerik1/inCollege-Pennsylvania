@@ -25,10 +25,18 @@ ENVIRONMENT DIVISION.
                      ASSIGN TO "PROFILES.TMP"
                      ORGANIZATION IS LINE SEQUENTIAL
                      FILE STATUS IS TEMP-PROFILES-STATUS.
+                 SELECT TEMP-CONNECTIONS-FILE
+                     ASSIGN TO "CONNECTIONS.TMP"
+                     ORGANIZATION IS LINE SEQUENTIAL
+                     FILE STATUS IS TEMP-CONNECTIONS-STATUS.
                  SELECT CONNECTION-REQUESTS-FILE
                      ASSIGN TO "CONNECTION_REQUESTS.DAT"
                      ORGANIZATION IS LINE SEQUENTIAL
                      FILE STATUS IS CONNECTION-REQUESTS-STATUS.
+                 SELECT CONNECTIONS-FILE
+                     ASSIGN TO "CONNECTIONS.DAT"
+                     ORGANIZATION IS LINE SEQUENTIAL
+                     FILE STATUS IS CONNECTIONS-STATUS.
 
 DATA DIVISION.
        FILE SECTION.
@@ -85,10 +93,22 @@ DATA DIVISION.
               10 TMP-EDU-UNIV          PIC X(40).
               10 TMP-EDU-YEARS         PIC X(20).
 
+       FD TEMP-CONNECTIONS-FILE.
+       01 TMP-CONNECTION-RECORD.
+           05 TMP-CR-SENDER-USERNAME    PIC X(20).
+           05 TMP-CR-RECIPIENT-USERNAME PIC X(20).
+           05 TMP-CR-STATUS             PIC X(10).
+
        FD CONNECTION-REQUESTS-FILE.
        01 CONNECTION-REQUEST-RECORD.
            05 CR-SENDER-USERNAME       PIC X(20).
            05 CR-RECIPIENT-USERNAME    PIC X(20).
+           05 CR-STATUS                PIC X(10).
+
+       FD CONNECTIONS-FILE.
+       01 CONNECTION-RECORD.
+           05 CONN-USER1               PIC X(20).
+           05 CONN-USER2               PIC X(20).
 
        WORKING-STORAGE SECTION.
        *> variables for file handling
@@ -98,6 +118,8 @@ DATA DIVISION.
        01 PROFILES-STATUS  PIC X(2).
        01 TEMP-PROFILES-STATUS PIC X(2).
        01 CONNECTION-REQUESTS-STATUS PIC X(2).
+       01 TEMP-CONNECTIONS-STATUS PIC X(2).
+       01 CONNECTIONS-STATUS PIC X(2).
 
        *> end of file flag to control main loop
        01 WS-EOF-FLAG PIC A(1) VALUE 'N'.
@@ -183,7 +205,16 @@ DATA DIVISION.
            05 WS-CONNECTION-EXISTS    PIC X VALUE 'N'.
            05 WS-REQUEST-EXISTS       PIC X VALUE 'N'.
            05 WS-CONN-MENU-CHOICE     PIC X(80).
+           05 WS-SELECTED-SENDER      PIC X(20).
+           05 WS-REQUEST-ACTION       PIC X(30).
 
+       01 WS-NETWORK-VARS.
+           05 WS-FRIEND-USERNAME      PIC X(20).
+           05 WS-NETWORK-COUNT        PIC 99 VALUE 0.
+           05 WS-CONN-EOF-FLAG        PIC X VALUE 'N'.
+               88 CONN-EOF            VALUE 'Y'.
+           05 WS-PROF-EOF-FLAG        PIC X VALUE 'N'.
+               88 PROF-EOF            VALUE 'Y'.
 
 PROCEDURE DIVISION.
        PERFORM OPEN-FILES.
@@ -517,6 +548,7 @@ POST-LOGIN-MENU.
        PERFORM UNTIL EOF
            MOVE SPACES TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
+
            MOVE "Create/Edit My Profile" TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
            MOVE "View My Profile" TO OUTPUT-LINE
@@ -527,6 +559,13 @@ POST-LOGIN-MENU.
            PERFORM WRITE-AND-DISPLAY
            MOVE "Learn a New Skill" TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
+           MOVE "View Pending Requests" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           MOVE "View My Network" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           MOVE "Log Out" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+
            MOVE "Enter your choice:" TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
 
@@ -550,6 +589,15 @@ POST-LOGIN-MENU.
                       PERFORM FIND-SOMEONE-YOU-KNOW
                    WHEN "Learn a New Skill"
                        PERFORM LEARN-A-SKILL-SUB-MENU
+                   WHEN "View Pending Requests"
+                       PERFORM GET-PENDING-CONNECTION-REQUESTS
+                   WHEN "View My Network"
+                       PERFORM VIEW-MY-NETWORK
+                   WHEN "Log Out"
+                       MOVE SPACES TO OUTPUT-LINE
+                       PERFORM WRITE-AND-DISPLAY
+                       PERFORM MAIN-MENU-DISPLAY
+                       EXIT PERFORM
                    WHEN "Go Back"
                        MOVE SPACES TO OUTPUT-LINE
                        PERFORM WRITE-AND-DISPLAY
@@ -866,26 +914,8 @@ CREATE-OR-EDIT-PROFILE.
        MOVE "Profile saved successfully!" TO OUTPUT-LINE
        PERFORM WRITE-AND-DISPLAY.
 
-VIEW-MY-PROFILE.
-       *> Enhanced profile display with improved formatting for better readability
-       MOVE "======================================" TO OUTPUT-LINE
-       PERFORM WRITE-AND-DISPLAY
-       MOVE "            YOUR PROFILE" TO OUTPUT-LINE
-       PERFORM WRITE-AND-DISPLAY
-       MOVE "======================================" TO OUTPUT-LINE
-       PERFORM WRITE-AND-DISPLAY
-       MOVE SPACES TO OUTPUT-LINE
-       PERFORM WRITE-AND-DISPLAY
-
-       PERFORM LOAD-PROFILE-FOR-CURRENT-USER
-       IF WS-PROFILE-FOUND = 'N'
-           MOVE "Profile not found. Please create your profile first." TO OUTPUT-LINE
-           PERFORM WRITE-AND-DISPLAY
-           MOVE SPACES TO OUTPUT-LINE
-           PERFORM WRITE-AND-DISPLAY
-           EXIT PARAGRAPH
-       END-IF
-
+DISPLAY-PROFILE-CONTENT.
+       *> Helper display function for VIEW-MY-PROFILE and DISPLAY-FOUND-PROFILE
        *> Personal Information Section
        MOVE "PERSONAL INFORMATION:" TO OUTPUT-LINE
        PERFORM WRITE-AND-DISPLAY
@@ -1046,6 +1076,28 @@ VIEW-MY-PROFILE.
        MOVE "======================================" TO OUTPUT-LINE
        PERFORM WRITE-AND-DISPLAY.
 
+VIEW-MY-PROFILE.
+       *> Enhanced profile display with improved formatting for better readability
+       MOVE "======================================" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+       MOVE "            YOUR PROFILE" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+       MOVE "======================================" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+       MOVE SPACES TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+
+       PERFORM LOAD-PROFILE-FOR-CURRENT-USER
+       IF WS-PROFILE-FOUND = 'N'
+           MOVE "Profile not found. Please create your profile first." TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           MOVE SPACES TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           EXIT PARAGRAPH
+       END-IF
+
+       PERFORM DISPLAY-PROFILE-CONTENT.
+
 SEND-CONNECTION-REQUEST.
        *> Validate connection request and save if valid
 
@@ -1088,7 +1140,31 @@ CHECK-EXISTING-CONNECTION.
        MOVE 'N' TO WS-CONNECTION-EXISTS
        MOVE 'N' TO WS-REQUEST-EXISTS
 
-       *> For now, we only check for existing requests since connections aren't implemented yet
+       *> Check if users are already friends
+       OPEN INPUT CONNECTIONS-FILE
+       IF CONNECTIONS-STATUS = "00"
+              PERFORM UNTIL 1 = 2
+                  READ CONNECTIONS-FILE
+                      AT END EXIT PERFORM
+                      NOT AT END
+                           *> Check if current user is already connected to target user
+                           IF (FUNCTION TRIM(CONN-USER1) = FUNCTION TRIM(USERNAME) AND
+                               FUNCTION TRIM(CONN-USER2) = FUNCTION TRIM(WS-TARGET-USERNAME)) OR
+                               (FUNCTION TRIM(CONN-USER1) = FUNCTION TRIM(WS-TARGET-USERNAME) AND
+                               FUNCTION TRIM(CONN-USER2) = FUNCTION TRIM(USERNAME))
+
+                               MOVE 'Y' TO WS-CONNECTION-EXISTS
+                              EXIT PERFORM
+                          END-IF
+                  END-READ
+              END-PERFORM
+              CLOSE CONNECTIONS-FILE.
+
+           *> If users are already connected, we don't need to check for pending requests.
+           IF WS-CONNECTION-EXISTS = 'Y'
+               EXIT PARAGRAPH
+           END-IF.
+
        *> Open the connection requests file to check for existing requests
        OPEN INPUT CONNECTION-REQUESTS-FILE
        IF CONNECTION-REQUESTS-STATUS NOT = "00"
@@ -1120,6 +1196,7 @@ SAVE-CONNECTION-REQUEST.
        *> Save the connection request to the file
        MOVE FUNCTION TRIM(USERNAME) TO CR-SENDER-USERNAME
        MOVE FUNCTION TRIM(WS-TARGET-USERNAME) TO CR-RECIPIENT-USERNAME
+       MOVE "pending" TO CR-STATUS
 
        *> Open file for appending (create if doesn't exist)
        OPEN EXTEND CONNECTION-REQUESTS-FILE
@@ -1376,226 +1453,227 @@ FIND-SOMEONE-YOU-KNOW.
            PERFORM WRITE-AND-DISPLAY
        END-IF.
 GET-PENDING-CONNECTION-REQUESTS.
-    OPEN INPUT CONNECTION-REQUESTS-FILE
-    IF CONNECTION-REQUESTS-STATUS NOT = "00"
-        MOVE "No connection requests found." TO OUTPUT-LINE
-        PERFORM WRITE-AND-DISPLAY
-        EXIT PARAGRAPH
-    END-IF
+    MOVE SPACES TO USER-ACTION
 
-    MOVE 0 TO WS-MATCHES-FOUND
-    PERFORM UNTIL 1 = 2
-        READ CONNECTION-REQUESTS-FILE
-            AT END EXIT PERFORM
-            NOT AT END
-                IF FUNCTION TRIM(CR-RECIPIENT-USERNAME) = FUNCTION TRIM(USERNAME) AND
-                   FUNCTION TRIM(CR-STATUS) = "pending"
-                    ADD 1 TO WS-MATCHES-FOUND
-                    MOVE "Pending Request from: " TO OUTPUT-LINE
-                    STRING CR-SENDER-USERNAME DELIMITED BY SIZE INTO OUTPUT-LINE
-                    PERFORM WRITE-AND-DISPLAY
-                END-IF
-        END-READ
-    END-PERFORM
-    CLOSE CONNECTION-REQUESTS-FILE
+    *> loop continues until no requests are left or user types 'Go Back'
+    PERFORM UNTIL FUNCTION TRIM(USER-ACTION) = "Go Back"
+       MOVE "=== PENDING CONNECTION REQUESTS ===" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+       MOVE SPACES TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
 
-    IF WS-MATCHES-FOUND = 0
-        MOVE "No pending connection requests." TO OUTPUT-LINE
-        PERFORM WRITE-AND-DISPLAY
-    END-IF
-POST-LOGIN-MENU.
-    MOVE "1. View Pending Requests" TO OUTPUT-LINE
-    PERFORM WRITE-AND-DISPLAY
-    MOVE "2. Log Out" TO OUTPUT-LINE
-    PERFORM WRITE-AND-DISPLAY
-    MOVE "Enter your choice:" TO OUTPUT-LINE
-    PERFORM WRITE-AND-DISPLAY
-      
+       OPEN INPUT CONNECTION-REQUESTS-FILE
+       IF CONNECTION-REQUESTS-STATUS NOT = "00"
+           MOVE "No connection requests found." TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           EXIT PARAGRAPH
+       END-IF
+
+       MOVE 0 TO WS-MATCHES-FOUND
+       PERFORM UNTIL 1 = 2
+           READ CONNECTION-REQUESTS-FILE
+               AT END EXIT PERFORM
+               NOT AT END
+                   IF FUNCTION TRIM(CR-RECIPIENT-USERNAME) = FUNCTION TRIM(USERNAME) AND
+                      FUNCTION TRIM(CR-STATUS) = "pending"
+                       ADD 1 TO WS-MATCHES-FOUND
+                       MOVE SPACES TO OUTPUT-LINE
+                       STRING "Connection Request #" WS-MATCHES-FOUND
+                              " from: " DELIMITED BY SIZE
+                              FUNCTION TRIM(CR-SENDER-USERNAME) DELIMITED BY SIZE
+                              INTO OUTPUT-LINE
+                       END-STRING
+                       PERFORM WRITE-AND-DISPLAY
+                   END-IF
+           END-READ
+       END-PERFORM
+       CLOSE CONNECTION-REQUESTS-FILE
+
+       IF WS-MATCHES-FOUND = 0
+           MOVE "No pending connection requests." TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           *> automatically leaves page when there are no more connection requests
+           EXIT PERFORM
+       END-IF
+
+       MOVE SPACES TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+       MOVE "Enter sender's username to manage:" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+
+       *> check if user inputted 'Go Back'
+       READ INPUT-FILE
+           AT END SET EOF TO TRUE
+           NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO USER-ACTION
+       END-READ
+       IF EOF EXIT PARAGRAPH END-IF
+
+        *> only proceed if the user DID NOT want to go back
+        IF FUNCTION TRIM(USER-ACTION) NOT = "Go Back"
+            *> the input is a username, so move it to the variable used by sub-paragraph
+            MOVE USER-ACTION TO WS-SELECTED-SENDER
+            PERFORM VERIFY-PENDING-REQUEST
+
+            IF WS-REQUEST-EXISTS = 'N'
+                MOVE "No pending request found from that user." TO OUTPUT-LINE
+                PERFORM WRITE-AND-DISPLAY
+                MOVE SPACES TO OUTPUT-LINE
+                PERFORM WRITE-AND-DISPLAY
+            ELSE
+                *> Valid user selected, now get the secondary action (Accept/Reject).
+                MOVE SPACES TO OUTPUT-LINE
+                PERFORM WRITE-AND-DISPLAY
+                MOVE "Accept Connection Request" TO OUTPUT-LINE
+                PERFORM WRITE-AND-DISPLAY
+                MOVE "Reject Connection Request" TO OUTPUT-LINE
+                PERFORM WRITE-AND-DISPLAY
+                MOVE "Go Back" TO OUTPUT-LINE
+                PERFORM WRITE-AND-DISPLAY
+                MOVE "Enter your choice:" TO OUTPUT-LINE
+                PERFORM WRITE-AND-DISPLAY
+
+                READ INPUT-FILE
+                    AT END SET EOF TO TRUE
+                    NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-REQUEST-ACTION
+                END-READ
+                IF EOF EXIT PERFORM END-IF
+
+                EVALUATE WS-REQUEST-ACTION
+                    WHEN "Accept Connection Request"
+                        PERFORM ACCEPT-CONNECTION-REQUEST
+                    WHEN "Reject Connection Request"
+                        PERFORM REJECT-CONNECTION-REQUEST
+                    WHEN "Go Back"
+                       CONTINUE
+                    WHEN OTHER
+                        MOVE "Invalid action." TO OUTPUT-LINE
+                        PERFORM WRITE-AND-DISPLAY
+                END-EVALUATE
+            END-IF
+        END-IF
+    END-PERFORM.
+
+    *> Reset the variable for safety after the loop is done.
+    MOVE SPACES TO USER-ACTION.
+
+VERIFY-PENDING-REQUEST.
+       *> Check if the selected sender has a pending request to current user
+       MOVE 'N' TO WS-REQUEST-EXISTS
+       OPEN INPUT CONNECTION-REQUESTS-FILE
+       IF CONNECTION-REQUESTS-STATUS NOT = "00"
+           EXIT PARAGRAPH
+       END-IF
+
+       PERFORM UNTIL 1 = 2
+           READ CONNECTION-REQUESTS-FILE
+               AT END EXIT PERFORM
+               NOT AT END
+                   IF FUNCTION TRIM(CR-SENDER-USERNAME) = FUNCTION TRIM(WS-SELECTED-SENDER) AND
+                      FUNCTION TRIM(CR-RECIPIENT-USERNAME) = FUNCTION TRIM(USERNAME) AND
+                      FUNCTION TRIM(CR-STATUS) = "pending"
+                       MOVE 'Y' TO WS-REQUEST-EXISTS
+                       EXIT PERFORM
+                   END-IF
+           END-READ
+       END-PERFORM
+       CLOSE CONNECTION-REQUESTS-FILE.
+
 ACCEPT-CONNECTION-REQUEST.
-    MOVE 'accepted' TO CR-STATUS
-    WRITE CONNECTION-REQUEST-RECORD
+       *> This paragraph adds a permanent connection record
+       PERFORM ADD-ESTABLISHED-CONNECTION
+       *> remove the pending request form the requests file
+       MOVE "accepted" TO WS-REQUEST-ACTION
+       PERFORM UPDATE-CONNECTION-REQUEST-STATUS.
 
+REJECT-CONNECTION-REQUEST.
+       *> This paragraph removes the pending request from the file
+       MOVE "rejected" TO WS-REQUEST-ACTION
+       PERFORM UPDATE-CONNECTION-REQUEST-STATUS.
+
+ADD-ESTABLISHED-CONNECTION.
+       *> This parapgraph creates the permanent connection
+       MOVE FUNCTION TRIM(USERNAME) TO CONN-USER1
+       MOVE FUNCTION TRIM(WS-SELECTED-SENDER) TO CONN-USER2
+
+       *> open file for appending (crete if it doesn't exisy)
+       OPEN EXTEND CONNECTIONS-FILE
+       IF CONNECTIONS-STATUS = "35" *> File not found
+           OPEN OUTPUT CONNECTIONS-FILE
+       ELSE
+           CLOSE CONNECTIONS-FILE
+           OPEN EXTEND CONNECTIONS-FILE
+       END-IF.
+
+        WRITE CONNECTION-RECORD
+        CLOSE CONNECTIONS-FILE.
+
+UPDATE-CONNECTION-REQUEST-STATUS.
+       *> This paragraph removes a specific request by copying all other requests to a temporary file
+       OPEN INPUT CONNECTION-REQUESTS-FILE
+       OPEN OUTPUT TEMP-CONNECTIONS-FILE
+
+       IF CONNECTION-REQUESTS-STATUS = "00"
+           PERFORM UNTIL 1 = 2
+               READ CONNECTION-REQUESTS-FILE
+                   AT END EXIT PERFORM
+                   NOT AT END
+                       IF FUNCTION TRIM(CR-SENDER-USERNAME) = FUNCTION TRIM(WS-SELECTED-SENDER) AND
+                          FUNCTION TRIM(CR-RECIPIENT-USERNAME) = FUNCTION TRIM(USERNAME) AND
+                          FUNCTION TRIM(CR-STATUS) = "pending"
+                           *> This is the request to remove. Display confirmation and DO NOT write to temp file
+                           *> Show confirmation message
+                           MOVE SPACES TO OUTPUT-LINE
+                           STRING "Connection request from " DELIMITED BY SIZE
+                                  FUNCTION TRIM(WS-SELECTED-SENDER) DELIMITED BY SIZE
+                                  " has been " DELIMITED BY SIZE
+                                  FUNCTION TRIM(WS-REQUEST-ACTION) DELIMITED BY SIZE
+                                  "." DELIMITED BY SIZE
+                                  INTO OUTPUT-LINE
+                           END-STRING
+                           PERFORM WRITE-AND-DISPLAY
+                           MOVE SPACES TO OUTPUT-LINE
+                           PERFORM WRITE-AND-DISPLAY
+                       ELSE
+                           *> Keep other requests unchanged
+                           MOVE CR-SENDER-USERNAME TO TMP-CR-SENDER-USERNAME
+                           MOVE CR-RECIPIENT-USERNAME TO TMP-CR-RECIPIENT-USERNAME
+                           MOVE CR-STATUS TO TMP-CR-STATUS
+                           WRITE TMP-CONNECTION-RECORD
+                       END-IF
+               END-READ
+           END-PERFORM
+       END-IF
+       CLOSE CONNECTION-REQUESTS-FILE
+       CLOSE TEMP-CONNECTIONS-FILE
+
+       *> Copy updated file back
+       OPEN INPUT TEMP-CONNECTIONS-FILE
+       OPEN OUTPUT CONNECTION-REQUESTS-FILE
+       PERFORM UNTIL 1 = 2
+           READ TEMP-CONNECTIONS-FILE
+               AT END EXIT PERFORM
+               NOT AT END
+                   MOVE TMP-CR-SENDER-USERNAME TO CR-SENDER-USERNAME
+                   MOVE TMP-CR-RECIPIENT-USERNAME TO CR-RECIPIENT-USERNAME
+                   MOVE TMP-CR-STATUS TO CR-STATUS
+                   WRITE CONNECTION-REQUEST-RECORD
+           END-READ
+       END-PERFORM
+       CLOSE CONNECTION-REQUESTS-FILE
+       CLOSE TEMP-CONNECTIONS-FILE.
 
 DISPLAY-FOUND-PROFILE.
-       *> Display the full profile of a found user with cool design
-       MOVE SPACES TO OUTPUT-LINE
+       *> Display the full profile of a found user
+       MOVE "======================================" TO OUTPUT-LINE
        PERFORM WRITE-AND-DISPLAY
-       MOVE "╔══════════════════════════════════════════════════════════════╗" TO OUTPUT-LINE
-       PERFORM WRITE-AND-DISPLAY
-       MOVE "║                                                              ║" TO OUTPUT-LINE
-       PERFORM WRITE-AND-DISPLAY
-       MOVE "║                    🎯 FOUND PROFILE 🎯                        ║" TO OUTPUT-LINE
-       PERFORM WRITE-AND-DISPLAY
-       MOVE "║                                                              ║" TO OUTPUT-LINE
-       PERFORM WRITE-AND-DISPLAY
-       MOVE "╚══════════════════════════════════════════════════════════════╝" TO OUTPUT-LINE
-       PERFORM WRITE-AND-DISPLAY
-       MOVE SPACES TO OUTPUT-LINE
-       PERFORM WRITE-AND-DISPLAY
-
-       *> Personal Information Section
-       MOVE "┌──────────────────────────────────────────────────────────────┐" TO OUTPUT-LINE
-       PERFORM WRITE-AND-DISPLAY
-       MOVE "│                      👤 PERSONAL INFO                        │" TO OUTPUT-LINE
-       PERFORM WRITE-AND-DISPLAY
-       MOVE "└──────────────────────────────────────────────────────────────┘" TO OUTPUT-LINE
-       PERFORM WRITE-AND-DISPLAY
-       MOVE SPACES TO OUTPUT-LINE
-       PERFORM WRITE-AND-DISPLAY
-
-       MOVE SPACES TO OUTPUT-LINE
-       STRING "🔸 First Name:     " DELIMITED BY SIZE
-              FUNCTION TRIM(PR-FIRST-NAME) DELIMITED BY SIZE
-              INTO OUTPUT-LINE
-       END-STRING
-       PERFORM WRITE-AND-DISPLAY
-
-       MOVE SPACES TO OUTPUT-LINE
-       STRING "🔸 Last Name:      " DELIMITED BY SIZE
-              FUNCTION TRIM(PR-LAST-NAME) DELIMITED BY SIZE
-              INTO OUTPUT-LINE
-       END-STRING
-       PERFORM WRITE-AND-DISPLAY
-
-       MOVE SPACES TO OUTPUT-LINE
-       STRING "🏫 University:     " DELIMITED BY SIZE
-              FUNCTION TRIM(PR-UNIVERSITY) DELIMITED BY SIZE
-              INTO OUTPUT-LINE
-       END-STRING
-       PERFORM WRITE-AND-DISPLAY
-
-       MOVE SPACES TO OUTPUT-LINE
-       STRING "📚 Major:          " DELIMITED BY SIZE
-              FUNCTION TRIM(PR-MAJOR) DELIMITED BY SIZE
-              INTO OUTPUT-LINE
-       END-STRING
-       PERFORM WRITE-AND-DISPLAY
-
-       MOVE PR-GRAD-YEAR TO WS-GRAD-YEAR-STR
-       MOVE SPACES TO OUTPUT-LINE
-       STRING "🎓 Graduation:     " DELIMITED BY SIZE
-              FUNCTION TRIM(WS-GRAD-YEAR-STR) DELIMITED BY SIZE
-              INTO OUTPUT-LINE
-       END-STRING
-       PERFORM WRITE-AND-DISPLAY
-
-       IF FUNCTION TRIM(PR-ABOUT) NOT = SPACE
-           MOVE SPACES TO OUTPUT-LINE
-           PERFORM WRITE-AND-DISPLAY
-           MOVE "ABOUT ME:" TO OUTPUT-LINE
-           PERFORM WRITE-AND-DISPLAY
-           MOVE "--------------------------------------" TO OUTPUT-LINE
-           PERFORM WRITE-AND-DISPLAY
-           MOVE SPACES TO OUTPUT-LINE
-           STRING FUNCTION TRIM(PR-ABOUT) DELIMITED BY SIZE
-                  INTO OUTPUT-LINE
-           END-STRING
-           PERFORM WRITE-AND-DISPLAY
-       END-IF
-
-       *> Experience Section
-       IF PR-EXP-COUNT > 0
-           MOVE SPACES TO OUTPUT-LINE
-           PERFORM WRITE-AND-DISPLAY
-           MOVE "EXPERIENCE:" TO OUTPUT-LINE
-           PERFORM WRITE-AND-DISPLAY
-           MOVE "--------------------------------------" TO OUTPUT-LINE
-           PERFORM WRITE-AND-DISPLAY
-
-           PERFORM VARYING I FROM 1 BY 1 UNTIL I > PR-EXP-COUNT
-               MOVE I TO WS-INDEX-TEXT
-               MOVE SPACES TO OUTPUT-LINE
-               STRING "Experience #" WS-INDEX-TEXT ":" DELIMITED BY SIZE
-                      INTO OUTPUT-LINE
-               END-STRING
-               PERFORM WRITE-AND-DISPLAY
-
-               MOVE SPACES TO OUTPUT-LINE
-               STRING "  Title:         " DELIMITED BY SIZE
-                      FUNCTION TRIM(PR-EXP-TITLE(I)) DELIMITED BY SIZE
-                      INTO OUTPUT-LINE
-               END-STRING
-               PERFORM WRITE-AND-DISPLAY
-
-               MOVE SPACES TO OUTPUT-LINE
-               STRING "  Company:       " DELIMITED BY SIZE
-                      FUNCTION TRIM(PR-EXP-COMPANY(I)) DELIMITED BY SIZE
-                      INTO OUTPUT-LINE
-               END-STRING
-               PERFORM WRITE-AND-DISPLAY
-
-               MOVE SPACES TO OUTPUT-LINE
-               STRING "  Dates:         " DELIMITED BY SIZE
-                      FUNCTION TRIM(PR-EXP-DATES(I)) DELIMITED BY SIZE
-                      INTO OUTPUT-LINE
-               END-STRING
-               PERFORM WRITE-AND-DISPLAY
-
-               IF FUNCTION TRIM(PR-EXP-DESC(I)) NOT = SPACE
-                   MOVE SPACES TO OUTPUT-LINE
-                   STRING "  Description:   " DELIMITED BY SIZE
-                          FUNCTION TRIM(PR-EXP-DESC(I)) DELIMITED BY SIZE
-                          INTO OUTPUT-LINE
-                   END-STRING
-                   PERFORM WRITE-AND-DISPLAY
-               END-IF
-
-               IF I < PR-EXP-COUNT
-                   MOVE SPACES TO OUTPUT-LINE
-                   PERFORM WRITE-AND-DISPLAY
-               END-IF
-           END-PERFORM
-       END-IF
-
-       *> Education Section
-       IF PR-EDU-COUNT > 0
-           MOVE SPACES TO OUTPUT-LINE
-           PERFORM WRITE-AND-DISPLAY
-           MOVE "EDUCATION:" TO OUTPUT-LINE
-           PERFORM WRITE-AND-DISPLAY
-           MOVE "--------------------------------------" TO OUTPUT-LINE
-           PERFORM WRITE-AND-DISPLAY
-
-           PERFORM VARYING I FROM 1 BY 1 UNTIL I > PR-EDU-COUNT
-               MOVE I TO WS-INDEX-TEXT
-               MOVE SPACES TO OUTPUT-LINE
-               STRING "Education #" WS-INDEX-TEXT ":" DELIMITED BY SIZE
-                      INTO OUTPUT-LINE
-               END-STRING
-               PERFORM WRITE-AND-DISPLAY
-
-               MOVE SPACES TO OUTPUT-LINE
-               STRING "  Degree:        " DELIMITED BY SIZE
-                      FUNCTION TRIM(PR-EDU-DEGREE(I)) DELIMITED BY SIZE
-                      INTO OUTPUT-LINE
-               END-STRING
-               PERFORM WRITE-AND-DISPLAY
-
-               MOVE SPACES TO OUTPUT-LINE
-               STRING "  University:    " DELIMITED BY SIZE
-                      FUNCTION TRIM(PR-EDU-UNIV(I)) DELIMITED BY SIZE
-                      INTO OUTPUT-LINE
-               END-STRING
-               PERFORM WRITE-AND-DISPLAY
-
-               MOVE SPACES TO OUTPUT-LINE
-               STRING "  Years:         " DELIMITED BY SIZE
-                      FUNCTION TRIM(PR-EDU-YEARS(I)) DELIMITED BY SIZE
-                      INTO OUTPUT-LINE
-               END-STRING
-               PERFORM WRITE-AND-DISPLAY
-
-               IF I < PR-EDU-COUNT
-                   MOVE SPACES TO OUTPUT-LINE
-                   PERFORM WRITE-AND-DISPLAY
-               END-IF
-           END-PERFORM
-       END-IF
-
-       MOVE SPACES TO OUTPUT-LINE
+       MOVE "            FOUND PROFILE" TO OUTPUT-LINE
        PERFORM WRITE-AND-DISPLAY
        MOVE "======================================" TO OUTPUT-LINE
        PERFORM WRITE-AND-DISPLAY
+       MOVE SPACES TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+
+       PERFORM DISPLAY-PROFILE-CONTENT
 
        *> Store the target username for connection request
        MOVE FUNCTION TRIM(PR-USERNAME) TO WS-TARGET-USERNAME
@@ -1629,4 +1707,72 @@ DISPLAY-FOUND-PROFILE.
            END-EVALUATE
        END-IF.
 
+VIEW-MY-NETWORK.
+       MOVE "=== YOUR NETWORK ===" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+       MOVE SPACES TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
 
+       MOVE 0 TO WS-NETWORK-COUNT
+
+       OPEN INPUT CONNECTIONS-FILE
+       IF CONNECTIONS-STATUS NOT = "00"
+           MOVE "No connections in your network yet." TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           CLOSE CONNECTIONS-FILE
+           EXIT PARAGRAPH
+       END-IF.
+
+       MOVE 'N' TO WS-CONN-EOF-FLAG
+       PERFORM UNTIL CONN-EOF
+           READ CONNECTIONS-FILE
+               AT END SET CONN-EOF TO TRUE
+               NOT AT END
+                   *> check if logged-in user is part of the connection record
+                   IF FUNCTION TRIM(CONN-USER1) = FUNCTION TRIM(USERNAME)
+                       MOVE CONN-USER2 TO WS-FRIEND-USERNAME
+                       ADD 1 TO WS-NETWORK-COUNT
+                       PERFORM DISPLAY-FRIEND-DETAILS
+                   ELSE
+                       IF FUNCTION TRIM(CONN-USER2) = FUNCTION TRIM(USERNAME)
+                           MOVE CONN-USER1 TO WS-FRIEND-USERNAME
+                           ADD 1 TO WS-NETWORK-COUNT
+                           PERFORM DISPLAY-FRIEND-DETAILS
+                       END-IF
+                   END-IF
+           END-READ
+       END-PERFORM.
+       CLOSE CONNECTIONS-FILE.
+
+       IF WS-NETWORK-COUNT = 0
+           MOVE "No connections in your network yet." TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+       END-IF.
+
+DISPLAY-FRIEND-DETAILS.
+       *> this paragraph find and displays a friend's profile details
+       OPEN INPUT PROFILES-FILE
+       MOVE 'N' TO WS-PROF-EOF-FLAG
+
+       PERFORM UNTIL PROF-EOF
+           READ PROFILES-FILE
+               AT END SET PROF-EOF TO TRUE
+               NOT AT END
+               IF FUNCTION TRIM(PR-USERNAME) = FUNCTION TRIM(WS-FRIEND-USERNAME)
+                       STRING "Connected with: "        DELIMITED BY SIZE
+                           FUNCTION TRIM(PR-FIRST-NAME) DELIMITED BY SIZE
+                           " "                          DELIMITED BY SIZE
+                           FUNCTION TRIM(PR-LAST-NAME)  DELIMITED BY SIZE
+                           " (University: "             DELIMITED BY SIZE
+                           FUNCTION TRIM(PR-UNIVERSITY) DELIMITED BY SIZE
+                           ", Major: "                  DELIMITED BY SIZE
+                           FUNCTION TRIM(PR-MAJOR)      DELIMITED BY SIZE
+                           ")"                          DELIMITED BY SIZE
+                           INTO OUTPUT-LINE
+                       END-STRING
+                       PERFORM WRITE-AND-DISPLAY
+                       SET PROF-EOF TO TRUE
+                   END-IF
+              END-READ
+           END-PERFORM.
+           CLOSE PROFILES-FILE.

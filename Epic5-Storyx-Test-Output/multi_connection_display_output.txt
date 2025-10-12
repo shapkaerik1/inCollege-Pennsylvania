@@ -47,6 +47,34 @@ View My Network
 Log Out
 Enter your choice:
 
+======================================
+            YOUR PROFILE
+======================================
+
+PERSONAL INFORMATION:
+--------------------------------------
+First Name:       Alice
+Last Name:        Smith
+University:       University of Florida
+Major:            Computer Science
+Graduation Year:  2025
+
+ABOUT ME:
+--------------------------------------
+I love programming and software development.
+
+======================================
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Log Out
+Enter your choice:
+
 
 ****************************************
 *                                      *
@@ -97,6 +125,34 @@ View My Network
 Log Out
 Enter your choice:
 
+======================================
+            YOUR PROFILE
+======================================
+
+PERSONAL INFORMATION:
+--------------------------------------
+First Name:       Bob
+Last Name:        Johnson
+University:       Florida State University
+Major:            Engineering
+Graduation Year:  2024
+
+ABOUT ME:
+--------------------------------------
+Passionate about robotics and automation.
+
+======================================
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Log Out
+Enter your choice:
+
 --- Find Someone You Know ---
 Enter Full Name (First Last):
 User found: Alice Smith (alice)
@@ -114,7 +170,7 @@ Graduation Year:  2025
 
 ABOUT ME:
 --------------------------------------
-I love programming.
+I love programming and software development.
 
 ======================================
 
@@ -183,6 +239,34 @@ View My Network
 Log Out
 Enter your choice:
 
+======================================
+            YOUR PROFILE
+======================================
+
+PERSONAL INFORMATION:
+--------------------------------------
+First Name:       Charlie
+Last Name:        Brown
+University:       University of Miami
+Major:            Business
+Graduation Year:  2023
+
+ABOUT ME:
+--------------------------------------
+Entrepreneur focused on tech startups.
+
+======================================
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Log Out
+Enter your choice:
+
 --- Find Someone You Know ---
 Enter Full Name (First Last):
 User found: Alice Smith (alice)
@@ -200,7 +284,7 @@ Graduation Year:  2025
 
 ABOUT ME:
 --------------------------------------
-I love programming.
+I love programming and software development.
 
 ======================================
 
@@ -269,31 +353,173 @@ View My Network
 Log Out
 Enter your choice:
 
+======================================
+            YOUR PROFILE
+======================================
+
+PERSONAL INFORMATION:
+--------------------------------------
+First Name:       Diana
+Last Name:        Prince
+University:       Florida Atlantic University
+Major:            Marketing
+Graduation Year:  2026
+
+ABOUT ME:
+--------------------------------------
+Creative and innovative marketer.
+
+======================================
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Log Out
+Enter your choice:
+
 --- Find Someone You Know ---
 Enter Full Name (First Last):
-User found: Bob Johnson (bob)
+User found: Alice Smith (alice)
 ======================================
             FOUND PROFILE
 ======================================
 
 PERSONAL INFORMATION:
 --------------------------------------
-First Name:       Bob
-Last Name:        Johnson
-University:       Florida State University
-Major:            Engineering
-Graduation Year:  2024
+First Name:       Alice
+Last Name:        Smith
+University:       University of Florida
+Major:            Computer Science
+Graduation Year:  2025
 
 ABOUT ME:
 --------------------------------------
-Passionate about robotics.
+I love programming and software development.
 
 ======================================
 
 Send Connection Request
 Back to Main Menu
 Enter your choice:
-Connection request sent to bob.
+Connection request sent to alice.
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Log Out
+Enter your choice:
+
+
+****************************************
+*                                      *
+*         Welcome to InCollege!        *
+*                                      *
+****************************************
+
+Log In
+Create New Account
+Enter your selection:
+Please enter your username:
+Please enter your password:
+Account created successfully.
+You have successfully logged in.
+
+Welcome, eve!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Log Out
+Enter your choice:
+
+--- Create/Edit Profile ---
+Enter First Name:
+Enter Last Name:
+Enter University/College Attended:
+Enter Major:
+Enter Graduation Year (YYYY):
+Enter About Me (optional, max 200 chars, enter blank line to skip):
+Add Experience (optional, max 3 entries. Enter 'DONE' to finish):
+Experience #1 - Title:
+Add Education (optional, max 3 entries. Enter 'DONE' to finish):
+Education #1 - Degree:
+Profile saved successfully!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Log Out
+Enter your choice:
+
+======================================
+            YOUR PROFILE
+======================================
+
+PERSONAL INFORMATION:
+--------------------------------------
+First Name:       Eve
+Last Name:        Wilson
+University:       University of Central Florida
+Major:            Psychology
+Graduation Year:  2027
+
+ABOUT ME:
+--------------------------------------
+Interested in human behavior and technology.
+
+======================================
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Log Out
+Enter your choice:
+
+--- Find Someone You Know ---
+Enter Full Name (First Last):
+User found: Alice Smith (alice)
+======================================
+            FOUND PROFILE
+======================================
+
+PERSONAL INFORMATION:
+--------------------------------------
+First Name:       Alice
+Last Name:        Smith
+University:       University of Florida
+Major:            Computer Science
+Graduation Year:  2025
+
+ABOUT ME:
+--------------------------------------
+I love programming and software development.
+
+======================================
+
+Send Connection Request
+Back to Main Menu
+Enter your choice:
+Connection request sent to alice.
 
 Create/Edit My Profile
 View My Profile
@@ -335,23 +561,8 @@ Enter your choice:
 
 Connection Request #1 from: bob
 Connection Request #2 from: charlie
-
-Enter sender's username to manage:
-
-Create/Edit My Profile
-View My Profile
-Search for a job
-Find someone you know
-Learn a New Skill
-View Pending Requests
-View My Network
-Log Out
-Enter your choice:
-
-=== PENDING CONNECTION REQUESTS ===
-
-Connection Request #1 from: bob
-Connection Request #2 from: charlie
+Connection Request #3 from: diana
+Connection Request #4 from: eve
 
 Enter sender's username to manage:
 
@@ -364,6 +575,8 @@ Connection request from bob has been accepted.
 === PENDING CONNECTION REQUESTS ===
 
 Connection Request #1 from: charlie
+Connection Request #2 from: diana
+Connection Request #3 from: eve
 
 Enter sender's username to manage:
 
@@ -380,20 +593,8 @@ Enter your choice:
 === PENDING CONNECTION REQUESTS ===
 
 Connection Request #1 from: charlie
-
-Enter sender's username to manage:
-No pending request found from that user.
-
-=== PENDING CONNECTION REQUESTS ===
-
-Connection Request #1 from: charlie
-
-Enter sender's username to manage:
-No pending request found from that user.
-
-=== PENDING CONNECTION REQUESTS ===
-
-Connection Request #1 from: charlie
+Connection Request #2 from: diana
+Connection Request #3 from: eve
 
 Enter sender's username to manage:
 
@@ -401,7 +602,65 @@ Accept Connection Request
 Reject Connection Request
 Go Back
 Enter your choice:
-Connection request from charlie has been rejected.
+Connection request from charlie has been accepted.
+
+=== PENDING CONNECTION REQUESTS ===
+
+Connection Request #1 from: diana
+Connection Request #2 from: eve
+
+Enter sender's username to manage:
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Log Out
+Enter your choice:
+
+=== PENDING CONNECTION REQUESTS ===
+
+Connection Request #1 from: diana
+Connection Request #2 from: eve
+
+Enter sender's username to manage:
+
+Accept Connection Request
+Reject Connection Request
+Go Back
+Enter your choice:
+Connection request from diana has been accepted.
+
+=== PENDING CONNECTION REQUESTS ===
+
+Connection Request #1 from: eve
+
+Enter sender's username to manage:
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Log Out
+Enter your choice:
+
+=== PENDING CONNECTION REQUESTS ===
+
+Connection Request #1 from: eve
+
+Enter sender's username to manage:
+
+Accept Connection Request
+Reject Connection Request
+Go Back
+Enter your choice:
+Connection request from eve has been accepted.
 
 === PENDING CONNECTION REQUESTS ===
 
@@ -417,16 +676,13 @@ View My Network
 Log Out
 Enter your choice:
 
-=== YOUR NETWORK ===
 
-Connected with: Bob Johnson (University: Florida State University, Major: Engineering)
+****************************************
+*                                      *
+*         Welcome to InCollege!        *
+*                                      *
+****************************************
 
-Create/Edit My Profile
-View My Profile
-Search for a job
-Find someone you know
-Learn a New Skill
-View Pending Requests
-View My Network
-Log Out
-Enter your choice:
+Log In
+Create New Account
+Enter your selection:

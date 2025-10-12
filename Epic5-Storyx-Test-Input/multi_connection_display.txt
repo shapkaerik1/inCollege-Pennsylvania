@@ -7,9 +7,10 @@ Smith
 University of Florida
 Computer Science
 2025
-I love programming.
+I love programming and software development.
 DONE
 DONE
+View My Profile
 Go Back
 Create New Account
 bob
@@ -20,9 +21,10 @@ Johnson
 Florida State University
 Engineering
 2024
-Passionate about robotics.
+Passionate about robotics and automation.
 DONE
 DONE
+View My Profile
 Find someone you know
 Alice Smith
 Send Connection Request
@@ -36,9 +38,10 @@ Brown
 University of Miami
 Business
 2023
-Entrepreneur at heart.
+Entrepreneur focused on tech startups.
 DONE
 DONE
+View My Profile
 Find someone you know
 Alice Smith
 Send Connection Request
@@ -52,25 +55,47 @@ Prince
 Florida Atlantic University
 Marketing
 2026
-Creative and innovative.
+Creative and innovative marketer.
 DONE
 DONE
+View My Profile
 Find someone you know
-Bob Johnson
+Alice Smith
+Send Connection Request
+Log Out
+Create New Account
+eve
+ValidPass5!
+Create/Edit My Profile
+Eve
+Wilson
+University of Central Florida
+Psychology
+2027
+Interested in human behavior and technology.
+DONE
+DONE
+View My Profile
+Find someone you know
+Alice Smith
 Send Connection Request
 Log Out
 Log In
 alice
 ValidPass1!
 View Pending Requests
-Go Back
-View Pending Requests
 bob
 Accept Connection Request
 Go Back
 View Pending Requests
-doesnt exist
-View Pending Requests
 charlie
-Reject Connection Request
-View My Network
+Accept Connection Request
+Go Back
+View Pending Requests
+diana
+Accept Connection Request
+Go Back
+View Pending Requests
+eve
+Accept Connection Request
+Log Out

@@ -1,0 +1,17 @@
+Create New Account
+alice
+ValidPass1!
+Create/Edit My Profile
+Alice
+Smith
+University of Florida
+Computer Science
+2025
+I love programming.
+DONE
+DONE
+View My Profile
+Find someone you know
+Alice Smith
+Send Connection Request
+Log Out

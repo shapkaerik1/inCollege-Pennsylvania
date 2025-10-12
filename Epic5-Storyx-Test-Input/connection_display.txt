@@ -1,0 +1,46 @@
+Create New Account
+alice
+ValidPass1!
+Create/Edit My Profile
+Alice
+Smith
+University of Florida
+Computer Science
+2025
+I love programming and software development.
+DONE
+DONE
+View My Profile
+Go Back
+Create New Account
+bob
+ValidPass2!
+Create/Edit My Profile
+Bob
+Johnson
+Florida State University
+Engineering
+2024
+Passionate about robotics and automation.
+DONE
+DONE
+View My Profile
+Find someone you know
+Alice Smith
+Send Connection Request
+Log Out
+Log In
+alice
+ValidPass1!
+View Pending Requests
+bob
+Accept Connection Request
+Go Back
+View My Network
+Go Back
+Log Out
+Log In
+bob
+ValidPass2!
+View My Network
+Go Back

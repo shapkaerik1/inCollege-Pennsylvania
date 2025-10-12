@@ -10,6 +10,7 @@ Computer Science
 I love programming.
 DONE
 DONE
+View My Profile
 Go Back
 Create New Account
 bob
@@ -23,54 +24,44 @@ Engineering
 Passionate about robotics.
 DONE
 DONE
+View My Profile
 Find someone you know
 Alice Smith
-Send Connection Request
-Log Out
-Create New Account
-charlie
-ValidPass3!
-Create/Edit My Profile
-Charlie
-Brown
-University of Miami
-Business
-2023
-Entrepreneur at heart.
-DONE
-DONE
-Find someone you know
-Alice Smith
-Send Connection Request
-Log Out
-Create New Account
-diana
-ValidPass4!
-Create/Edit My Profile
-Diana
-Prince
-Florida Atlantic University
-Marketing
-2026
-Creative and innovative.
-DONE
-DONE
-Find someone you know
-Bob Johnson
 Send Connection Request
 Log Out
 Log In
 alice
 ValidPass1!
 View Pending Requests
-Go Back
-View Pending Requests
 bob
 Accept Connection Request
 Go Back
-View Pending Requests
-doesnt exist
-View Pending Requests
-charlie
-Reject Connection Request
-View My Network
+Log Out
+Log In
+bob
+ValidPass2!
+Find someone you know
+Alice Smith
+Send Connection Request
+Log Out
+Log In
+alice
+ValidPass1!
+Find someone you know
+Alice Smith
+Send Connection Request
+Log Out
+Log In
+bob
+ValidPass2!
+Find someone you know
+Charlie Brown
+Send Connection Request
+Log Out
+Log In
+alice
+ValidPass1!
+Find someone you know
+Bob Johnson
+Send Connection Request
+Log Out

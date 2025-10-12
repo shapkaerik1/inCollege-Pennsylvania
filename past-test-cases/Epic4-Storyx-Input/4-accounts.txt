@@ -10,6 +10,7 @@ Computer Science
 I love programming.
 DONE
 DONE
+View My Profile
 Go Back
 Create New Account
 bob
@@ -23,6 +24,7 @@ Engineering
 Passionate about robotics.
 DONE
 DONE
+View My Profile
 Find someone you know
 Alice Smith
 Send Connection Request
@@ -39,6 +41,7 @@ Business
 Entrepreneur at heart.
 DONE
 DONE
+View My Profile
 Find someone you know
 Alice Smith
 Send Connection Request
@@ -55,6 +58,7 @@ Marketing
 Creative and innovative.
 DONE
 DONE
+View My Profile
 Find someone you know
 Bob Johnson
 Send Connection Request
@@ -63,14 +67,55 @@ Log In
 alice
 ValidPass1!
 View Pending Requests
+bob
+Accept Connection Request
 Go Back
+View Pending Requests
+charlie
+Reject Connection Request
+Go Back
+View Pending Requests
+Go Back
+Log Out
+Log In
+bob
+ValidPass2!
+Find someone you know
+Alice Smith
+Send Connection Request
+Log Out
+Log In
+alice
+ValidPass1!
+Find someone you know
+Alice Smith
+Send Connection Request
+Log Out
+Log In
+bob
+ValidPass2!
+Find someone you know
+Charlie Brown
+Send Connection Request
+Log Out
+Log In
+charlie
+ValidPass3!
+Find someone you know
+Diana Prince
+Send Connection Request
+Log Out
+Log In
+diana
+ValidPass4!
 View Pending Requests
 bob
 Accept Connection Request
 Go Back
 View Pending Requests
-doesnt exist
-View Pending Requests
 charlie
-Reject Connection Request
-View My Network
+Accept Connection Request
+Go Back
+View Pending Requests
+Go Back
+Log Out
