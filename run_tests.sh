@@ -17,8 +17,8 @@
 SRC_DIR="/workspace/src"
 BIN_DIR="bin"
 PROG_NAME="InCollege"
-INPUT_DIR="Epic5-Storyx-Test-Input"
-OUTPUT_DIR="Epic5-Storyx-Test-Output"
+INPUT_DIR="Epic6-Storyx-Test-Input"
+OUTPUT_DIR="Epic6-Storyx-Test-Output"
 
 # --- 1. Backup Original Files ---
 echo "--- Backing up original input/output files (if they exist)... ---"

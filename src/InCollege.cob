@@ -37,6 +37,10 @@ ENVIRONMENT DIVISION.
                      ASSIGN TO "CONNECTIONS.DAT"
                      ORGANIZATION IS LINE SEQUENTIAL
                      FILE STATUS IS CONNECTIONS-STATUS.
+                 SELECT JOBS-FILE
+                     ASSIGN TO "JOBS.DAT"
+                     ORGANIZATION IS LINE SEQUENTIAL
+                     FILE STATUS IS JOBS-STATUS.
 
 DATA DIVISION.
        FILE SECTION.
@@ -110,6 +114,15 @@ DATA DIVISION.
            05 CONN-USER1               PIC X(20).
            05 CONN-USER2               PIC X(20).
 
+       FD JOBS-FILE.
+       01 JOB-RECORD.
+           05 JR-POSTER-USERNAME     PIC X(20).
+           05 JR-TITLE               PIC X(50).
+           05 JR-DESCRIPTION         PIC X(200).
+           05 JR-EMPLOYER            PIC X(50).
+           05 JR-LOCATION            PIC X(50).
+           05 JR-SALARY              PIC X(30).
+
        WORKING-STORAGE SECTION.
        *> variables for file handling
        01 INPUT-FILE-STATUS PIC XX.
@@ -120,6 +133,8 @@ DATA DIVISION.
        01 CONNECTION-REQUESTS-STATUS PIC X(2).
        01 TEMP-CONNECTIONS-STATUS PIC X(2).
        01 CONNECTIONS-STATUS PIC X(2).
+
+       01 JOBS-STATUS  PIC X(2).
 
        *> end of file flag to control main loop
        01 WS-EOF-FLAG PIC A(1) VALUE 'N'.
@@ -178,8 +193,7 @@ DATA DIVISION.
        01 WS-PROFILE-FOUND            PIC X VALUE 'N'.
        01 WS-INDEX-TEXT               PIC 9.
 
-
-        *> ***Added for "find someone you know" function
+        *> for "find someone you know" function
 
        01 WS-SEARCH-CRITERIA          PIC X(80).
        01 WS-SEARCH-TYPE              PIC X(20).
@@ -199,7 +213,7 @@ DATA DIVISION.
        01 WS-MATCHES-FOUND            PIC 9 VALUE 0.
        01 WS-CURRENT-MATCH            PIC X VALUE 'N'.
 
-        *> ***Added for connection request functionality
+        *> for connection request functionality
        01 WS-CONNECTION-VARIABLES.
            05 WS-TARGET-USERNAME      PIC X(20).
            05 WS-CONNECTION-EXISTS    PIC X VALUE 'N'.
@@ -215,6 +229,20 @@ DATA DIVISION.
                88 CONN-EOF            VALUE 'Y'.
            05 WS-PROF-EOF-FLAG        PIC X VALUE 'N'.
                88 PROF-EOF            VALUE 'Y'.
+
+       *> for job/internship posting functionality
+       01 WS-JOB-DETAILS.
+           05 WS-JOB-TITLE           PIC X(50).
+           05 WS-JOB-DESCRIPTION     PIC X(200).
+           05 WS-JOB-EMPLOYER        PIC X(50).
+           05 WS-JOB-LOCATION        PIC X(50).
+           05 WS-JOB-SALARY          PIC X(30).
+
+       *> removing redunancy of asking user for a required field
+       01 WS-PROMPT-HELPER.
+           05 WS-PROMPT-TEXT     PIC X(80).
+           05 WS-ERROR-TEXT      PIC X(80).
+           05 WS-PROMPT-INPUT    PIC X(250).
 
 PROCEDURE DIVISION.
        PERFORM OPEN-FILES.
@@ -575,16 +603,13 @@ POST-LOGIN-MENU.
            END-READ
 
            IF NOT EOF
-               MOVE SPACES TO OUTPUT-LINE
-               PERFORM WRITE-AND-DISPLAY
                EVALUATE USER-ACTION
                    WHEN "Create/Edit My Profile"
                        PERFORM CREATE-OR-EDIT-PROFILE
                    WHEN "View My Profile"
                        PERFORM VIEW-MY-PROFILE
                    WHEN "Search for a job"
-                       MOVE "Search for a job is under construction." TO OUTPUT-LINE
-                       PERFORM WRITE-AND-DISPLAY
+                       PERFORM JOB-MENU
                    WHEN "Find someone you know"
                       PERFORM FIND-SOMEONE-YOU-KNOW
                    WHEN "Learn a New Skill"
@@ -594,11 +619,6 @@ POST-LOGIN-MENU.
                    WHEN "View My Network"
                        PERFORM VIEW-MY-NETWORK
                    WHEN "Log Out"
-                       MOVE SPACES TO OUTPUT-LINE
-                       PERFORM WRITE-AND-DISPLAY
-                       PERFORM MAIN-MENU-DISPLAY
-                       EXIT PERFORM
-                   WHEN "Go Back"
                        MOVE SPACES TO OUTPUT-LINE
                        PERFORM WRITE-AND-DISPLAY
                        PERFORM MAIN-MENU-DISPLAY
@@ -1776,3 +1796,132 @@ DISPLAY-FRIEND-DETAILS.
               END-READ
            END-PERFORM.
            CLOSE PROFILES-FILE.
+
+JOB-MENU.
+       *> this is the sub-menu for searching for jobs/internships.
+      PERFORM UNTIL USER-ACTION = "Go Back" OR EOF
+           MOVE SPACES TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           MOVE "--- Job Search/Internship Menu ---" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           MOVE "Post a Job/Internship" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           MOVE "Browse Jobs/Internships" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           MOVE "Go Back" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           MOVE "Enter your choice:" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+
+           READ INPUT-FILE
+               AT END SET EOF TO TRUE
+               NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO USER-ACTION
+           END-READ
+
+           IF NOT EOF
+               EVALUATE USER-ACTION
+                   WHEN "Post a Job/Internship"
+                       PERFORM CREATE-JOB-POSTING
+                   WHEN "Browse Jobs/Internships"
+                       MOVE "Browse Jobs/Internships is under construction." TO OUTPUT-LINE
+                       PERFORM WRITE-AND-DISPLAY
+                   WHEN "Go Back"
+                       EXIT PERFORM
+                   WHEN OTHER
+                       MOVE "Error: Invalid input. Please try again." TO OUTPUT-LINE
+                       PERFORM WRITE-AND-DISPLAY
+               END-EVALUATE
+           END-IF
+      END-PERFORM.
+
+GET-REQUIRED-FIELD.
+       *> This is a reusable paragraph to get any non-blank input
+       MOVE SPACES TO WS-PROMPT-INPUT.
+
+       PERFORM UNTIL FUNCTION TRIM(WS-PROMPT-INPUT) NOT = SPACE OR EOF
+           *> Use the prompt text passed in by the caller
+           MOVE WS-PROMPT-TEXT TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+
+           READ INPUT-FILE
+               AT END SET EOF TO TRUE
+               NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-PROMPT-INPUT
+           END-READ
+
+           IF FUNCTION TRIM(WS-PROMPT-INPUT) = SPACE AND NOT EOF
+               *> Use the error text passed in by the caller
+               MOVE WS-ERROR-TEXT TO OUTPUT-LINE
+               PERFORM WRITE-AND-DISPLAY
+           END-IF
+       END-PERFORM.
+
+CREATE-JOB-POSTING.
+       MOVE SPACES TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+       MOVE "--- Post a Job/Internship ---" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+
+       MOVE SPACES TO WS-JOB-DETAILS
+
+       *> Job Title (Required)
+       MOVE "Enter Job Title:" TO WS-PROMPT-TEXT
+       MOVE "Error: Job Title is required." TO WS-ERROR-TEXT
+       PERFORM GET-REQUIRED-FIELD
+       IF EOF EXIT PARAGRAPH END-IF
+       MOVE WS-PROMPT-INPUT TO WS-JOB-TITLE
+
+       *> Description (Required)
+       MOVE "Enter Job Description (max 200 chars):" TO WS-PROMPT-TEXT
+       MOVE "Error: Description is required." TO WS-ERROR-TEXT
+       PERFORM GET-REQUIRED-FIELD
+       IF EOF EXIT PARAGRAPH END-IF
+       MOVE WS-PROMPT-INPUT TO WS-JOB-DESCRIPTION
+
+       *> Employer (Required)
+       MOVE "Enter Employer Name:" TO WS-PROMPT-TEXT
+       MOVE "Error: Employer is required." TO WS-ERROR-TEXT
+       PERFORM GET-REQUIRED-FIELD
+       IF EOF EXIT PARAGRAPH END-IF
+       MOVE WS-PROMPT-INPUT TO WS-JOB-EMPLOYER
+
+       *> Location (Required)
+       MOVE "Enter Location:" TO WS-PROMPT-TEXT
+       MOVE "Error: Location is required." TO WS-ERROR-TEXT
+       PERFORM GET-REQUIRED-FIELD
+       IF EOF EXIT PARAGRAPH END-IF
+       MOVE WS-PROMPT-INPUT TO WS-JOB-LOCATION
+
+       *> Salary (Optional)
+       MOVE "Enter Salary (optional, enter 'NONE' to skip):" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+       READ INPUT-FILE
+           AT END SET EOF TO TRUE
+           NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-JOB-SALARY
+       END-READ
+       IF EOF EXIT PARAGRAPH END-IF
+
+       PERFORM SAVE-JOB-POSTING
+
+       MOVE "Job posted successfully!" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY.
+
+SAVE-JOB-POSTING.
+       *> Move data from Working-Storage to the file record
+       MOVE FUNCTION TRIM(USERNAME) TO JR-POSTER-USERNAME
+       MOVE WS-JOB-TITLE            TO JR-TITLE
+       MOVE WS-JOB-DESCRIPTION      TO JR-DESCRIPTION
+       MOVE WS-JOB-EMPLOYER         TO JR-EMPLOYER
+       MOVE WS-JOB-LOCATION         TO JR-LOCATION
+       MOVE WS-JOB-SALARY           TO JR-SALARY
+
+       *> Open file for appending (create if doesn't exist)
+       OPEN EXTEND JOBS-FILE
+       IF JOBS-STATUS = "35" *> File not found
+           OPEN OUTPUT JOBS-FILE
+       ELSE
+           CLOSE JOBS-FILE
+           OPEN EXTEND JOBS-FILE
+       END-IF
+
+       WRITE JOB-RECORD
+       CLOSE JOBS-FILE.
