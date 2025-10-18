@@ -678,68 +678,39 @@ LEARN-A-SKILL-SUB-MENU.
       END-PERFORM.
 
 CREATE-OR-EDIT-PROFILE.
+       MOVE SPACES TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
        MOVE "--- Create/Edit Profile ---" TO OUTPUT-LINE
        PERFORM WRITE-AND-DISPLAY
+
        *> First Name (Required)
-       MOVE SPACES TO WS-FIRST-NAME
-       PERFORM UNTIL FUNCTION TRIM(WS-FIRST-NAME) NOT = SPACE OR EOF
-           MOVE "Enter First Name:" TO OUTPUT-LINE
-           PERFORM WRITE-AND-DISPLAY
-           READ INPUT-FILE
-               AT END SET EOF TO TRUE
-               NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-FIRST-NAME
-           END-READ
-           IF FUNCTION TRIM(WS-FIRST-NAME) = SPACE AND NOT EOF
-               MOVE "Error: First Name is required." TO OUTPUT-LINE
-               PERFORM WRITE-AND-DISPLAY
-           END-IF
-       END-PERFORM
+       MOVE "Enter First Name:" TO WS-PROMPT-TEXT
+       MOVE "Error: First Name is required." TO WS-ERROR-TEXT
+       PERFORM GET-REQUIRED-FIELD
        IF EOF EXIT PARAGRAPH END-IF
+       MOVE WS-PROMPT-INPUT TO WS-FIRST-NAME
+
        *> Last Name (Required)
-       MOVE SPACES TO WS-LAST-NAME
-       PERFORM UNTIL FUNCTION TRIM(WS-LAST-NAME) NOT = SPACE OR EOF
-           MOVE "Enter Last Name:" TO OUTPUT-LINE
-           PERFORM WRITE-AND-DISPLAY
-           READ INPUT-FILE
-               AT END SET EOF TO TRUE
-               NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-LAST-NAME
-           END-READ
-           IF FUNCTION TRIM(WS-LAST-NAME) = SPACE AND NOT EOF
-               MOVE "Error: Last Name is required." TO OUTPUT-LINE
-               PERFORM WRITE-AND-DISPLAY
-           END-IF
-       END-PERFORM
+       MOVE "Enter Last Name:" TO WS-PROMPT-TEXT
+       MOVE "Error: Last Name is required." TO WS-ERROR-TEXT
+       PERFORM GET-REQUIRED-FIELD
        IF EOF EXIT PARAGRAPH END-IF
+       MOVE WS-PROMPT-INPUT TO WS-LAST-NAME
+
        *> University (Required)
-       MOVE SPACES TO WS-UNIVERSITY
-       PERFORM UNTIL FUNCTION TRIM(WS-UNIVERSITY) NOT = SPACE OR EOF
-           MOVE "Enter University/College Attended:" TO OUTPUT-LINE
-           PERFORM WRITE-AND-DISPLAY
-           READ INPUT-FILE
-               AT END SET EOF TO TRUE
-               NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-UNIVERSITY
-           END-READ
-           IF FUNCTION TRIM(WS-UNIVERSITY) = SPACE AND NOT EOF
-               MOVE "Error: University/College is required." TO OUTPUT-LINE
-               PERFORM WRITE-AND-DISPLAY
-           END-IF
-       END-PERFORM
-       IF EOF EXIT PARAGraph END-IF
-       *> Major (Required)
-       MOVE SPACES TO WS-MAJOR
-       PERFORM UNTIL FUNCTION TRIM(WS-MAJOR) NOT = SPACE OR EOF
-           MOVE "Enter Major:" TO OUTPUT-LINE
-           PERFORM WRITE-AND-DISPLAY
-           READ INPUT-FILE
-               AT END SET EOF TO TRUE
-               NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-MAJOR
-           END-READ
-           IF FUNCTION TRIM(WS-MAJOR) = SPACE AND NOT EOF
-               MOVE "Error: Major is required." TO OUTPUT-LINE
-               PERFORM WRITE-AND-DISPLAY
-           END-IF
-       END-PERFORM
+       MOVE "Enter University/College Attended:" TO WS-PROMPT-TEXT
+       MOVE "Error: University/College is required." TO WS-ERROR-TEXT
+       PERFORM GET-REQUIRED-FIELD
        IF EOF EXIT PARAGRAPH END-IF
+       MOVE WS-PROMPT-INPUT TO WS-UNIVERSITY
+
+       *> Major (Required)
+       MOVE "Enter Major:" TO WS-PROMPT-TEXT
+       MOVE "Error: Major is required." TO WS-ERROR-TEXT
+       PERFORM GET-REQUIRED-FIELD
+       IF EOF EXIT PARAGRAPH END-IF
+       MOVE WS-PROMPT-INPUT TO WS-MAJOR
+
        *> Grad Year (Required, numeric 4-digits, reasonable range)
        MOVE SPACES TO WS-GRAD-YEAR-STR
        MOVE ZEROS  TO WS-GRAD-YEAR-NUM
@@ -813,35 +784,18 @@ CREATE-OR-EDIT-PROFILE.
            ADD 1 TO WS-EXP-COUNT
            MOVE WS-INPUT-LINE TO WS-EXP-TITLE(WS-EXP-COUNT)
 
-           STRING "Experience #" WS-INDEX-TEXT " - Company/Organization:" INTO OUTPUT-LINE
-           PERFORM WRITE-AND-DISPLAY
-           MOVE SPACES TO WS-EXP-COMPANY(WS-EXP-COUNT)
-           PERFORM UNTIL FUNCTION TRIM(WS-EXP-COMPANY(WS-EXP-COUNT)) NOT = SPACE OR EOF
-               READ INPUT-FILE
-                   AT END SET EOF TO TRUE
-                   NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-EXP-COMPANY(WS-EXP-COUNT)
-               END-READ
-               IF FUNCTION TRIM(WS-EXP-COMPANY(WS-EXP-COUNT)) = SPACE AND NOT EOF
-                   MOVE "Error: Company/Organization is required." TO OUTPUT-LINE
-                   PERFORM WRITE-AND-DISPLAY
-               END-IF
-           END-PERFORM
+           STRING "Experience #" WS-INDEX-TEXT " - Company/Organization:" INTO WS-PROMPT-TEXT
+           MOVE "Error: Company/Organization is required." TO WS-ERROR-TEXT
+           PERFORM GET-REQUIRED-FIELD
            IF EOF EXIT PERFORM END-IF
+           MOVE WS-PROMPT-INPUT TO WS-EXP-COMPANY(WS-EXP-COUNT)
 
-           STRING "Experience #" WS-INDEX-TEXT " - Dates (e.g., Summer 2024):" INTO OUTPUT-LINE
-           PERFORM WRITE-AND-DISPLAY
-           MOVE SPACES TO WS-EXP-DATES(WS-EXP-COUNT)
-           PERFORM UNTIL FUNCTION TRIM(WS-EXP-DATES(WS-EXP-COUNT)) NOT = SPACE OR EOF
-               READ INPUT-FILE
-                   AT END SET EOF TO TRUE
-                   NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-EXP-DATES(WS-EXP-COUNT)
-               END-READ
-               IF FUNCTION TRIM(WS-EXP-DATES(WS-EXP-COUNT)) = SPACE AND NOT EOF
-                   MOVE "Error: Dates are required." TO OUTPUT-LINE
-                   PERFORM WRITE-AND-DISPLAY
-               END-IF
-           END-PERFORM
+           STRING "Experience #" WS-INDEX-TEXT " - Dates (e.g., Summer 2024):" INTO WS-PROMPT-TEXT
+           MOVE "Error: Dates are required." TO WS-ERROR-TEXT
+           PERFORM GET-REQUIRED-FIELD
            IF EOF EXIT PERFORM END-IF
+           MOVE WS-PROMPT-INPUT TO WS-EXP-DATES(WS-EXP-COUNT)
+           MOVE SPACES TO WS-PROMPT-TEXT
 
            STRING "Experience #" WS-INDEX-TEXT " - Description (optional, max 100 chars, blank to skip):" INTO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
@@ -893,35 +847,17 @@ CREATE-OR-EDIT-PROFILE.
            ADD 1 TO WS-EDU-COUNT
            MOVE WS-INPUT-LINE TO WS-EDU-DEGREE(WS-EDU-COUNT)
 
-           STRING "Education #" WS-INDEX-TEXT " - University/College:" INTO OUTPUT-LINE
-           PERFORM WRITE-AND-DISPLAY
-           MOVE SPACES TO WS-EDU-UNIV(WS-EDU-COUNT)
-           PERFORM UNTIL FUNCTION TRIM(WS-EDU-UNIV(WS-EDU-COUNT)) NOT = SPACE OR EOF
-               READ INPUT-FILE
-                   AT END SET EOF TO TRUE
-                   NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-EDU-UNIV(WS-EDU-COUNT)
-               END-READ
-               IF FUNCTION TRIM(WS-EDU-UNIV(WS-EDU-COUNT)) = SPACE AND NOT EOF
-                   MOVE "Error: University/College is required." TO OUTPUT-LINE
-                   PERFORM WRITE-AND-DISPLAY
-               END-IF
-           END-PERFORM
+           STRING "Education #" WS-INDEX-TEXT " - University/College:" INTO WS-PROMPT-TEXT
+           MOVE "Error: University/College is required." TO WS-ERROR-TEXT
+           PERFORM GET-REQUIRED-FIELD
            IF EOF EXIT PERFORM END-IF
+           MOVE WS-PROMPT-INPUT TO WS-EDU-UNIV(WS-EDU-COUNT)
 
-           STRING "Education #" WS-INDEX-TEXT " - Years Attended (e.g., 2023-2025):" INTO OUTPUT-LINE
-           PERFORM WRITE-AND-DISPLAY
-           MOVE SPACES TO WS-EDU-YEARS(WS-EDU-COUNT)
-           PERFORM UNTIL FUNCTION TRIM(WS-EDU-YEARS(WS-EDU-COUNT)) NOT = SPACE OR EOF
-               READ INPUT-FILE
-                   AT END SET EOF TO TRUE
-                   NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-EDU-YEARS(WS-EDU-COUNT)
-               END-READ
-               IF FUNCTION TRIM(WS-EDU-YEARS(WS-EDU-COUNT)) = SPACE AND NOT EOF
-                   MOVE "Error: Years Attended are required." TO OUTPUT-LINE
-                   PERFORM WRITE-AND-DISPLAY
-               END-IF
-           END-PERFORM
+           STRING "Education #" WS-INDEX-TEXT " - Years Attended (e.g., 2023-2025):" INTO WS-PROMPT-TEXT
+           MOVE "Error: Years Attended are required." TO WS-ERROR-TEXT
+           PERFORM GET-REQUIRED-FIELD
            IF EOF EXIT PERFORM END-IF
+           MOVE WS-PROMPT-INPUT TO WS-EDU-YEARS(WS-EDU-COUNT)
        END-PERFORM
 
        IF WS-EDU-COUNT = 3
@@ -1097,6 +1033,8 @@ DISPLAY-PROFILE-CONTENT.
        PERFORM WRITE-AND-DISPLAY.
 
 VIEW-MY-PROFILE.
+       MOVE SPACES TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
        *> Enhanced profile display with improved formatting for better readability
        MOVE "======================================" TO OUTPUT-LINE
        PERFORM WRITE-AND-DISPLAY
@@ -1892,7 +1830,7 @@ CREATE-JOB-POSTING.
        MOVE WS-PROMPT-INPUT TO WS-JOB-LOCATION
 
        *> Salary (Optional)
-       MOVE "Enter Salary (optional, enter 'NONE' to skip):" TO OUTPUT-LINE
+       MOVE "Enter Salary (blank to skip):" TO OUTPUT-LINE
        PERFORM WRITE-AND-DISPLAY
        READ INPUT-FILE
            AT END SET EOF TO TRUE
