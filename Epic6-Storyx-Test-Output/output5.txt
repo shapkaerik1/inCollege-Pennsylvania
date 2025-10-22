@@ -1,0 +1,71 @@
+****************************************
+*                                      *
+*         Welcome to InCollege!        *
+*                                      *
+****************************************
+
+Log In
+Create New Account
+Enter your selection:
+Please enter your username:
+Please enter your password:
+You have successfully logged in.
+
+Welcome, testuser5!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Log Out
+Enter your choice:
+
+--- Job Search/Internship Menu ---
+Post a Job/Internship
+Browse Jobs/Internships
+Go Back
+Enter your choice:
+
+--- Post a Job/Internship ---
+Enter Job Title:
+Enter Job Description (max 200 chars):
+Enter Employer Name:
+Enter Location:
+Enter Salary (blank to skip):
+Job posted successfully!
+
+--- Job Search/Internship Menu ---
+Post a Job/Internship
+Browse Jobs/Internships
+Go Back
+Enter your choice:
+Browse Jobs/Internships is under construction.
+
+--- Job Search/Internship Menu ---
+Post a Job/Internship
+Browse Jobs/Internships
+Go Back
+Enter your choice:
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Log Out
+Enter your choice:
+
+****************************************
+*                                      *
+*         Welcome to InCollege!        *
+*                                      *
+****************************************
+
+Log In
+Create New Account
+Enter your selection:
