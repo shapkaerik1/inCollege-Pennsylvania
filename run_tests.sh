@@ -58,7 +58,8 @@ do
 
     # CRITICAL: Reset the environment by deleting all data files from previous runs.
     # This ensures each test starts from a clean slate.
-    rm -f *.DAT *.TMP
+    # BUT: Keep ACCOUNTS.DAT because tests need existing users to log in!
+    rm -f JOBS.DAT PROFILES.DAT CONNECTIONS.DAT CONNECTION_REQUESTS.DAT JOB_APPLICATIONS.DAT *.TMP
 
     # Check if the input file for this test case exists.
     if [ ! -f "${INPUT_DIR}/test${i}.txt" ]; then

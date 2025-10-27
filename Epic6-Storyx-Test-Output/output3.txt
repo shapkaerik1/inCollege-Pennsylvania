@@ -20,6 +20,7 @@ Find someone you know
 Learn a New Skill
 View Pending Requests
 View My Network
+View My Applications
 Log Out
 Enter your choice:
 
@@ -30,8 +31,6 @@ Go Back
 Enter your choice:
 
 --- Post a Job/Internship ---
-Enter Job Title:
-Error: Job Title is required.
 Enter Job Title:
 Enter Job Description (max 200 chars):
 Enter Employer Name:
@@ -52,6 +51,7 @@ Find someone you know
 Learn a New Skill
 View Pending Requests
 View My Network
+View My Applications
 Log Out
 Enter your choice:
 

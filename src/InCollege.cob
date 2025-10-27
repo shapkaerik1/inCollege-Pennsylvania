@@ -41,6 +41,10 @@ ENVIRONMENT DIVISION.
                      ASSIGN TO "JOBS.DAT"
                      ORGANIZATION IS LINE SEQUENTIAL
                      FILE STATUS IS JOBS-STATUS.
+                 SELECT JOB-APPLICATIONS-FILE
+                     ASSIGN TO "JOB_APPLICATIONS.DAT"
+                     ORGANIZATION IS LINE SEQUENTIAL
+                     FILE STATUS IS JOB-APPLICATIONS-STATUS.
 
 DATA DIVISION.
        FILE SECTION.
@@ -123,6 +127,13 @@ DATA DIVISION.
            05 JR-LOCATION            PIC X(50).
            05 JR-SALARY              PIC X(30).
 
+       FD JOB-APPLICATIONS-FILE.
+       01 JOB-APPLICATION-RECORD.
+           05 JA-APPLICANT-USERNAME  PIC X(20).
+           05 JA-JOB-TITLE           PIC X(50).
+           05 JA-JOB-EMPLOYER        PIC X(50).
+           05 JA-JOB-LOCATION        PIC X(50).
+
        WORKING-STORAGE SECTION.
        *> variables for file handling
        01 INPUT-FILE-STATUS PIC XX.
@@ -135,6 +146,7 @@ DATA DIVISION.
        01 CONNECTIONS-STATUS PIC X(2).
 
        01 JOBS-STATUS  PIC X(2).
+       01 JOB-APPLICATIONS-STATUS PIC X(2).
 
        *> end of file flag to control main loop
        01 WS-EOF-FLAG PIC A(1) VALUE 'N'.
@@ -237,6 +249,12 @@ DATA DIVISION.
            05 WS-JOB-EMPLOYER        PIC X(50).
            05 WS-JOB-LOCATION        PIC X(50).
            05 WS-JOB-SALARY          PIC X(30).
+       01 WS-SELECTED-JOB-INDEX      PIC 9(3).
+       01 WS-CURRENT-JOB-TITLE       PIC X(50).
+       01 WS-CURRENT-JOB-EMPLOYER    PIC X(50).
+       01 WS-CURRENT-JOB-LOCATION    PIC X(50).
+       01 WS-ALREADY-APPLIED         PIC X VALUE 'N'.
+           88 HAS-APPLIED            VALUE 'Y'.
 
        *> removing redunancy of asking user for a required field
        01 WS-PROMPT-HELPER.
@@ -247,6 +265,7 @@ DATA DIVISION.
 PROCEDURE DIVISION.
        PERFORM OPEN-FILES.
        PERFORM LOAD-ACCOUNTS.
+       PERFORM VALIDATE-APPLICATIONS-FILE.
        PERFORM MAIN-MENU-DISPLAY.
 
        *> main loop that drives the program, processing one command per iteration
@@ -304,6 +323,24 @@ LOAD-ACCOUNTS.
            END-READ
        END-PERFORM.
        CLOSE ACCOUNTS-FILE.
+
+VALIDATE-APPLICATIONS-FILE.
+       *> Validate that applications file exists and is readable
+       OPEN INPUT JOB-APPLICATIONS-FILE
+       IF JOB-APPLICATIONS-STATUS NOT = "00" AND JOB-APPLICATIONS-STATUS NOT = "35"
+           *> File exists but is corrupted or cannot be read
+           MOVE "Warning: Application file may be corrupted." TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           EXIT PARAGRAPH
+       END-IF
+
+       IF JOB-APPLICATIONS-STATUS = "00"
+           *> File exists, try to read to verify it's not corrupted
+           CLOSE JOB-APPLICATIONS-FILE
+       ELSE
+           *> File doesn't exist yet (status 35), create it
+           CLOSE JOB-APPLICATIONS-FILE
+       END-IF.
 
 ADD-AND-SAVE-ACCOUNT.
        *> this paragraph handels writing to a new account to the ACCOUNTS.DAT file for persistence
@@ -591,6 +628,8 @@ POST-LOGIN-MENU.
            PERFORM WRITE-AND-DISPLAY
            MOVE "View My Network" TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
+           MOVE "View My Applications" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
            MOVE "Log Out" TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
 
@@ -618,6 +657,8 @@ POST-LOGIN-MENU.
                        PERFORM GET-PENDING-CONNECTION-REQUESTS
                    WHEN "View My Network"
                        PERFORM VIEW-MY-NETWORK
+                   WHEN "View My Applications"
+                       PERFORM VIEW-MY-APPLICATIONS
                    WHEN "Log Out"
                        MOVE SPACES TO OUTPUT-LINE
                        PERFORM WRITE-AND-DISPLAY
@@ -1735,6 +1776,88 @@ DISPLAY-FRIEND-DETAILS.
            END-PERFORM.
            CLOSE PROFILES-FILE.
 
+VIEW-MY-APPLICATIONS.
+       MOVE SPACES TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+       MOVE "Your Job Applications" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+       MOVE SPACES TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+
+       OPEN INPUT JOB-APPLICATIONS-FILE
+       IF JOB-APPLICATIONS-STATUS NOT = "00"
+           MOVE 0 TO WS-MATCHES-FOUND
+           MOVE SPACES TO OUTPUT-LINE
+           MOVE "======================================" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           MOVE SPACES TO OUTPUT-LINE
+           STRING "Total Applications: " WS-MATCHES-FOUND DELIMITED BY SIZE
+                  INTO OUTPUT-LINE
+           END-STRING
+           PERFORM WRITE-AND-DISPLAY
+           MOVE SPACES TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           EXIT PARAGRAPH
+       END-IF
+
+       MOVE 0 TO WS-MATCHES-FOUND
+       MOVE 0 TO I
+
+       PERFORM UNTIL 1 = 2
+           READ JOB-APPLICATIONS-FILE
+               AT END EXIT PERFORM
+               NOT AT END
+                   IF FUNCTION TRIM(JA-APPLICANT-USERNAME) = FUNCTION TRIM(USERNAME)
+                       ADD 1 TO WS-MATCHES-FOUND
+                       ADD 1 TO I
+                       MOVE I TO WS-INDEX-TEXT
+                       MOVE SPACES TO OUTPUT-LINE
+
+                       STRING "Application #" WS-INDEX-TEXT ":" DELIMITED BY SIZE
+                              INTO OUTPUT-LINE
+                       END-STRING
+                       PERFORM WRITE-AND-DISPLAY
+
+                       MOVE SPACES TO OUTPUT-LINE
+                       STRING "  Job Title: " DELIMITED BY SIZE
+                              FUNCTION TRIM(JA-JOB-TITLE) DELIMITED BY SIZE
+                              INTO OUTPUT-LINE
+                       END-STRING
+                       PERFORM WRITE-AND-DISPLAY
+
+                       MOVE SPACES TO OUTPUT-LINE
+                       STRING "  Employer:  " DELIMITED BY SIZE
+                              FUNCTION TRIM(JA-JOB-EMPLOYER) DELIMITED BY SIZE
+                              INTO OUTPUT-LINE
+                       END-STRING
+                       PERFORM WRITE-AND-DISPLAY
+
+                       MOVE SPACES TO OUTPUT-LINE
+                       STRING "  Location:  " DELIMITED BY SIZE
+                              FUNCTION TRIM(JA-JOB-LOCATION) DELIMITED BY SIZE
+                              INTO OUTPUT-LINE
+                       END-STRING
+                       PERFORM WRITE-AND-DISPLAY
+
+                       MOVE SPACES TO OUTPUT-LINE
+                       PERFORM WRITE-AND-DISPLAY
+                   END-IF
+           END-READ
+       END-PERFORM
+       CLOSE JOB-APPLICATIONS-FILE
+
+       MOVE SPACES TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+       MOVE "======================================" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+       MOVE SPACES TO OUTPUT-LINE
+       STRING "Total Applications: " WS-MATCHES-FOUND DELIMITED BY SIZE
+              INTO OUTPUT-LINE
+       END-STRING
+       PERFORM WRITE-AND-DISPLAY
+       MOVE SPACES TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY.
+
 JOB-MENU.
        *> this is the sub-menu for searching for jobs/internships.
       PERFORM UNTIL USER-ACTION = "Go Back" OR EOF
@@ -1761,8 +1884,7 @@ JOB-MENU.
                    WHEN "Post a Job/Internship"
                        PERFORM CREATE-JOB-POSTING
                    WHEN "Browse Jobs/Internships"
-                       MOVE "Browse Jobs/Internships is under construction." TO OUTPUT-LINE
-                       PERFORM WRITE-AND-DISPLAY
+                       PERFORM BROWSE-JOB-LISTINGS
                    WHEN "Go Back"
                        EXIT PERFORM
                    WHEN OTHER
@@ -1863,3 +1985,290 @@ SAVE-JOB-POSTING.
 
        WRITE JOB-RECORD
        CLOSE JOBS-FILE.
+
+BROWSE-JOB-LISTINGS.
+       MOVE SPACES TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+       MOVE "=== Job/Internship Listings ===" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+       MOVE SPACES TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+
+       OPEN INPUT JOBS-FILE
+       IF JOBS-STATUS NOT = "00"
+           MOVE "No job listings available." TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           EXIT PARAGRAPH
+       END-IF
+
+       MOVE 0 TO WS-MATCHES-FOUND
+       MOVE 0 TO I
+
+       PERFORM UNTIL 1 = 2
+           READ JOBS-FILE
+               AT END EXIT PERFORM
+               NOT AT END
+                   ADD 1 TO WS-MATCHES-FOUND
+                   ADD 1 TO I
+                   MOVE SPACES TO OUTPUT-LINE
+
+                   *> Format: [#] Title | Employer | Location
+                   MOVE I TO WS-INDEX-TEXT
+                   STRING "[" DELIMITED BY SIZE
+                          WS-INDEX-TEXT DELIMITED BY SIZE
+                          "] " DELIMITED BY SIZE
+                          FUNCTION TRIM(JR-TITLE) DELIMITED BY SIZE
+                          " | " DELIMITED BY SIZE
+                          FUNCTION TRIM(JR-EMPLOYER) DELIMITED BY SIZE
+                          " | " DELIMITED BY SIZE
+                          FUNCTION TRIM(JR-LOCATION) DELIMITED BY SIZE
+                          INTO OUTPUT-LINE
+                   END-STRING
+                   PERFORM WRITE-AND-DISPLAY
+           END-READ
+       END-PERFORM
+       CLOSE JOBS-FILE
+
+       IF WS-MATCHES-FOUND = 0
+           MOVE "No job listings available." TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           EXIT PARAGRAPH
+       END-IF
+
+       *> Allow user to select a job to view details
+       PERFORM SELECT-JOB-DETAILS.
+
+
+SELECT-JOB-DETAILS.
+       MOVE SPACES TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+       MOVE "Enter listing number to view details (or 'Back' to return):" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+
+       READ INPUT-FILE
+           AT END SET EOF TO TRUE
+           NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-INPUT-LINE
+       END-READ
+
+       IF EOF EXIT PARAGRAPH END-IF
+
+       IF FUNCTION UPPER-CASE(FUNCTION TRIM(WS-INPUT-LINE)) = "BACK"
+           EXIT PARAGRAPH
+       END-IF
+
+       *> Check if input is numeric
+       IF WS-INPUT-LINE IS NOT NUMERIC
+           MOVE "Error: Invalid listing number. Please enter a number or 'Back'." TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           PERFORM SELECT-JOB-DETAILS
+           EXIT PARAGRAPH
+       END-IF
+
+       *> Convert to numeric and validate range
+       MOVE WS-INPUT-LINE TO WS-SELECTED-JOB-INDEX
+       IF WS-SELECTED-JOB-INDEX <= 0 OR WS-SELECTED-JOB-INDEX > WS-MATCHES-FOUND
+           MOVE SPACES TO OUTPUT-LINE
+           STRING "Error: Listing number must be between 1 and " WS-MATCHES-FOUND "." DELIMITED BY SIZE
+                  INTO OUTPUT-LINE
+           END-STRING
+           PERFORM WRITE-AND-DISPLAY
+           PERFORM SELECT-JOB-DETAILS
+           EXIT PARAGRAPH
+       END-IF
+
+       *> Display full details of selected job
+       PERFORM DISPLAY-JOB-DETAILS.
+
+DISPLAY-JOB-DETAILS.
+       MOVE 0 TO I
+
+       OPEN INPUT JOBS-FILE
+       IF JOBS-STATUS NOT = "00"
+           MOVE "Error: Unable to read job listings." TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           EXIT PARAGRAPH
+       END-IF
+
+       PERFORM UNTIL 1 = 2
+           READ JOBS-FILE
+               AT END EXIT PERFORM
+               NOT AT END
+                   ADD 1 TO I
+                   IF I = WS-SELECTED-JOB-INDEX
+                       *> Found the selected job
+                       MOVE SPACES TO OUTPUT-LINE
+                       PERFORM WRITE-AND-DISPLAY
+                       MOVE "=== Job Details ===" TO OUTPUT-LINE
+                       PERFORM WRITE-AND-DISPLAY
+                       MOVE SPACES TO OUTPUT-LINE
+                       PERFORM WRITE-AND-DISPLAY
+
+                       MOVE SPACES TO OUTPUT-LINE
+                       STRING "Title:       " DELIMITED BY SIZE
+                              FUNCTION TRIM(JR-TITLE) DELIMITED BY SIZE
+                              INTO OUTPUT-LINE
+                       END-STRING
+                       PERFORM WRITE-AND-DISPLAY
+
+                       MOVE SPACES TO OUTPUT-LINE
+                       STRING "Employer:    " DELIMITED BY SIZE
+                              FUNCTION TRIM(JR-EMPLOYER) DELIMITED BY SIZE
+                              INTO OUTPUT-LINE
+                       END-STRING
+                       PERFORM WRITE-AND-DISPLAY
+
+                       MOVE SPACES TO OUTPUT-LINE
+                       STRING "Description: " DELIMITED BY SIZE
+                              FUNCTION TRIM(JR-DESCRIPTION) DELIMITED BY SIZE
+                              INTO OUTPUT-LINE
+                       END-STRING
+                       PERFORM WRITE-AND-DISPLAY
+
+                       MOVE SPACES TO OUTPUT-LINE
+                       STRING "Location:    " DELIMITED BY SIZE
+                              FUNCTION TRIM(JR-LOCATION) DELIMITED BY SIZE
+                              INTO OUTPUT-LINE
+                       END-STRING
+                       PERFORM WRITE-AND-DISPLAY
+
+                       IF FUNCTION TRIM(JR-SALARY) NOT = SPACE
+                           MOVE SPACES TO OUTPUT-LINE
+                           STRING "Salary:      " DELIMITED BY SIZE
+                                  FUNCTION TRIM(JR-SALARY) DELIMITED BY SIZE
+                                  INTO OUTPUT-LINE
+                           END-STRING
+                           PERFORM WRITE-AND-DISPLAY
+                       END-IF
+
+                       MOVE SPACES TO OUTPUT-LINE
+                       STRING "Posted by:   " DELIMITED BY SIZE
+                              FUNCTION TRIM(JR-POSTER-USERNAME) DELIMITED BY SIZE
+                              INTO OUTPUT-LINE
+                       END-STRING
+                       PERFORM WRITE-AND-DISPLAY
+
+                       *> Store current job details for application
+                       MOVE JR-TITLE TO WS-CURRENT-JOB-TITLE
+                       MOVE JR-EMPLOYER TO WS-CURRENT-JOB-EMPLOYER
+                       MOVE JR-LOCATION TO WS-CURRENT-JOB-LOCATION
+
+                       EXIT PERFORM
+                   END-IF
+           END-READ
+       END-PERFORM
+
+       CLOSE JOBS-FILE
+
+       *> Offer Apply or Back options
+       PERFORM OFFER-JOB-ACTIONS.
+
+OFFER-JOB-ACTIONS.
+       MOVE SPACES TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+       MOVE "Apply for this position" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+       MOVE "Go Back to list" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+       MOVE "Enter your choice:" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+
+       READ INPUT-FILE
+           AT END SET EOF TO TRUE
+           NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-INPUT-LINE
+       END-READ
+
+       IF EOF EXIT PARAGRAPH END-IF
+
+       EVALUATE WS-INPUT-LINE
+           WHEN "Apply for this position"
+               PERFORM CHECK-AND-APPLY-TO-JOB
+           WHEN "Go Back to list"
+               EXIT PARAGRAPH
+           WHEN OTHER
+               MOVE "Invalid choice. Please try again." TO OUTPUT-LINE
+               PERFORM WRITE-AND-DISPLAY
+               PERFORM OFFER-JOB-ACTIONS
+       END-EVALUATE.
+
+CHECK-AND-APPLY-TO-JOB.
+       *> Check if user has already applied
+       MOVE 'N' TO WS-ALREADY-APPLIED
+       OPEN INPUT JOB-APPLICATIONS-FILE
+       IF JOB-APPLICATIONS-STATUS = "00"
+           PERFORM UNTIL 1 = 2
+               READ JOB-APPLICATIONS-FILE
+                   AT END EXIT PERFORM
+                   NOT AT END
+                       IF FUNCTION TRIM(JA-APPLICANT-USERNAME) = FUNCTION TRIM(USERNAME) AND
+                          FUNCTION TRIM(JA-JOB-TITLE) = FUNCTION TRIM(WS-CURRENT-JOB-TITLE) AND
+                          FUNCTION TRIM(JA-JOB-EMPLOYER) = FUNCTION TRIM(WS-CURRENT-JOB-EMPLOYER) AND
+                          FUNCTION TRIM(JA-JOB-LOCATION) = FUNCTION TRIM(WS-CURRENT-JOB-LOCATION)
+                           MOVE 'Y' TO WS-ALREADY-APPLIED
+                           EXIT PERFORM
+                       END-IF
+               END-READ
+           END-PERFORM
+       END-IF
+       CLOSE JOB-APPLICATIONS-FILE
+
+       IF HAS-APPLIED
+           MOVE "You have already applied to this job." TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           PERFORM OFFER-JOB-ACTIONS
+       ELSE
+           PERFORM SAVE-APPLICATION-AND-SHOW-CONFIRMATION
+           PERFORM OFFER-JOB-ACTIONS
+       END-IF.
+
+SAVE-APPLICATION-AND-SHOW-CONFIRMATION.
+       PERFORM SAVE-APPLICATION
+       *> Show detailed confirmation message
+       MOVE SPACES TO OUTPUT-LINE
+       STRING "Your application for " DELIMITED BY SIZE
+              FUNCTION TRIM(WS-CURRENT-JOB-TITLE) DELIMITED BY SIZE
+              " at " DELIMITED BY SIZE
+              FUNCTION TRIM(WS-CURRENT-JOB-EMPLOYER) DELIMITED BY SIZE
+              " has been submitted." DELIMITED BY SIZE
+              INTO OUTPUT-LINE
+       END-STRING
+       PERFORM WRITE-AND-DISPLAY.
+
+SAVE-APPLICATION.
+       MOVE FUNCTION TRIM(USERNAME) TO JA-APPLICANT-USERNAME
+       MOVE WS-CURRENT-JOB-TITLE TO JA-JOB-TITLE
+       MOVE WS-CURRENT-JOB-EMPLOYER TO JA-JOB-EMPLOYER
+       MOVE WS-CURRENT-JOB-LOCATION TO JA-JOB-LOCATION
+
+       *> Try to open file for appending
+       OPEN EXTEND JOB-APPLICATIONS-FILE
+       IF JOB-APPLICATIONS-STATUS = "35"
+           *> File doesn't exist, create it
+           OPEN OUTPUT JOB-APPLICATIONS-FILE
+           IF JOB-APPLICATIONS-STATUS NOT = "00"
+               MOVE "Error: Cannot create application file." TO OUTPUT-LINE
+               PERFORM WRITE-AND-DISPLAY
+               EXIT PARAGRAPH
+           END-IF
+       ELSE
+           IF JOB-APPLICATIONS-STATUS NOT = "00"
+               CLOSE JOB-APPLICATIONS-FILE
+               MOVE "Error: Cannot access application file." TO OUTPUT-LINE
+               PERFORM WRITE-AND-DISPLAY
+               EXIT PARAGRAPH
+           ELSE
+               CLOSE JOB-APPLICATIONS-FILE
+               OPEN EXTEND JOB-APPLICATIONS-FILE
+               IF JOB-APPLICATIONS-STATUS NOT = "00"
+                   MOVE "Error: Cannot write to application file." TO OUTPUT-LINE
+                   PERFORM WRITE-AND-DISPLAY
+                   EXIT PARAGRAPH
+               END-IF
+           END-IF
+       END-IF
+
+       WRITE JOB-APPLICATION-RECORD
+       IF JOB-APPLICATIONS-STATUS NOT = "00"
+           MOVE "Error: Failed to save application." TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+       END-IF
+       CLOSE JOB-APPLICATIONS-FILE.
