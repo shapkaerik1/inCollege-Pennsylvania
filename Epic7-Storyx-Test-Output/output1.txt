@@ -85,7 +85,8 @@ Posted by:   testuser1
 Apply for this position
 Go Back to list
 Enter your choice:
-Your application for Software Engineer at Bank of America has been submitted.
+
+Error: You cannot apply to your own job posting.
 
 === Job/Internship Listings ===
 
@@ -103,14 +104,8 @@ Enter your choice:
 
 Your Job Applications
 
-Application #1:
-  Job Title: Software Engineer
-  Employer:  Bank of America
-  Location:  Tampa, FL
-
-
 ======================================
-Total Applications: 1
+Total Applications: 0
 
 
 --- Job Search/Internship Menu ---

@@ -11,7 +11,7 @@ Please enter your username:
 Please enter your password:
 You have successfully logged in.
 
-Welcome, testuser1!
+Welcome, testuser3!
 
 Create/Edit My Profile
 View My Profile
@@ -60,6 +60,48 @@ View My Applications
 Go Back
 Enter your choice:
 
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Log Out
+Enter your choice:
+
+****************************************
+*                                      *
+*         Welcome to InCollege!        *
+*                                      *
+****************************************
+
+Log In
+Create New Account
+Enter your selection:
+Please enter your username:
+Please enter your password:
+You have successfully logged in.
+
+Welcome, testuser1!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Log Out
+Enter your choice:
+
+--- Job Search/Internship Menu ---
+Post a Job/Internship
+Browse Jobs/Internships
+View My Applications
+Go Back
+Enter your choice:
+
 === Job/Internship Listings ===
 
 [1] Software Engineer | Bank of America | Tampa, FL
@@ -74,7 +116,7 @@ Employer:    Bank of America
 Description: Coding applications in Cobol
 Location:    Tampa, FL
 Salary:      $80,000
-Posted by:   testuser1
+Posted by:   testuser3
 
 Apply for this position
 Go Back to list
@@ -87,6 +129,21 @@ Your application for Software Engineer at Bank of America has been submitted.
 [2] Full-Stack Developer | Google | Sarasota, FL
 
 Enter listing number to view details (or 'Back' to return):
+
+--- Job Search/Internship Menu ---
+Post a Job/Internship
+Browse Jobs/Internships
+View My Applications
+Go Back
+Enter your choice:
+
+--- Post a Job/Internship ---
+Enter Job Title:
+Enter Job Description (max 200 chars):
+Enter Employer Name:
+Enter Location:
+Enter Salary (blank to skip):
+Job posted successfully!
 
 --- Job Search/Internship Menu ---
 Post a Job/Internship
@@ -137,21 +194,6 @@ View My Applications
 Go Back
 Enter your choice:
 
---- Post a Job/Internship ---
-Enter Job Title:
-Enter Job Description (max 200 chars):
-Enter Employer Name:
-Enter Location:
-Enter Salary (blank to skip):
-Job posted successfully!
-
---- Job Search/Internship Menu ---
-Post a Job/Internship
-Browse Jobs/Internships
-View My Applications
-Go Back
-Enter your choice:
-
 === Job/Internship Listings ===
 
 [1] Software Engineer | Bank of America | Tampa, FL
@@ -167,7 +209,7 @@ Employer:    Bank of America
 Description: Coding applications in Cobol
 Location:    Tampa, FL
 Salary:      $80,000
-Posted by:   testuser1
+Posted by:   testuser3
 
 Apply for this position
 Go Back to list
@@ -188,7 +230,7 @@ Title:       Cybersecurity Analyst
 Employer:    Cisco
 Description: Investigates security alerts, and performs vulnerability assessments
 Location:    Austin,TX
-Posted by:   testuser2
+Posted by:   testuser1
 
 Apply for this position
 Go Back to list
@@ -210,7 +252,7 @@ Employer:    Google
 Description: Develops and maintains web applications using React and Node.js
 Location:    Sarasota, FL
 Salary:      $120,000
-Posted by:   testuser1
+Posted by:   testuser3
 
 Apply for this position
 Go Back to list
