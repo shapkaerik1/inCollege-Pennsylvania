@@ -628,8 +628,6 @@ POST-LOGIN-MENU.
            PERFORM WRITE-AND-DISPLAY
            MOVE "View My Network" TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
-           MOVE "View My Applications" TO OUTPUT-LINE
-           PERFORM WRITE-AND-DISPLAY
            MOVE "Log Out" TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
 
@@ -657,8 +655,6 @@ POST-LOGIN-MENU.
                        PERFORM GET-PENDING-CONNECTION-REQUESTS
                    WHEN "View My Network"
                        PERFORM VIEW-MY-NETWORK
-                   WHEN "View My Applications"
-                       PERFORM VIEW-MY-APPLICATIONS
                    WHEN "Log Out"
                        MOVE SPACES TO OUTPUT-LINE
                        PERFORM WRITE-AND-DISPLAY
@@ -1869,6 +1865,8 @@ JOB-MENU.
            PERFORM WRITE-AND-DISPLAY
            MOVE "Browse Jobs/Internships" TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
+           MOVE "View My Applications" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
            MOVE "Go Back" TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
            MOVE "Enter your choice:" TO OUTPUT-LINE
@@ -1885,6 +1883,8 @@ JOB-MENU.
                        PERFORM CREATE-JOB-POSTING
                    WHEN "Browse Jobs/Internships"
                        PERFORM BROWSE-JOB-LISTINGS
+                   WHEN "View My Applications"
+                       PERFORM VIEW-MY-APPLICATIONS
                    WHEN "Go Back"
                        EXIT PERFORM
                    WHEN OTHER
@@ -2056,13 +2056,13 @@ SELECT-JOB-DETAILS.
            EXIT PARAGRAPH
        END-IF
 
-       *> Check if input is numeric
-       IF WS-INPUT-LINE IS NOT NUMERIC
-           MOVE "Error: Invalid listing number. Please enter a number or 'Back'." TO OUTPUT-LINE
-           PERFORM WRITE-AND-DISPLAY
-           PERFORM SELECT-JOB-DETAILS
-           EXIT PARAGRAPH
-       END-IF
+      *> Check if input is numeric
+      *> IF WS-INPUT-LINE IS NOT NUMERIC
+      *>     MOVE "Error: Invalid listing number. Please enter a number or 'Back'." TO OUTPUT-LINE
+      *>     PERFORM WRITE-AND-DISPLAY
+      *>     PERFORM SELECT-JOB-DETAILS
+      *>     EXIT PARAGRAPH
+      *> END-IF
 
        *> Convert to numeric and validate range
        MOVE WS-INPUT-LINE TO WS-SELECTED-JOB-INDEX
@@ -2214,10 +2214,10 @@ CHECK-AND-APPLY-TO-JOB.
        IF HAS-APPLIED
            MOVE "You have already applied to this job." TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
-           PERFORM OFFER-JOB-ACTIONS
+           PERFORM BROWSE-JOB-LISTINGS
        ELSE
            PERFORM SAVE-APPLICATION-AND-SHOW-CONFIRMATION
-           PERFORM OFFER-JOB-ACTIONS
+           PERFORM BROWSE-JOB-LISTINGS
        END-IF.
 
 SAVE-APPLICATION-AND-SHOW-CONFIRMATION.

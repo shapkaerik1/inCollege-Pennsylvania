@@ -1,4 +1,4 @@
-Create New Account
+Log In
 testuser1
 TestPass1!
 Search for a job
@@ -15,9 +15,10 @@ Google
 Sarasota, FL
 $120,000
 Browse Jobs/Internships
+not a number
+9
 1
-Apply for this position
-2
 Apply for this position
 Back
 View My Applications
+Browse Jobs/Internships

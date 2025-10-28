@@ -9,7 +9,6 @@ Create New Account
 Enter your selection:
 Please enter your username:
 Please enter your password:
-Account created successfully.
 You have successfully logged in.
 
 Welcome, testuser1!
@@ -67,6 +66,12 @@ Enter your choice:
 [2] Full-Stack Developer | Google | Sarasota, FL
 
 Enter listing number to view details (or 'Back' to return):
+Error: Listing number must be between 1 and 2.
+
+Enter listing number to view details (or 'Back' to return):
+Error: Listing number must be between 1 and 2.
+
+Enter listing number to view details (or 'Back' to return):
 
 === Job Details ===
 
@@ -89,27 +94,6 @@ Your application for Software Engineer at Bank of America has been submitted.
 
 Enter listing number to view details (or 'Back' to return):
 
-=== Job Details ===
-
-Title:       Full-Stack Developer
-Employer:    Google
-Description: Develops and maintains web applications using React and Node.js
-Location:    Sarasota, FL
-Salary:      $120,000
-Posted by:   testuser1
-
-Apply for this position
-Go Back to list
-Enter your choice:
-Your application for Full-Stack Developer at Google has been submitted.
-
-=== Job/Internship Listings ===
-
-[1] Software Engineer | Bank of America | Tampa, FL
-[2] Full-Stack Developer | Google | Sarasota, FL
-
-Enter listing number to view details (or 'Back' to return):
-
 --- Job Search/Internship Menu ---
 Post a Job/Internship
 Browse Jobs/Internships
@@ -124,14 +108,9 @@ Application #1:
   Employer:  Bank of America
   Location:  Tampa, FL
 
-Application #2:
-  Job Title: Full-Stack Developer
-  Employer:  Google
-  Location:  Sarasota, FL
-
 
 ======================================
-Total Applications: 2
+Total Applications: 1
 
 
 --- Job Search/Internship Menu ---
@@ -140,3 +119,10 @@ Browse Jobs/Internships
 View My Applications
 Go Back
 Enter your choice:
+
+=== Job/Internship Listings ===
+
+[1] Software Engineer | Bank of America | Tampa, FL
+[2] Full-Stack Developer | Google | Sarasota, FL
+
+Enter listing number to view details (or 'Back' to return):

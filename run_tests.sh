@@ -17,8 +17,8 @@
 SRC_DIR="/workspace/src"
 BIN_DIR="bin"
 PROG_NAME="InCollege"
-INPUT_DIR="Epic6-Storyx-Test-Input"
-OUTPUT_DIR="Epic6-Storyx-Test-Output"
+INPUT_DIR="Epic7-Storyx-Test-Input"
+OUTPUT_DIR="Epic7-Storyx-Test-Output"
 
 # --- 1. Backup Original Files ---
 echo "--- Backing up original input/output files (if they exist)... ---"
@@ -85,7 +85,7 @@ done
 
 # --- 5. Final Cleanup ---
 # Remove any leftover files from the last test run.
-rm -f *.DAT *.TMP
+rm -f JOBS.DAT PROFILES.DAT CONNECTIONS.DAT CONNECTION_REQUESTS.DAT JOB_APPLICATIONS.DAT *.TMP
 
 # --- 6. Restore Original Files ---
 echo "--- Restoring original input/output files... ---"
