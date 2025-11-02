@@ -1,23 +1,46 @@
 Create New Account
-testuser1
-TestPass1!
-Search for a job
-Post a Job/Internship
-Software Engineer
-Coding applications in Cobol
-Bank of America
-Tampa, FL
-$80,000
-Post a Job/Internship
-Full-Stack Developer
-Develops and maintains web applications using React and Node.js
-Google
-Sarasota, FL
-$120,000
-Browse Jobs/Internships
-1
-Apply for this position
-2
-Apply for this position
-Back
-View My Applications
+User1
+Pass123!
+Create/Edit My Profile
+James
+Ryan
+University of Chicago
+Computer Science
+2025
+I am a struggling college student
+DONE
+DONE
+Log Out
+Create New Account
+User2
+Pass123!
+Create/Edit My Profile
+Maddison
+Lenn
+University of Florida
+Computer Engineering
+2025
+A successful college student
+DONE
+DONE
+Find someone you know
+James Ryan
+Send Connection Request
+Log Out
+Log In
+User1
+Pass123!
+View Pending Requests
+User2
+Accept Connection Request
+Messages
+Send a New Message
+User2
+Did you receive this?
+Back to Main Menu
+Log Out
+Log In
+User2
+Pass123!
+Messages
+View My Messages

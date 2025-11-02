@@ -45,6 +45,10 @@ ENVIRONMENT DIVISION.
                      ASSIGN TO "JOB_APPLICATIONS.DAT"
                      ORGANIZATION IS LINE SEQUENTIAL
                      FILE STATUS IS JOB-APPLICATIONS-STATUS.
+                 SELECT MESSAGES-FILE
+                     ASSIGN TO "MESSAGES.DAT"
+                     ORGANIZATION IS LINE SEQUENTIAL
+                     FILE STATUS IS MESSAGES-STATUS.
 
 DATA DIVISION.
        FILE SECTION.
@@ -134,6 +138,13 @@ DATA DIVISION.
            05 JA-JOB-EMPLOYER        PIC X(50).
            05 JA-JOB-LOCATION        PIC X(50).
 
+       FD MESSAGES-FILE.
+       01 MESSAGE-RECORD.
+           05 MSG-SENDER-USERNAME    PIC X(20).
+           05 MSG-RECIPIENT-USERNAME PIC X(20).
+           05 MSG-CONTENT            PIC X(200).
+           05 MSG-TIMESTAMP          PIC X(19).
+
        WORKING-STORAGE SECTION.
        *> variables for file handling
        01 INPUT-FILE-STATUS PIC XX.
@@ -147,6 +158,7 @@ DATA DIVISION.
 
        01 JOBS-STATUS  PIC X(2).
        01 JOB-APPLICATIONS-STATUS PIC X(2).
+       01 MESSAGES-STATUS PIC X(2).
 
        *> end of file flag to control main loop
        01 WS-EOF-FLAG PIC A(1) VALUE 'N'.
@@ -262,6 +274,13 @@ DATA DIVISION.
            05 WS-PROMPT-TEXT     PIC X(80).
            05 WS-ERROR-TEXT      PIC X(80).
            05 WS-PROMPT-INPUT    PIC X(250).
+
+       *> for messaging functionality
+       01 WS-MESSAGE-DETAILS.
+           05 WS-MESSAGE-RECIPIENT PIC X(20).
+           05 WS-MESSAGE-CONTENT   PIC X(200).
+           05 WS-MESSAGE-TIMESTAMP PIC X(19).
+           05 WS-IS-CONNECTED      PIC X VALUE 'N'.
 
 PROCEDURE DIVISION.
        PERFORM OPEN-FILES.
@@ -629,6 +648,8 @@ POST-LOGIN-MENU.
            PERFORM WRITE-AND-DISPLAY
            MOVE "View My Network" TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
+           MOVE "Messages" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
            MOVE "Log Out" TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
 
@@ -656,6 +677,8 @@ POST-LOGIN-MENU.
                        PERFORM GET-PENDING-CONNECTION-REQUESTS
                    WHEN "View My Network"
                        PERFORM VIEW-MY-NETWORK
+                   WHEN "Messages"
+                       PERFORM MESSAGES-MENU
                    WHEN "Log Out"
                        MOVE SPACES TO OUTPUT-LINE
                        PERFORM WRITE-AND-DISPLAY
@@ -1772,6 +1795,137 @@ DISPLAY-FRIEND-DETAILS.
               END-READ
            END-PERFORM.
            CLOSE PROFILES-FILE.
+
+MESSAGES-MENU.
+       *> this is the sub-menu for messaging.
+      PERFORM UNTIL USER-ACTION = "Back to Main Menu" OR EOF
+           MOVE SPACES TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           MOVE "--- Messages Menu ---" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           MOVE "Send a New Message" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           MOVE "View My Messages" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           MOVE "Back to Main Menu" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           MOVE "Enter your choice:" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+
+           READ INPUT-FILE
+               AT END SET EOF TO TRUE
+               NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO USER-ACTION
+           END-READ
+
+           IF NOT EOF
+               EVALUATE USER-ACTION
+                   WHEN "Send a New Message"
+                       PERFORM SEND-MESSAGE
+                   WHEN "View My Messages"
+                       MOVE "View My Messages is under construction." TO OUTPUT-LINE
+                       PERFORM WRITE-AND-DISPLAY
+                   WHEN "Back to Main Menu"
+                       EXIT PERFORM
+                   WHEN OTHER
+                       MOVE "Error: Invalid input. Please try again." TO OUTPUT-LINE
+                       PERFORM WRITE-AND-DISPLAY
+               END-EVALUATE
+           END-IF
+      END-PERFORM.
+
+VALIDATE-RECIPIENT-CONNECTION.
+       MOVE 'N' TO WS-IS-CONNECTED
+       OPEN INPUT CONNECTIONS-FILE
+       IF CONNECTIONS-STATUS = "00"
+           PERFORM UNTIL 1 = 2
+               READ CONNECTIONS-FILE
+                   AT END EXIT PERFORM
+                   NOT AT END
+                       *> Check if current user is connected to the recipient
+                       IF (FUNCTION TRIM(CONN-USER1) = FUNCTION TRIM(USERNAME) AND
+                           FUNCTION TRIM(CONN-USER2) = FUNCTION TRIM(WS-MESSAGE-RECIPIENT)) OR
+                           (FUNCTION TRIM(CONN-USER1) = FUNCTION TRIM(WS-MESSAGE-RECIPIENT) AND
+                           FUNCTION TRIM(CONN-USER2) = FUNCTION TRIM(USERNAME))
+                           MOVE 'Y' TO WS-IS-CONNECTED
+                           EXIT PERFORM
+                       END-IF
+               END-READ
+           END-PERFORM
+           CLOSE CONNECTIONS-FILE
+       END-IF.
+
+SEND-MESSAGE.
+       MOVE SPACES TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+       MOVE "Enter recipient's username (must be a connection):" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+       READ INPUT-FILE
+           AT END SET EOF TO TRUE
+           NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-MESSAGE-RECIPIENT
+       END-READ
+       IF EOF EXIT PARAGRAPH END-IF
+
+       PERFORM VALIDATE-RECIPIENT-CONNECTION
+       IF WS-IS-CONNECTED = 'N'
+           MOVE "You can only message users you are connected with." TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           EXIT PARAGRAPH
+       END-IF
+
+       MOVE "Enter your message (max 200 chars):" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+       READ INPUT-FILE
+           AT END SET EOF TO TRUE
+           NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-MESSAGE-CONTENT
+       END-READ
+       IF EOF EXIT PARAGRAPH END-IF
+
+       IF FUNCTION TRIM(WS-MESSAGE-CONTENT) = SPACE
+           MOVE "Error: Message content cannot be empty." TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           EXIT PARAGRAPH
+       END-IF
+
+       PERFORM GENERATE-TIMESTAMP
+       PERFORM SAVE-MESSAGE-RECORD
+
+       MOVE SPACES TO OUTPUT-LINE
+       STRING "Message sent to " DELIMITED BY SIZE
+              FUNCTION TRIM(WS-MESSAGE-RECIPIENT) DELIMITED BY SIZE
+              " successfully!" DELIMITED BY SIZE
+              INTO OUTPUT-LINE
+       END-STRING
+       PERFORM WRITE-AND-DISPLAY.
+
+GENERATE-TIMESTAMP.
+       *> Generate a timestamp in YYYY-MM-DD HH:MM:SS format
+       ACCEPT WS-MESSAGE-TIMESTAMP FROM DATE YYYYMMDD
+       STRING WS-MESSAGE-TIMESTAMP(1:4) DELIMITED BY SIZE
+              "-" DELIMITED BY SIZE
+              WS-MESSAGE-TIMESTAMP(5:2) DELIMITED BY SIZE
+              "-" DELIMITED BY SIZE
+              WS-MESSAGE-TIMESTAMP(7:2) DELIMITED BY SIZE
+              " " DELIMITED BY SIZE
+              "00:00:00" DELIMITED BY SIZE
+              INTO WS-MESSAGE-TIMESTAMP
+       END-STRING.
+
+SAVE-MESSAGE-RECORD.
+       MOVE FUNCTION TRIM(USERNAME) TO MSG-SENDER-USERNAME
+       MOVE FUNCTION TRIM(WS-MESSAGE-RECIPIENT) TO MSG-RECIPIENT-USERNAME
+       MOVE WS-MESSAGE-CONTENT TO MSG-CONTENT
+       MOVE WS-MESSAGE-TIMESTAMP TO MSG-TIMESTAMP
+
+       OPEN EXTEND MESSAGES-FILE
+       IF MESSAGES-STATUS = "35" *> File not found
+           OPEN OUTPUT MESSAGES-FILE
+       ELSE
+           CLOSE MESSAGES-FILE
+           OPEN EXTEND MESSAGES-FILE
+       END-IF
+
+       WRITE MESSAGE-RECORD
+       CLOSE MESSAGES-FILE.
 
 VIEW-MY-APPLICATIONS.
        MOVE SPACES TO OUTPUT-LINE
