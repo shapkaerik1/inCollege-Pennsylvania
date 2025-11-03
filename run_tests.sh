@@ -17,8 +17,8 @@
 SRC_DIR="/workspace/src"
 BIN_DIR="bin"
 PROG_NAME="InCollege"
-INPUT_DIR="Epic7-Storyx-Test-Input"
-OUTPUT_DIR="Epic7-Storyx-Test-Output"
+INPUT_DIR="Epic8-Storyx-Test-Input"
+OUTPUT_DIR="Epic8-Storyx-Test-Output"
 
 # --- 1. Backup Original Files ---
 echo "--- Backing up original input/output files (if they exist)... ---"
@@ -59,7 +59,7 @@ do
     # CRITICAL: Reset the environment by deleting all data files from previous runs.
     # This ensures each test starts from a clean slate.
     # BUT: Keep ACCOUNTS.DAT because tests need existing users to log in!
-    rm -f JOBS.DAT PROFILES.DAT CONNECTIONS.DAT CONNECTION_REQUESTS.DAT JOB_APPLICATIONS.DAT *.TMP
+    rm -f JOBS.DAT JOB_APPLICATIONS.DAT CONNECTIONS.DAT *.TMP
 
     # Check if the input file for this test case exists.
     if [ ! -f "${INPUT_DIR}/test${i}.txt" ]; then
@@ -85,7 +85,7 @@ done
 
 # --- 5. Final Cleanup ---
 # Remove any leftover files from the last test run.
-rm -f JOBS.DAT PROFILES.DAT CONNECTIONS.DAT CONNECTION_REQUESTS.DAT JOB_APPLICATIONS.DAT *.TMP
+rm -f JOBS.DAT JOB_APPLICATIONS.DAT CONNECTIONS.DAT *.TMP
 
 # --- 6. Restore Original Files ---
 echo "--- Restoring original input/output files... ---"
