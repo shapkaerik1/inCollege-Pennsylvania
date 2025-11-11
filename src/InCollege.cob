@@ -1925,7 +1925,74 @@ SAVE-MESSAGE-RECORD.
 
        WRITE MESSAGE-RECORD
        CLOSE MESSAGES-FILE.
+VIEW-MY-MESSAGES.
+       MOVE SPACES TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+       MOVE "--- Your Messages ---" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
 
+       OPEN INPUT MESSAGES-FILE
+       IF MESSAGES-STATUS NOT = "00"
+           MOVE "You have no messages at this time." TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           EXIT PARAGRAPH
+       END-IF
+
+       MOVE 0 TO WS-MATCHES-FOUND
+
+       PERFORM UNTIL 1 = 2
+           READ MESSAGES-FILE
+               AT END EXIT PERFORM
+               NOT AT END
+                   *> Check if current user is the recipient
+                   IF FUNCTION TRIM(MSG-RECIPIENT-USERNAME) = FUNCTION TRIM(USERNAME)
+                       ADD 1 TO WS-MATCHES-FOUND
+                       
+                       *> Display sender
+                       MOVE SPACES TO OUTPUT-LINE
+                       STRING "From: " DELIMITED BY SIZE
+                              FUNCTION TRIM(MSG-SENDER-USERNAME) DELIMITED BY SIZE
+                              INTO OUTPUT-LINE
+                       END-STRING
+                       PERFORM WRITE-AND-DISPLAY
+                       
+                       *> Display message content
+                       MOVE SPACES TO OUTPUT-LINE
+                       STRING "Message: " DELIMITED BY SIZE
+                              FUNCTION TRIM(MSG-CONTENT) DELIMITED BY SIZE
+                              INTO OUTPUT-LINE
+                       END-STRING
+                       PERFORM WRITE-AND-DISPLAY
+                       
+                       *> Display timestamp (optional but recommended)
+                       IF FUNCTION TRIM(MSG-TIMESTAMP) NOT = SPACE
+                           MOVE SPACES TO OUTPUT-LINE
+                           STRING "(Sent: " DELIMITED BY SIZE
+                                  FUNCTION TRIM(MSG-TIMESTAMP) DELIMITED BY SIZE
+                                  ")" DELIMITED BY SIZE
+                                  INTO OUTPUT-LINE
+                           END-STRING
+                           PERFORM WRITE-AND-DISPLAY
+                       END-IF
+                       
+                       *> Display separator between messages
+                       MOVE "---" TO OUTPUT-LINE
+                       PERFORM WRITE-AND-DISPLAY
+                   END-IF
+           END-READ
+       END-PERFORM
+       
+       CLOSE MESSAGES-FILE
+
+       *> If no messages were found for this user
+       IF WS-MATCHES-FOUND = 0
+           MOVE "You have no messages at this time." TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+       ELSE
+           *> Display separator after all messages
+           MOVE "---------------------" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+       END-IF.
 VIEW-MY-APPLICATIONS.
        MOVE SPACES TO OUTPUT-LINE
        PERFORM WRITE-AND-DISPLAY
