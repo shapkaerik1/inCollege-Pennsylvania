@@ -1822,8 +1822,7 @@ MESSAGES-MENU.
                    WHEN "Send a New Message"
                        PERFORM SEND-MESSAGE
                    WHEN "View My Messages"
-                       MOVE "View My Messages is under construction." TO OUTPUT-LINE
-                       PERFORM WRITE-AND-DISPLAY
+                       PERFORM VIEW-MY-MESSAGES
                    WHEN "Back to Main Menu"
                        EXIT PERFORM
                    WHEN OTHER
