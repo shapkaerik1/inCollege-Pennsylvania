@@ -1,13 +1,13 @@
-Create New Account
-user_empty
+Log In
+user_single
 Pass123$!!!
 Create/Edit My Profile
-John
-Doe
-University of Florida
-Computer Science
-2025
-I am a student
+Jane
+Smith
+UCF
+Engineering
+2024
+Love coding
 DONE
 DONE
 Messages
@@ -16,11 +16,16 @@ Back to Main Menu
 Messages
 Send a New Message
 Back to Main Menu
+View My Profile
 Messages
 View My Messages
 Back to Main Menu
-View My Profile
 Search for a job
+Go Back
+Messages
+View My Messages
+Back to Main Menu
+Learn a New Skill
 Go Back
 Messages
 View My Messages

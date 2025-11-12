@@ -1,8 +1,0 @@
-Create New Account
-receiver1
-Pass123$!!!
-Messages
-View My Messages
-Back to Main Menu
-Log Out
-

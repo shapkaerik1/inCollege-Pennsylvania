@@ -11,53 +11,7 @@ Please enter your username:
 Please enter your password:
 You have successfully logged in.
 
-Welcome, user_multi!
-
-Create/Edit My Profile
-View My Profile
-Search for a job
-Find someone you know
-Learn a New Skill
-View Pending Requests
-View My Network
-Messages
-Log Out
-Enter your choice:
-
---- Messages Menu ---
-Send a New Message
-View My Messages
-Back to Main Menu
-Enter your choice:
-
---- Your Messages ---
-From: alice
-Message: Hi! How are you doing?
-(Sent: 2024-01-15 10:00:00)
----
-From: bob
-Message: Can we schedule a meeting?
-(Sent: 2024-01-15 11:30:00)
----
-From: charlie
-Message: Thanks for your help yesterday!
-(Sent: 2024-01-15 15:45:00)
----
-From: david
-Message: Are you free this weekend?
-(Sent: 2024-01-16 08:00:00)
----
-From: emma
-Message: Great work on the project!
-(Sent: 2024-01-16 12:00:00)
----
----------------------
-
---- Messages Menu ---
-Send a New Message
-View My Messages
-Back to Main Menu
-Enter your choice:
+Welcome, user_twice!
 
 Create/Edit My Profile
 View My Profile
@@ -101,25 +55,17 @@ Back to Main Menu
 Enter your choice:
 
 --- Your Messages ---
-From: alice
-Message: Hi! How are you doing?
-(Sent: 2024-01-15 10:00:00)
+From: friend1
+Message: First message to test viewing twice
+(Sent: 2024-01-15 09:00:00)
 ---
-From: bob
-Message: Can we schedule a meeting?
+From: friend2
+Message: Second message for testing
+(Sent: 2024-01-15 10:15:00)
+---
+From: friend3
+Message: Third message here
 (Sent: 2024-01-15 11:30:00)
----
-From: charlie
-Message: Thanks for your help yesterday!
-(Sent: 2024-01-15 15:45:00)
----
-From: david
-Message: Are you free this weekend?
-(Sent: 2024-01-16 08:00:00)
----
-From: emma
-Message: Great work on the project!
-(Sent: 2024-01-16 12:00:00)
 ---
 ---------------------
 
@@ -146,15 +92,15 @@ Enter your choice:
 
 PERSONAL INFORMATION:
 --------------------------------------
-First Name:       Bob
-Last Name:        Johnson
-University:       FSU
-Major:            Business
-Graduation Year:  2026
+First Name:       Alice
+Last Name:        Williams
+University:       UF
+Major:            Biology
+Graduation Year:  2025
 
 ABOUT ME:
 --------------------------------------
-Interested in finance
+Pre-med student
 
 ======================================
 
@@ -176,25 +122,17 @@ Back to Main Menu
 Enter your choice:
 
 --- Your Messages ---
-From: alice
-Message: Hi! How are you doing?
-(Sent: 2024-01-15 10:00:00)
+From: friend1
+Message: First message to test viewing twice
+(Sent: 2024-01-15 09:00:00)
 ---
-From: bob
-Message: Can we schedule a meeting?
+From: friend2
+Message: Second message for testing
+(Sent: 2024-01-15 10:15:00)
+---
+From: friend3
+Message: Third message here
 (Sent: 2024-01-15 11:30:00)
----
-From: charlie
-Message: Thanks for your help yesterday!
-(Sent: 2024-01-15 15:45:00)
----
-From: david
-Message: Are you free this weekend?
-(Sent: 2024-01-16 08:00:00)
----
-From: emma
-Message: Great work on the project!
-(Sent: 2024-01-16 12:00:00)
 ---
 ---------------------
 
@@ -240,25 +178,17 @@ Back to Main Menu
 Enter your choice:
 
 --- Your Messages ---
-From: alice
-Message: Hi! How are you doing?
-(Sent: 2024-01-15 10:00:00)
+From: friend1
+Message: First message to test viewing twice
+(Sent: 2024-01-15 09:00:00)
 ---
-From: bob
-Message: Can we schedule a meeting?
+From: friend2
+Message: Second message for testing
+(Sent: 2024-01-15 10:15:00)
+---
+From: friend3
+Message: Third message here
 (Sent: 2024-01-15 11:30:00)
----
-From: charlie
-Message: Thanks for your help yesterday!
-(Sent: 2024-01-15 15:45:00)
----
-From: david
-Message: Are you free this weekend?
-(Sent: 2024-01-16 08:00:00)
----
-From: emma
-Message: Great work on the project!
-(Sent: 2024-01-16 12:00:00)
 ---
 ---------------------
 
@@ -301,25 +231,17 @@ Back to Main Menu
 Enter your choice:
 
 --- Your Messages ---
-From: alice
-Message: Hi! How are you doing?
-(Sent: 2024-01-15 10:00:00)
+From: friend1
+Message: First message to test viewing twice
+(Sent: 2024-01-15 09:00:00)
 ---
-From: bob
-Message: Can we schedule a meeting?
+From: friend2
+Message: Second message for testing
+(Sent: 2024-01-15 10:15:00)
+---
+From: friend3
+Message: Third message here
 (Sent: 2024-01-15 11:30:00)
----
-From: charlie
-Message: Thanks for your help yesterday!
-(Sent: 2024-01-15 15:45:00)
----
-From: david
-Message: Are you free this weekend?
-(Sent: 2024-01-16 08:00:00)
----
-From: emma
-Message: Great work on the project!
-(Sent: 2024-01-16 12:00:00)
 ---
 ---------------------
 
@@ -359,6 +281,20 @@ View My Network
 Messages
 Log Out
 Enter your choice:
+=== YOUR NETWORK ===
+
+No connections in your network yet.
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Messages
+Log Out
+Enter your choice:
 
 --- Messages Menu ---
 Send a New Message
@@ -367,25 +303,17 @@ Back to Main Menu
 Enter your choice:
 
 --- Your Messages ---
-From: alice
-Message: Hi! How are you doing?
-(Sent: 2024-01-15 10:00:00)
+From: friend1
+Message: First message to test viewing twice
+(Sent: 2024-01-15 09:00:00)
 ---
-From: bob
-Message: Can we schedule a meeting?
+From: friend2
+Message: Second message for testing
+(Sent: 2024-01-15 10:15:00)
+---
+From: friend3
+Message: Third message here
 (Sent: 2024-01-15 11:30:00)
----
-From: charlie
-Message: Thanks for your help yesterday!
-(Sent: 2024-01-15 15:45:00)
----
-From: david
-Message: Are you free this weekend?
-(Sent: 2024-01-16 08:00:00)
----
-From: emma
-Message: Great work on the project!
-(Sent: 2024-01-16 12:00:00)
 ---
 ---------------------
 

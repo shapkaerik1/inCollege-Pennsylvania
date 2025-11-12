@@ -9,10 +9,9 @@ Create New Account
 Enter your selection:
 Please enter your username:
 Please enter your password:
-Account created successfully.
 You have successfully logged in.
 
-Welcome, user_empty!
+Welcome, user_single!
 
 Create/Edit My Profile
 View My Profile
@@ -56,7 +55,11 @@ Back to Main Menu
 Enter your choice:
 
 --- Your Messages ---
-You have no messages at this time.
+From: sender1
+Message: Hello! This is a test message.
+(Sent: 2024-01-15 14:30:25)
+---
+---------------------
 
 --- Messages Menu ---
 Send a New Message
@@ -96,9 +99,7 @@ Send a New Message
 View My Messages
 Back to Main Menu
 Enter your choice:
-
---- Your Messages ---
-You have no messages at this time.
+Error: Invalid input. Please try again.
 
 --- Messages Menu ---
 Send a New Message
@@ -106,34 +107,18 @@ View My Messages
 Back to Main Menu
 Enter your choice:
 
-Create/Edit My Profile
-View My Profile
-Search for a job
-Find someone you know
-Learn a New Skill
-View Pending Requests
-View My Network
-Messages
-Log Out
+--- Your Messages ---
+From: sender1
+Message: Hello! This is a test message.
+(Sent: 2024-01-15 14:30:25)
+---
+---------------------
+
+--- Messages Menu ---
+Send a New Message
+View My Messages
+Back to Main Menu
 Enter your choice:
-
-======================================
-            YOUR PROFILE
-======================================
-
-PERSONAL INFORMATION:
---------------------------------------
-First Name:       John
-Last Name:        Doe
-University:       University of Florida
-Major:            Computer Science
-Graduation Year:  2025
-
-ABOUT ME:
---------------------------------------
-I am a student
-
-======================================
 
 Create/Edit My Profile
 View My Profile
@@ -171,7 +156,61 @@ Back to Main Menu
 Enter your choice:
 
 --- Your Messages ---
-You have no messages at this time.
+From: sender1
+Message: Hello! This is a test message.
+(Sent: 2024-01-15 14:30:25)
+---
+---------------------
+
+--- Messages Menu ---
+Send a New Message
+View My Messages
+Back to Main Menu
+Enter your choice:
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Messages
+Log Out
+Enter your choice:
+
+Learn a New Skill:
+Resume Writing
+Agile and Scrum Basics
+Git and GitHub Fundamentals
+Cloud Fundamentals
+Networking Basics
+Go Back
+Enter your choice:
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Messages
+Log Out
+Enter your choice:
+
+--- Messages Menu ---
+Send a New Message
+View My Messages
+Back to Main Menu
+Enter your choice:
+
+--- Your Messages ---
+From: sender1
+Message: Hello! This is a test message.
+(Sent: 2024-01-15 14:30:25)
+---
+---------------------
 
 --- Messages Menu ---
 Send a New Message

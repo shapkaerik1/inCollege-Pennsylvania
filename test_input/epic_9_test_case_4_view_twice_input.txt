@@ -1,16 +1,13 @@
 Log In
-user_multi
+user_twice
 Pass123$!!!
-Messages
-View My Messages
-Back to Main Menu
 Create/Edit My Profile
-Bob
-Johnson
-FSU
-Business
-2026
-Interested in finance
+Alice
+Williams
+UF
+Biology
+2025
+Pre-med student
 DONE
 DONE
 Messages
@@ -32,6 +29,7 @@ View My Messages
 Back to Main Menu
 Learn a New Skill
 Go Back
+View My Network
 Messages
 View My Messages
 Back to Main Menu
