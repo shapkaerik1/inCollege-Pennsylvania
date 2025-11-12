@@ -1947,7 +1947,7 @@ VIEW-MY-MESSAGES.
                    *> Check if current user is the recipient
                    IF FUNCTION TRIM(MSG-RECIPIENT-USERNAME) = FUNCTION TRIM(USERNAME)
                        ADD 1 TO WS-MATCHES-FOUND
-                       
+
                        *> Display sender
                        MOVE SPACES TO OUTPUT-LINE
                        STRING "From: " DELIMITED BY SIZE
@@ -1955,7 +1955,7 @@ VIEW-MY-MESSAGES.
                               INTO OUTPUT-LINE
                        END-STRING
                        PERFORM WRITE-AND-DISPLAY
-                       
+
                        *> Display message content
                        MOVE SPACES TO OUTPUT-LINE
                        STRING "Message: " DELIMITED BY SIZE
@@ -1963,7 +1963,6 @@ VIEW-MY-MESSAGES.
                               INTO OUTPUT-LINE
                        END-STRING
                        PERFORM WRITE-AND-DISPLAY
-                       
                        *> Display timestamp (optional but recommended)
                        IF FUNCTION TRIM(MSG-TIMESTAMP) NOT = SPACE
                            MOVE SPACES TO OUTPUT-LINE
@@ -1974,14 +1973,13 @@ VIEW-MY-MESSAGES.
                            END-STRING
                            PERFORM WRITE-AND-DISPLAY
                        END-IF
-                       
+
                        *> Display separator between messages
                        MOVE "---" TO OUTPUT-LINE
                        PERFORM WRITE-AND-DISPLAY
                    END-IF
            END-READ
        END-PERFORM
-       
        CLOSE MESSAGES-FILE
 
        *> If no messages were found for this user
