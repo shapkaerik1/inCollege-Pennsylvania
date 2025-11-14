@@ -1,0 +1,345 @@
+****************************************
+*                                      *
+*         Welcome to InCollege!        *
+*                                      *
+****************************************
+
+Log In
+Create New Account
+Enter your selection:
+Please enter your username:
+Please enter your password:
+You have successfully logged in.
+
+Welcome, user_twice!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Messages
+Log Out
+Enter your choice:
+
+--- Create/Edit Profile ---
+Enter First Name:
+Enter Last Name:
+Enter University/College Attended:
+Enter Major:
+Enter Graduation Year (YYYY):
+Enter About Me (optional, max 200 chars, enter blank line to skip):
+Add Experience (optional, max 3 entries. Enter 'DONE' to finish):
+Experience #1 - Title:
+Add Education (optional, max 3 entries. Enter 'DONE' to finish):
+Education #1 - Degree:
+Profile saved successfully!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Messages
+Log Out
+Enter your choice:
+
+--- Messages Menu ---
+Send a New Message
+View My Messages
+Back to Main Menu
+Enter your choice:
+
+--- Your Messages ---
+From: friend1
+Message: First message to test viewing twice
+(Sent: 2024-01-15 09:00:00)
+---
+From: friend2
+Message: Second message for testing
+(Sent: 2024-01-15 10:15:00)
+---
+From: friend3
+Message: Third message here
+(Sent: 2024-01-15 11:30:00)
+---
+---------------------
+
+--- Messages Menu ---
+Send a New Message
+View My Messages
+Back to Main Menu
+Enter your choice:
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Messages
+Log Out
+Enter your choice:
+
+======================================
+            YOUR PROFILE
+======================================
+
+PERSONAL INFORMATION:
+--------------------------------------
+First Name:       Alice
+Last Name:        Williams
+University:       UF
+Major:            Biology
+Graduation Year:  2025
+
+ABOUT ME:
+--------------------------------------
+Pre-med student
+
+======================================
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Messages
+Log Out
+Enter your choice:
+
+--- Messages Menu ---
+Send a New Message
+View My Messages
+Back to Main Menu
+Enter your choice:
+
+--- Your Messages ---
+From: friend1
+Message: First message to test viewing twice
+(Sent: 2024-01-15 09:00:00)
+---
+From: friend2
+Message: Second message for testing
+(Sent: 2024-01-15 10:15:00)
+---
+From: friend3
+Message: Third message here
+(Sent: 2024-01-15 11:30:00)
+---
+---------------------
+
+--- Messages Menu ---
+Send a New Message
+View My Messages
+Back to Main Menu
+Enter your choice:
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Messages
+Log Out
+Enter your choice:
+
+--- Job Search/Internship Menu ---
+Post a Job/Internship
+Browse Jobs/Internships
+View My Applications
+Go Back
+Enter your choice:
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Messages
+Log Out
+Enter your choice:
+
+--- Messages Menu ---
+Send a New Message
+View My Messages
+Back to Main Menu
+Enter your choice:
+
+--- Your Messages ---
+From: friend1
+Message: First message to test viewing twice
+(Sent: 2024-01-15 09:00:00)
+---
+From: friend2
+Message: Second message for testing
+(Sent: 2024-01-15 10:15:00)
+---
+From: friend3
+Message: Third message here
+(Sent: 2024-01-15 11:30:00)
+---
+---------------------
+
+--- Messages Menu ---
+Send a New Message
+View My Messages
+Back to Main Menu
+Enter your choice:
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Messages
+Log Out
+Enter your choice:
+--- Find Someone You Know ---
+Enter Full Name (First Last):
+No users found with full name: Back to Main Menu
+Tip: Make sure to enter the exact full name (First Last).
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Messages
+Log Out
+Enter your choice:
+
+--- Messages Menu ---
+Send a New Message
+View My Messages
+Back to Main Menu
+Enter your choice:
+
+--- Your Messages ---
+From: friend1
+Message: First message to test viewing twice
+(Sent: 2024-01-15 09:00:00)
+---
+From: friend2
+Message: Second message for testing
+(Sent: 2024-01-15 10:15:00)
+---
+From: friend3
+Message: Third message here
+(Sent: 2024-01-15 11:30:00)
+---
+---------------------
+
+--- Messages Menu ---
+Send a New Message
+View My Messages
+Back to Main Menu
+Enter your choice:
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Messages
+Log Out
+Enter your choice:
+
+Learn a New Skill:
+Resume Writing
+Agile and Scrum Basics
+Git and GitHub Fundamentals
+Cloud Fundamentals
+Networking Basics
+Go Back
+Enter your choice:
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Messages
+Log Out
+Enter your choice:
+=== YOUR NETWORK ===
+
+No connections in your network yet.
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Messages
+Log Out
+Enter your choice:
+
+--- Messages Menu ---
+Send a New Message
+View My Messages
+Back to Main Menu
+Enter your choice:
+
+--- Your Messages ---
+From: friend1
+Message: First message to test viewing twice
+(Sent: 2024-01-15 09:00:00)
+---
+From: friend2
+Message: Second message for testing
+(Sent: 2024-01-15 10:15:00)
+---
+From: friend3
+Message: Third message here
+(Sent: 2024-01-15 11:30:00)
+---
+---------------------
+
+--- Messages Menu ---
+Send a New Message
+View My Messages
+Back to Main Menu
+Enter your choice:
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Messages
+Log Out
+Enter your choice:
+
+****************************************
+*                                      *
+*         Welcome to InCollege!        *
+*                                      *
+****************************************
+
+Log In
+Create New Account
+Enter your selection:
