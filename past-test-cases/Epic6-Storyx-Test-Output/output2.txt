@@ -20,6 +20,7 @@ Find someone you know
 Learn a New Skill
 View Pending Requests
 View My Network
+View My Applications
 Log Out
 Enter your choice:
 
@@ -50,6 +51,7 @@ Find someone you know
 Learn a New Skill
 View Pending Requests
 View My Network
+View My Applications
 Log Out
 Enter your choice:
 

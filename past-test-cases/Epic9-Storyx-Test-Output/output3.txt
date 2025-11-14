@@ -1,0 +1,544 @@
+****************************************
+*                                      *
+*         Welcome to InCollege!        *
+*                                      *
+****************************************
+
+Log In
+Create New Account
+Enter your selection:
+Please enter your username:
+Please enter your password:
+You have successfully logged in.
+
+Welcome, testuser2!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Messages
+Log Out
+Enter your choice:
+--- Find Someone You Know ---
+Enter Full Name (First Last):
+User found: James Ryan (testuser1)
+======================================
+            FOUND PROFILE
+======================================
+
+PERSONAL INFORMATION:
+--------------------------------------
+First Name:       James
+Last Name:        Ryan
+University:       University of Chicago
+Major:            Computer Science
+Graduation Year:  2025
+
+ABOUT ME:
+--------------------------------------
+I am a struggling college student
+
+======================================
+
+Send Connection Request
+Back to Main Menu
+Enter your choice:
+Connection request sent to testuser1.
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Messages
+Log Out
+Enter your choice:
+
+****************************************
+*                                      *
+*         Welcome to InCollege!        *
+*                                      *
+****************************************
+
+Log In
+Create New Account
+Enter your selection:
+Please enter your username:
+Please enter your password:
+You have successfully logged in.
+
+Welcome, testuser3!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Messages
+Log Out
+Enter your choice:
+--- Find Someone You Know ---
+Enter Full Name (First Last):
+User found: James Ryan (testuser1)
+======================================
+            FOUND PROFILE
+======================================
+
+PERSONAL INFORMATION:
+--------------------------------------
+First Name:       James
+Last Name:        Ryan
+University:       University of Chicago
+Major:            Computer Science
+Graduation Year:  2025
+
+ABOUT ME:
+--------------------------------------
+I am a struggling college student
+
+======================================
+
+Send Connection Request
+Back to Main Menu
+Enter your choice:
+Connection request sent to testuser1.
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Messages
+Log Out
+Enter your choice:
+
+****************************************
+*                                      *
+*         Welcome to InCollege!        *
+*                                      *
+****************************************
+
+Log In
+Create New Account
+Enter your selection:
+Please enter your username:
+Please enter your password:
+You have successfully logged in.
+
+Welcome, testuser5!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Messages
+Log Out
+Enter your choice:
+--- Find Someone You Know ---
+Enter Full Name (First Last):
+User found: James Ryan (testuser1)
+======================================
+            FOUND PROFILE
+======================================
+
+PERSONAL INFORMATION:
+--------------------------------------
+First Name:       James
+Last Name:        Ryan
+University:       University of Chicago
+Major:            Computer Science
+Graduation Year:  2025
+
+ABOUT ME:
+--------------------------------------
+I am a struggling college student
+
+======================================
+
+Send Connection Request
+Back to Main Menu
+Enter your choice:
+Connection request sent to testuser1.
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Messages
+Log Out
+Enter your choice:
+
+****************************************
+*                                      *
+*         Welcome to InCollege!        *
+*                                      *
+****************************************
+
+Log In
+Create New Account
+Enter your selection:
+Please enter your username:
+Please enter your password:
+You have successfully logged in.
+
+Welcome, testuser1!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Messages
+Log Out
+Enter your choice:
+=== PENDING CONNECTION REQUESTS ===
+
+Connection Request #1 from: testuser2
+Connection Request #2 from: testuser3
+Connection Request #3 from: testuser5
+
+Enter sender's username to manage:
+
+Accept Connection Request
+Reject Connection Request
+Go Back
+Enter your choice:
+Connection request from testuser2 has been accepted.
+
+=== PENDING CONNECTION REQUESTS ===
+
+Connection Request #1 from: testuser3
+Connection Request #2 from: testuser5
+
+Enter sender's username to manage:
+
+Accept Connection Request
+Reject Connection Request
+Go Back
+Enter your choice:
+Connection request from testuser3 has been accepted.
+
+=== PENDING CONNECTION REQUESTS ===
+
+Connection Request #1 from: testuser5
+
+Enter sender's username to manage:
+
+Accept Connection Request
+Reject Connection Request
+Go Back
+Enter your choice:
+Connection request from testuser5 has been accepted.
+
+=== PENDING CONNECTION REQUESTS ===
+
+No pending connection requests.
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Messages
+Log Out
+Enter your choice:
+
+--- Messages Menu ---
+Send a New Message
+View My Messages
+Back to Main Menu
+Enter your choice:
+
+Enter recipient's username (must be a connection):
+Enter your message (max 200 chars):
+Message sent to testuser2 successfully!
+
+--- Messages Menu ---
+Send a New Message
+View My Messages
+Back to Main Menu
+Enter your choice:
+
+Enter recipient's username (must be a connection):
+Enter your message (max 200 chars):
+Message sent to testuser2 successfully!
+
+--- Messages Menu ---
+Send a New Message
+View My Messages
+Back to Main Menu
+Enter your choice:
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Messages
+Log Out
+Enter your choice:
+
+****************************************
+*                                      *
+*         Welcome to InCollege!        *
+*                                      *
+****************************************
+
+Log In
+Create New Account
+Enter your selection:
+Please enter your username:
+Please enter your password:
+You have successfully logged in.
+
+Welcome, testuser2!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Messages
+Log Out
+Enter your choice:
+
+--- Messages Menu ---
+Send a New Message
+View My Messages
+Back to Main Menu
+Enter your choice:
+
+--- Your Messages ---
+From: testuser1
+Message: Hi there! Glad we connected on InCollege.
+(Sent: 2025--1-1- 00:00:00)
+---
+From: testuser1
+Message: How are you?
+(Sent: 2025--1-1- 00:00:00)
+---
+---------------------
+
+--- Messages Menu ---
+Send a New Message
+View My Messages
+Back to Main Menu
+Enter your choice:
+
+Enter recipient's username (must be a connection):
+Enter your message (max 200 chars):
+Message sent to testuser1 successfully!
+
+--- Messages Menu ---
+Send a New Message
+View My Messages
+Back to Main Menu
+Enter your choice:
+
+Enter recipient's username (must be a connection):
+Enter your message (max 200 chars):
+Message sent to testuser1 successfully!
+
+--- Messages Menu ---
+Send a New Message
+View My Messages
+Back to Main Menu
+Enter your choice:
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Messages
+Log Out
+Enter your choice:
+
+****************************************
+*                                      *
+*         Welcome to InCollege!        *
+*                                      *
+****************************************
+
+Log In
+Create New Account
+Enter your selection:
+Please enter your username:
+Please enter your password:
+You have successfully logged in.
+
+Welcome, testuser3!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Messages
+Log Out
+Enter your choice:
+
+--- Messages Menu ---
+Send a New Message
+View My Messages
+Back to Main Menu
+Enter your choice:
+
+Enter recipient's username (must be a connection):
+Enter your message (max 200 chars):
+Message sent to testuser1 successfully!
+
+--- Messages Menu ---
+Send a New Message
+View My Messages
+Back to Main Menu
+Enter your choice:
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Messages
+Log Out
+Enter your choice:
+
+****************************************
+*                                      *
+*         Welcome to InCollege!        *
+*                                      *
+****************************************
+
+Log In
+Create New Account
+Enter your selection:
+Please enter your username:
+Please enter your password:
+You have successfully logged in.
+
+Welcome, testuser5!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Messages
+Log Out
+Enter your choice:
+
+--- Messages Menu ---
+Send a New Message
+View My Messages
+Back to Main Menu
+Enter your choice:
+
+Enter recipient's username (must be a connection):
+Enter your message (max 200 chars):
+Message sent to testuser1 successfully!
+
+--- Messages Menu ---
+Send a New Message
+View My Messages
+Back to Main Menu
+Enter your choice:
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Messages
+Log Out
+Enter your choice:
+
+****************************************
+*                                      *
+*         Welcome to InCollege!        *
+*                                      *
+****************************************
+
+Log In
+Create New Account
+Enter your selection:
+Please enter your username:
+Please enter your password:
+You have successfully logged in.
+
+Welcome, testuser1!
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Messages
+Log Out
+Enter your choice:
+
+--- Messages Menu ---
+Send a New Message
+View My Messages
+Back to Main Menu
+Enter your choice:
+
+--- Your Messages ---
+From: testuser2
+Message: I'm doing well!
+(Sent: 2025--1-1- 00:00:00)
+---
+From: testuser2
+Message: Could you help me polish my resume?
+(Sent: 2025--1-1- 00:00:00)
+---
+From: testuser3
+Message: Check out this new job posting I found
+(Sent: 2025--1-1- 00:00:00)
+---
+From: testuser5
+Message: Hello, I'm a recruiter for Computer Inc.
+(Sent: 2025--1-1- 00:00:00)
+---
+---------------------
+
+--- Messages Menu ---
+Send a New Message
+View My Messages
+Back to Main Menu
+Enter your choice:

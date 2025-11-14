@@ -1,11 +1,8 @@
 Create New Account
-alice
-ValidPass1!
-Search for a job
-Post a Job/Internship
-Software Engineer
-Coding applications in Cobol
-Bank of America
-Tampa, FL
-$80,000
-Browse Jobs/Internships
+receiver1
+Pass123$!!!
+Messages
+View My Messages
+Back to Main Menu
+Log Out
+
