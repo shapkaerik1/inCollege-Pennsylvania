@@ -282,6 +282,13 @@ DATA DIVISION.
            05 WS-MESSAGE-TIMESTAMP PIC X(19).
            05 WS-IS-CONNECTED      PIC X VALUE 'N'.
 
+       01 WS-TIMESTAMP-HELPER.
+          05 WS-UTC-TIME          PIC 9(8).
+          05 WS-UTC-HOUR-NUM      PIC S9(2).  *> Signed for math
+          05 WS-LOCAL-HOUR-NUM    PIC S9(2).  *> Signed for math
+          05 WS-LOCAL-HOUR-X      PIC X(2).   *> For display
+          05 EST-OFFSET           PIC S9(2) VALUE -5.
+
 PROCEDURE DIVISION.
        PERFORM OPEN-FILES.
        PERFORM LOAD-ACCOUNTS.
@@ -1897,17 +1904,40 @@ SEND-MESSAGE.
        PERFORM WRITE-AND-DISPLAY.
 
 GENERATE-TIMESTAMP.
-       *> Generate a timestamp in YYYY-MM-DD HH:MM:SS format
-       ACCEPT WS-MESSAGE-TIMESTAMP FROM DATE YYYYMMDD
-       STRING WS-MESSAGE-TIMESTAMP(1:4) DELIMITED BY SIZE
-              "-" DELIMITED BY SIZE
-              WS-MESSAGE-TIMESTAMP(5:2) DELIMITED BY SIZE
-              "-" DELIMITED BY SIZE
-              WS-MESSAGE-TIMESTAMP(7:2) DELIMITED BY SIZE
-              " " DELIMITED BY SIZE
-              "00:00:00" DELIMITED BY SIZE
-              INTO WS-MESSAGE-TIMESTAMP
-       END-STRING.
+*> Generate a timestamp in YYYY-MM-DD HH:MM:SS format
+
+*> Get Local Date and UTC Time
+    ACCEPT WS-MESSAGE-TIMESTAMP FROM DATE YYYYMMDD.
+    ACCEPT WS-UTC-TIME FROM TIME. *> e.g., 06565600 (UTC)
+
+*> Convert UTC hour to a number for math
+    MOVE WS-UTC-TIME(1:2) TO WS-UTC-HOUR-NUM.
+
+*> Apply the timezone offset (EST = -5)
+    COMPUTE WS-LOCAL-HOUR-NUM = WS-UTC-HOUR-NUM + EST-OFFSET.
+
+*> Handle date rollover (if time goes negative, wrap to 24h)
+    IF WS-LOCAL-HOUR-NUM < 0
+        ADD 24 TO WS-LOCAL-HOUR-NUM *> e.g., 2 AM - 5 = -3. -3 + 24 = 21 (9 PM)
+    END-IF.
+
+*> Format the new local hour for display (with leading zero)
+    MOVE WS-LOCAL-HOUR-NUM TO WS-LOCAL-HOUR-X.
+
+*> Build the final string
+    STRING WS-MESSAGE-TIMESTAMP(1:4) DELIMITED BY SIZE *> YYYY
+           "-" DELIMITED BY SIZE
+           WS-MESSAGE-TIMESTAMP(5:2) DELIMITED BY SIZE *> MM
+           "-" DELIMITED BY SIZE
+           WS-MESSAGE-TIMESTAMP(7:2) DELIMITED BY SIZE *> DD
+           " " DELIMITED BY SIZE
+           WS-LOCAL-HOUR-X         DELIMITED BY SIZE *> HH (Local)
+           ":" DELIMITED BY SIZE
+           WS-UTC-TIME(3:2)        DELIMITED BY SIZE *> MM
+           ":" DELIMITED BY SIZE
+           WS-UTC-TIME(5:2)        DELIMITED BY SIZE *> SS
+           INTO WS-MESSAGE-TIMESTAMP
+    END-STRING.
 
 SAVE-MESSAGE-RECORD.
        MOVE FUNCTION TRIM(USERNAME) TO MSG-SENDER-USERNAME

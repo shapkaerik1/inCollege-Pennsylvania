@@ -1,8 +1,78 @@
 Create New Account
-receiver1
-Pass123$!!!
+testuser1
+TestPass1!
+Create/Edit My Profile
+James
+Ryan
+University of Chicago
+Computer Science
+2025
+I am a struggling college student
+DONE
+DONE
+Log Out
+Create New Account
+testuser2
+TestPass2!
+Create/Edit My Profile
+Alice
+Smith
+University of Florida
+Computer Science
+2025
+I love programming.
+DONE
+DONE
+Find someone you know
+James Ryan
+Send Connection Request
+Log Out
+Create New Account
+testuser3
+TestPass3!
+Create/Edit My Profile
+Bob
+Johnson
+Florida State University
+Engineering
+2024
+Passionate about robotics.
+DONE
+DONE
+Find someone you know
+Alice Smith
+Send Connection Request
+Log Out
+Log In
+testuser1
+TestPass1!
+View Pending Requests
+testuser2
+Accept Connection Request
 Messages
-View My Messages
+Send a New Message
+testuser2
+Hi there! Glad we connected on InCollege.
 Back to Main Menu
 Log Out
-
+Log In
+testuser2
+TestPass2!
+View Pending Requests
+testuser3
+Accept Connection Request
+Log Out
+Log In
+testuser3
+TestPass3!
+Messages
+Send a New Message
+testuser2
+Check out this interesting job posting I found!
+Back to Main Menu
+Log Out
+Log In
+testuser2
+TestPass2!
+Messages
+View My Messages

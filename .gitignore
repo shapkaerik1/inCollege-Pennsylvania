@@ -18,3 +18,4 @@ Thumbs.db
 
 # Runtime data files
 *.DAT
+*.TMP
