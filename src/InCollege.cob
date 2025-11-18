@@ -302,6 +302,10 @@ PROCEDURE DIVISION.
        CLOSE INPUT-FILE OUTPUT-FILE ACCOUNTS-FILE.
        STOP RUN.
 
+*> ---------------------------------------------------------
+*>               FILE HANDLING UTILITIES
+*> ---------------------------------------------------------
+
 OPEN-FILES.
        *> this paragraph handles the opening of input and output files and checks for errors
        OPEN INPUT INPUT-FILE.
@@ -392,6 +396,10 @@ ADD-AND-SAVE-ACCOUNT.
        MOVE USERNAME TO WS-USERNAME(ACCOUNT-COUNT).
        MOVE PASSWORD TO WS-PASSWORD(ACCOUNT-COUNT).
 
+*> ---------------------------------------------------------
+*>                  CORE AUTHENTICATION
+*> ---------------------------------------------------------
+
 MAIN-MENU-DISPLAY.
        *> displays the initial welcome screen and static text prompt
        MOVE "****************************************" TO OUTPUT-LINE.
@@ -427,7 +435,7 @@ PROCESS-INPUT-COMMANDS.
                    WHEN "Log In"
                        PERFORM LOGIN-SECTION
                    WHEN OTHER
-                       MOVE "Error: Input must be 'Log In' or 'Create New Account'."
+                       MOVE "Unrecognized command. Please type 'Log In' or 'Create New Account'."
                            TO OUTPUT-LINE
                        PERFORM WRITE-AND-DISPLAY
                END-EVALUATE
@@ -543,7 +551,7 @@ VALIDATE-PASSWORD.
        COMPUTE PASSWORD-LENGTH = FUNCTION LENGTH(FUNCTION TRIM(PASSWORD)).
 
        IF PASSWORD-LENGTH < 8 OR PASSWORD-LENGTH > 12
-           MOVE "Error: Password must be 8-12 characters." TO OUTPUT-LINE
+           MOVE "Password Requirement: Password must be 8-12 characters." TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
            EXIT PARAGRAPH
        END-IF.
@@ -567,18 +575,18 @@ VALIDATE-PASSWORD.
 
        *> check if password met all criteria
        IF WS-HAS-CAPITAL = 'N'
-           MOVE "Error: Password must have a capital letter."
+           MOVE "Weak Password: Password must have a capital letter."
                TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
            EXIT PARAGRAPH
        END-IF.
        IF WS-HAS-DIGIT = 'N'
-           MOVE "Error: Password must have a digit." TO OUTPUT-LINE
+           MOVE "Weak Password: Password must have a digit." TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
            EXIT PARAGRAPH
        END-IF.
        IF WS-HAS-SPECIAL = 'N'
-           MOVE "Error: Password must have a special character."
+           MOVE "Weak Password: Password must have a special character."
                TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
            EXIT PARAGRAPH
@@ -626,6 +634,10 @@ LOGIN-SECTION.
         PERFORM POST-LOGIN-MENU
     END-IF.
 
+*> ---------------------------------------------------------
+*>                  MAIN APPLICATION MENU
+*> ---------------------------------------------------------
+
 POST-LOGIN-MENU.
        MOVE SPACES TO OUTPUT-LINE
        PERFORM WRITE-AND-DISPLAY
@@ -638,6 +650,16 @@ POST-LOGIN-MENU.
 
        *> This loop redisplays the menu after every action
        PERFORM UNTIL EOF
+           MOVE SPACES TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+
+           MOVE "----------------------------------------" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           MOVE "|               Main Menu              |" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           MOVE "----------------------------------------" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+
            MOVE SPACES TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
 
@@ -705,8 +727,17 @@ LEARN-A-SKILL-SUB-MENU.
       PERFORM UNTIL USER-ACTION = "Go Back" OR EOF
            MOVE SPACES TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
-           MOVE "Learn a New Skill:" TO OUTPUT-LINE
+
+           MOVE "----------------------------------------" TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
+           MOVE "|           Learn a New Skill          |" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           MOVE "----------------------------------------" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+
+           MOVE SPACES TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+
            MOVE "Resume Writing" TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
            MOVE "Agile and Scrum Basics" TO OUTPUT-LINE
@@ -745,36 +776,48 @@ LEARN-A-SKILL-SUB-MENU.
            END-IF
       END-PERFORM.
 
+*> ---------------------------------------------------------
+*>                  PROFILE MANAGEMENT
+*> ---------------------------------------------------------
+
 CREATE-OR-EDIT-PROFILE.
        MOVE SPACES TO OUTPUT-LINE
        PERFORM WRITE-AND-DISPLAY
-       MOVE "--- Create/Edit Profile ---" TO OUTPUT-LINE
+
+       MOVE "----------------------------------------" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+       MOVE "|      Create or Edit Your Profile     |" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+       MOVE "----------------------------------------" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+
+       MOVE SPACES TO OUTPUT-LINE
        PERFORM WRITE-AND-DISPLAY
 
        *> First Name (Required)
        MOVE "Enter First Name:" TO WS-PROMPT-TEXT
-       MOVE "Error: First Name is required." TO WS-ERROR-TEXT
+       MOVE "Input Required: First Name cannot be blank." TO WS-ERROR-TEXT
        PERFORM GET-REQUIRED-FIELD
        IF EOF EXIT PARAGRAPH END-IF
        MOVE WS-PROMPT-INPUT TO WS-FIRST-NAME
 
        *> Last Name (Required)
        MOVE "Enter Last Name:" TO WS-PROMPT-TEXT
-       MOVE "Error: Last Name is required." TO WS-ERROR-TEXT
+       MOVE "Input Required: First Name cannot be blank." TO WS-ERROR-TEXT
        PERFORM GET-REQUIRED-FIELD
        IF EOF EXIT PARAGRAPH END-IF
        MOVE WS-PROMPT-INPUT TO WS-LAST-NAME
 
        *> University (Required)
        MOVE "Enter University/College Attended:" TO WS-PROMPT-TEXT
-       MOVE "Error: University/College is required." TO WS-ERROR-TEXT
+       MOVE "Input Required: University name is missing." TO WS-ERROR-TEXT
        PERFORM GET-REQUIRED-FIELD
        IF EOF EXIT PARAGRAPH END-IF
        MOVE WS-PROMPT-INPUT TO WS-UNIVERSITY
 
        *> Major (Required)
        MOVE "Enter Major:" TO WS-PROMPT-TEXT
-       MOVE "Error: Major is required." TO WS-ERROR-TEXT
+       MOVE "Input Required: Major is missing." TO WS-ERROR-TEXT
        PERFORM GET-REQUIRED-FIELD
        IF EOF EXIT PARAGRAPH END-IF
        MOVE WS-PROMPT-INPUT TO WS-MAJOR
@@ -1104,11 +1147,11 @@ VIEW-MY-PROFILE.
        MOVE SPACES TO OUTPUT-LINE
        PERFORM WRITE-AND-DISPLAY
        *> Enhanced profile display with improved formatting for better readability
-       MOVE "======================================" TO OUTPUT-LINE
+       MOVE "----------------------------------------" TO OUTPUT-LINE
        PERFORM WRITE-AND-DISPLAY
-       MOVE "            YOUR PROFILE" TO OUTPUT-LINE
+       MOVE "|             YOUR PROFILE             |" TO OUTPUT-LINE
        PERFORM WRITE-AND-DISPLAY
-       MOVE "======================================" TO OUTPUT-LINE
+       MOVE "----------------------------------------" TO OUTPUT-LINE
        PERFORM WRITE-AND-DISPLAY
        MOVE SPACES TO OUTPUT-LINE
        PERFORM WRITE-AND-DISPLAY
@@ -1123,6 +1166,10 @@ VIEW-MY-PROFILE.
        END-IF
 
        PERFORM DISPLAY-PROFILE-CONTENT.
+
+*> ---------------------------------------------------------
+*>                  CONNECTION & MESSAGING
+*> ---------------------------------------------------------
 
 SEND-CONNECTION-REQUEST.
        *> Validate connection request and save if valid
@@ -1413,7 +1460,18 @@ FIND-SOMEONE-YOU-KNOW.
        MOVE 0 TO WS-MATCHES-FOUND
        MOVE SPACES TO WS-SEARCH-FULL-NAME WS-CURRENT-FULL-NAME
        MOVE SPACES TO WS-SEARCH-FIRST-NAME WS-SEARCH-LAST-NAME
-       MOVE "--- Find Someone You Know ---" TO OUTPUT-LINE
+
+       MOVE SPACES TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+
+       MOVE "----------------------------------------" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+       MOVE "|         Find Someone You Know        |" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+       MOVE "----------------------------------------" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+
+       MOVE SPACES TO OUTPUT-LINE
        PERFORM WRITE-AND-DISPLAY
 
        MOVE "Enter Full Name (First Last):" TO OUTPUT-LINE
@@ -1483,8 +1541,13 @@ GET-PENDING-CONNECTION-REQUESTS.
 
     *> loop continues until no requests are left or user types 'Go Back'
     PERFORM UNTIL FUNCTION TRIM(USER-ACTION) = "Go Back"
-       MOVE "=== PENDING CONNECTION REQUESTS ===" TO OUTPUT-LINE
+       MOVE "----------------------------------------" TO OUTPUT-LINE
        PERFORM WRITE-AND-DISPLAY
+       MOVE "|     PENDING CONNECTION REQUESTS      |" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+       MOVE "----------------------------------------" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+
        MOVE SPACES TO OUTPUT-LINE
        PERFORM WRITE-AND-DISPLAY
 
@@ -1690,12 +1753,13 @@ UPDATE-CONNECTION-REQUEST-STATUS.
 
 DISPLAY-FOUND-PROFILE.
        *> Display the full profile of a found user
-       MOVE "======================================" TO OUTPUT-LINE
+       MOVE "----------------------------------------" TO OUTPUT-LINE
        PERFORM WRITE-AND-DISPLAY
-       MOVE "            FOUND PROFILE" TO OUTPUT-LINE
+       MOVE "|            FOUND PROFILE             |" TO OUTPUT-LINE
        PERFORM WRITE-AND-DISPLAY
-       MOVE "======================================" TO OUTPUT-LINE
+       MOVE "----------------------------------------" TO OUTPUT-LINE
        PERFORM WRITE-AND-DISPLAY
+
        MOVE SPACES TO OUTPUT-LINE
        PERFORM WRITE-AND-DISPLAY
 
@@ -1734,8 +1798,13 @@ DISPLAY-FOUND-PROFILE.
        END-IF.
 
 VIEW-MY-NETWORK.
-       MOVE "=== YOUR NETWORK ===" TO OUTPUT-LINE
+       MOVE "----------------------------------------" TO OUTPUT-LINE
        PERFORM WRITE-AND-DISPLAY
+       MOVE "|              YOUR NETWORK            |" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+       MOVE "----------------------------------------" TO OUTPUT-LINE
+       PERFORM WRITE-AND-DISPLAY
+
        MOVE SPACES TO OUTPUT-LINE
        PERFORM WRITE-AND-DISPLAY
 
@@ -1808,8 +1877,17 @@ MESSAGES-MENU.
       PERFORM UNTIL USER-ACTION = "Back to Main Menu" OR EOF
            MOVE SPACES TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
-           MOVE "--- Messages Menu ---" TO OUTPUT-LINE
+
+           MOVE "----------------------------------------" TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
+           MOVE "|             Messages Menu            |" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           MOVE "----------------------------------------" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+
+           MOVE SPACES TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+
            MOVE "Send a New Message" TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
            MOVE "View My Messages" TO OUTPUT-LINE
@@ -1955,6 +2033,7 @@ SAVE-MESSAGE-RECORD.
 
        WRITE MESSAGE-RECORD
        CLOSE MESSAGES-FILE.
+
 VIEW-MY-MESSAGES.
        MOVE SPACES TO OUTPUT-LINE
        PERFORM WRITE-AND-DISPLAY
@@ -2021,6 +2100,11 @@ VIEW-MY-MESSAGES.
            MOVE "---------------------" TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
        END-IF.
+
+*> ---------------------------------------------------------
+*>                  JOB & INTERNSHIP SYSTEM
+*> ---------------------------------------------------------
+
 VIEW-MY-APPLICATIONS.
        MOVE SPACES TO OUTPUT-LINE
        PERFORM WRITE-AND-DISPLAY
@@ -2108,8 +2192,18 @@ JOB-MENU.
       PERFORM UNTIL USER-ACTION = "Go Back" OR EOF
            MOVE SPACES TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
-           MOVE "--- Job Search/Internship Menu ---" TO OUTPUT-LINE
+
            PERFORM WRITE-AND-DISPLAY
+           MOVE "----------------------------------------" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           MOVE "|      Job Search/Internship Menu      |" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+           MOVE "----------------------------------------" TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+
+           MOVE SPACES TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+
            MOVE "Post a Job/Internship" TO OUTPUT-LINE
            PERFORM WRITE-AND-DISPLAY
            MOVE "Browse Jobs/Internships" TO OUTPUT-LINE
@@ -2142,27 +2236,6 @@ JOB-MENU.
                END-EVALUATE
            END-IF
       END-PERFORM.
-
-GET-REQUIRED-FIELD.
-       *> This is a reusable paragraph to get any non-blank input
-       MOVE SPACES TO WS-PROMPT-INPUT.
-
-       PERFORM UNTIL FUNCTION TRIM(WS-PROMPT-INPUT) NOT = SPACE OR EOF
-           *> Use the prompt text passed in by the caller
-           MOVE WS-PROMPT-TEXT TO OUTPUT-LINE
-           PERFORM WRITE-AND-DISPLAY
-
-           READ INPUT-FILE
-               AT END SET EOF TO TRUE
-               NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-PROMPT-INPUT
-           END-READ
-
-           IF FUNCTION TRIM(WS-PROMPT-INPUT) = SPACE AND NOT EOF
-               *> Use the error text passed in by the caller
-               MOVE WS-ERROR-TEXT TO OUTPUT-LINE
-               PERFORM WRITE-AND-DISPLAY
-           END-IF
-       END-PERFORM.
 
 CREATE-JOB-POSTING.
        MOVE SPACES TO OUTPUT-LINE
@@ -2317,7 +2390,7 @@ SELECT-JOB-DETAILS.
        MOVE WS-INPUT-LINE TO WS-SELECTED-JOB-INDEX
        IF WS-SELECTED-JOB-INDEX <= 0 OR WS-SELECTED-JOB-INDEX > WS-MATCHES-FOUND
            MOVE SPACES TO OUTPUT-LINE
-           STRING "Error: Listing number must be between 1 and " WS-MATCHES-FOUND "." DELIMITED BY SIZE
+           STRING "Invalid Selection: Please enter a number between 1 and " WS-MATCHES-FOUND "." DELIMITED BY SIZE
                   INTO OUTPUT-LINE
            END-STRING
            PERFORM WRITE-AND-DISPLAY
@@ -2532,3 +2605,27 @@ SAVE-APPLICATION.
            PERFORM WRITE-AND-DISPLAY
        END-IF
        CLOSE JOB-APPLICATIONS-FILE.
+
+*> ---------------------------------------------------------
+*>                  SHARED UTILITIES
+*> ---------------------------------------------------------
+GET-REQUIRED-FIELD.
+       *> This is a reusable paragraph to get any non-blank input
+       MOVE SPACES TO WS-PROMPT-INPUT.
+
+       PERFORM UNTIL FUNCTION TRIM(WS-PROMPT-INPUT) NOT = SPACE OR EOF
+           *> Use the prompt text passed in by the caller
+           MOVE WS-PROMPT-TEXT TO OUTPUT-LINE
+           PERFORM WRITE-AND-DISPLAY
+
+           READ INPUT-FILE
+               AT END SET EOF TO TRUE
+               NOT AT END MOVE FUNCTION TRIM(FILE-RECORD) TO WS-PROMPT-INPUT
+           END-READ
+
+           IF FUNCTION TRIM(WS-PROMPT-INPUT) = SPACE AND NOT EOF
+               *> Use the error text passed in by the caller
+               MOVE WS-ERROR-TEXT TO OUTPUT-LINE
+               PERFORM WRITE-AND-DISPLAY
+           END-IF
+       END-PERFORM.
