@@ -17,8 +17,8 @@
 SRC_DIR="/workspace/src"
 BIN_DIR="bin"
 PROG_NAME="InCollege"
-INPUT_DIR="Epic8-Storyx-Test-Input"
-OUTPUT_DIR="Epic8-Storyx-Test-Output"
+INPUT_DIR="Epic10-Storyx-Test-Input/complex"
+OUTPUT_DIR="Epic10-Storyx-Test-Output"
 
 # --- 1. Backup Original Files ---
 echo "--- Backing up original input/output files (if they exist)... ---"
@@ -52,14 +52,14 @@ mkdir -p "${OUTPUT_DIR}"
 # --- 4. Run Test Cases ---
 # Loop through test cases from 1 to 4. You can change the '4' to match
 # the number of test input files you have.
-for i in {1..4}
+for i in {31..52}
 do
     echo "--- Running Test Case ${i} ---"
 
     # CRITICAL: Reset the environment by deleting all data files from previous runs.
     # This ensures each test starts from a clean slate.
     # BUT: Keep ACCOUNTS.DAT because tests need existing users to log in!
-    rm -f JOBS.DAT JOB_APPLICATIONS.DAT CONNECTIONS.DAT *.TMP
+    rm -f JOBS.DAT JOB_APPLICATIONS.DAT CONNECTIONS.DAT MESSAGES.DAT *.TMP
 
     # Check if the input file for this test case exists.
     if [ ! -f "${INPUT_DIR}/test${i}.txt" ]; then
@@ -85,7 +85,7 @@ done
 
 # --- 5. Final Cleanup ---
 # Remove any leftover files from the last test run.
-rm -f JOBS.DAT JOB_APPLICATIONS.DAT CONNECTIONS.DAT *.TMP
+rm -f *JOBS.DAT JOB_APPLICATIONS.DAT CONNECTIONS.DAT MESSAGES.DAT *.TMP
 
 # --- 6. Restore Original Files ---
 echo "--- Restoring original input/output files... ---"

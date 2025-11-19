@@ -1,0 +1,27 @@
+Log In
+testuser4
+TestPass4!
+Find someone you know
+Jane Doe
+Send Connection Request
+Log Out
+Log In
+testuser5
+TestPass5!
+View Pending Requests
+testuser4
+Accept Connection Request
+Messages
+Send a New Message
+testuser4
+
+Send a New Message
+testuser4
+This is a really long message I am sending. This is a really long message I am sending. This is a really long message I am sending. This is a really long message I am sending. This is a really long message I am sending. This is a really long message I am sending.
+Back to Main Menu
+Log Out
+Log In
+testuser4
+TestPass4!
+Messages
+View My Messages

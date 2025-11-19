@@ -1,0 +1,215 @@
+****************************************
+*                                      *
+*         Welcome to InCollege!        *
+*                                      *
+****************************************
+
+Log In
+Create New Account
+Enter your selection:
+Please enter your username:
+Please enter your password:
+Account created successfully.
+You have successfully logged in.
+
+Welcome, emma!
+
+----------------------------------------
+|               Main Menu              |
+----------------------------------------
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Messages
+Log Out
+Enter your choice:
+
+----------------------------------------
+|      Create or Edit Your Profile     |
+----------------------------------------
+
+Enter First Name:
+Enter Last Name:
+Enter University/College Attended:
+Enter Major:
+Enter Graduation Year (YYYY):
+Enter About Me (optional, max 200 chars, enter blank line to skip):
+Add Experience (optional, max 3 entries. Enter 'DONE' to finish):
+Experience #1 - Title:
+Experience #1 - Company/Organization:
+Experience #1 - Dates (e.g., Summer 2024):
+Experience #1 - Description (optional, max 100 chars, blank to skip):
+Add Experience (optional, max 3 entries. Enter 'DONE' to finish):
+Experience #2 - Title:
+Add Education (optional, max 3 entries. Enter 'DONE' to finish):
+Education #1 - Degree:
+Education #1 - University/College:
+Education #1 - Years Attended (e.g., 2023-2025):
+Add Education (optional, max 3 entries. Enter 'DONE' to finish):
+Education #2 - Degree:
+Profile saved successfully!
+
+----------------------------------------
+|               Main Menu              |
+----------------------------------------
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Messages
+Log Out
+Enter your choice:
+
+----------------------------------------
+|             YOUR PROFILE             |
+----------------------------------------
+
+PERSONAL INFORMATION:
+--------------------------------------
+First Name:       Emma
+Last Name:        Watson
+University:       University of South Florida
+Major:            Literature
+Graduation Year:  2026
+
+ABOUT ME:
+--------------------------------------
+Avid reader.
+
+EXPERIENCE:
+--------------------------------------
+Experience #1:
+  Title:         Intern
+  Company:       USF Library
+  Dates:         Summer 2025
+  Description:   Cataloged archives.
+
+EDUCATION:
+--------------------------------------
+Education #1:
+  Degree:        Bachelor of Arts
+  University:    USF
+  Years:         2022-2026
+
+======================================
+
+----------------------------------------
+|               Main Menu              |
+----------------------------------------
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Messages
+Log Out
+Enter your choice:
+
+----------------------------------------
+|         Find Someone You Know        |
+----------------------------------------
+
+Enter Full Name (First Last):
+Error: Full name is required for searching another person.
+
+----------------------------------------
+|               Main Menu              |
+----------------------------------------
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Messages
+Log Out
+Enter your choice:
+
+----------------------------------------
+|         Find Someone You Know        |
+----------------------------------------
+
+Enter Full Name (First Last):
+User found: Emma Watson (emma)
+----------------------------------------
+|            FOUND PROFILE             |
+----------------------------------------
+
+PERSONAL INFORMATION:
+--------------------------------------
+First Name:       Emma
+Last Name:        Watson
+University:       University of South Florida
+Major:            Literature
+Graduation Year:  2026
+
+ABOUT ME:
+--------------------------------------
+Avid reader.
+
+EXPERIENCE:
+--------------------------------------
+Experience #1:
+  Title:         Intern
+  Company:       USF Library
+  Dates:         Summer 2025
+  Description:   Cataloged archives.
+
+EDUCATION:
+--------------------------------------
+Education #1:
+  Degree:        Bachelor of Arts
+  University:    USF
+  Years:         2022-2026
+
+======================================
+
+Send Connection Request
+Back to Main Menu
+Enter your choice:
+Invalid choice. Returning to main menu.
+
+----------------------------------------
+|               Main Menu              |
+----------------------------------------
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Messages
+Log Out
+Enter your choice:
+Invalid choice. Please try again.
+
+----------------------------------------
+|               Main Menu              |
+----------------------------------------
+
+Create/Edit My Profile
+View My Profile
+Search for a job
+Find someone you know
+Learn a New Skill
+View Pending Requests
+View My Network
+Messages
+Log Out
+Enter your choice:

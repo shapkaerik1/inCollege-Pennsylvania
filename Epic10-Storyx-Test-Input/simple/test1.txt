@@ -1,0 +1,37 @@
+Create New Account
+testuser1
+ValidP1!
+Log Out
+Create New Account
+testuser2
+ValidPass1*
+Log Out
+Create New Account
+testuser3
+Short1!
+Validpass3#
+Log Out
+Create New Account
+testuser4
+TooLongPass1*
+TooLongPas1*
+Log Out
+Create New Account
+testuser5
+validpass1!
+Validpass1!
+Log Out
+Create New Account
+testuser6
+ValidPass1!
+Log In
+testuser1
+ValidP1!
+Learn a New Skill
+Resume Writing
+notrealskill
+Go Back
+Log Out
+Log In
+testuser1
+WrongPass1!

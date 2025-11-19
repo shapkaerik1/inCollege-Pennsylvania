@@ -1,0 +1,29 @@
+Log In
+testuser2
+TestPass2!
+Messages
+Send a New Message
+testuser1
+Back to Main Menu
+Find someone you know
+James Ryan
+Send Connection Request
+Log Out
+Log In
+testuser1
+TestPass1!
+View Pending Requests
+testuser2
+Accept Connection Request
+Messages
+View My Messages
+Send a New Message
+testuser2
+Hello, how are you?
+Back to Main Menu
+Log Out
+Log In
+testuser2
+TestPass2!
+Messages
+View My Messages
